@@ -15,4 +15,4 @@ Route::post('/buscar-paciente', [AtencionController::class, 'buscarPaciente'])->
 Route::post('/atenciones', [AtencionController::class, 'store'])->name('atenciones.store');
 
 //rutas del crud de usuarios
-Route::resource('users', UserController::class)->middleware('auth');
+//Route::resource('users', UserController::class)->middleware('auth');
