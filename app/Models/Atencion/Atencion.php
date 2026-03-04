@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Atencion;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Users\User;
+use App\Models\Paciente\Paciente;
+
 
 class Atencion extends Model
 {

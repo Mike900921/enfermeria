@@ -27,11 +27,6 @@
             </div>
 
             <div class="mb-3">
-                <label>Ciudad</label>
-                <input type="text" name="city" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
                 <label>Teléfono</label>
                 <input type="text" name="phone_number" class="form-control" required>
             </div>
@@ -39,6 +34,17 @@
             <div class="mb-3">
                 <label>Email</label>
                 <input type="email" name="email" class="form-control" required>
+            </div>
+            
+            <div class="mb-3">
+                <label>Rol</label>
+                <select name="role_id" class="form-control">
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
+                            {{ $role->name }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="mb-3">

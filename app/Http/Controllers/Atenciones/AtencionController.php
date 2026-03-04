@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Paciente;
 use App\Models\Atencion;
+use Illuminate\Support\Facades\Auth;
 
 class AtencionController extends Controller
 {
@@ -21,6 +22,7 @@ class AtencionController extends Controller
             return back()->with('error', 'Paciente no encontrado');
         }
 
+
         return view('atenciones.registrar', compact('paciente'));
     }
 
@@ -35,7 +37,7 @@ class AtencionController extends Controller
 
         Atencion::create([
             'paciente_id' => $request->paciente_id,
-            'usuario_id'  => auth()->id(),
+            'usuario_id' => Auth::id(),
             'fecha_hora'  => $request->fecha_hora,
             'motivo'      => $request->motivo,
             'procedimientos' => $request->procedimientos,

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 
 
+
 class UserController extends Controller
 {
     /**
@@ -40,7 +41,6 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
@@ -50,7 +50,6 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'last_name' => $request->last_name,
-            'city' => $request->city,
             'phone_number' => $request->phone_number,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -76,7 +75,8 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
-        return view('users.edit', compact('user'));
+        $roles = Roles::all();
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -84,9 +84,11 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->update($request->except('password'));
+        $data = $request->except('password');
 
-        if ($request->password) {
+        $user->update($data);
+
+        if ($request->filled('password')) {
             $user->update([
                 'password' => Hash::make($request->password)
             ]);
