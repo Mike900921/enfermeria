@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Atencion;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Users\User; // 👈 IMPORTANTE
+use App\Models\Paciente\Paciente;
 
 class Atencion extends Model
 {
@@ -20,13 +22,11 @@ class Atencion extends Model
         'observaciones',
     ];
 
-    // Relación con el usuario de enfermería
     public function usuario()
     {
         return $this->belongsTo(User::class, 'usuario_id');
     }
 
-    // Relación con el paciente (modelo externo)
     public function paciente()
     {
         return $this->belongsTo(Paciente::class, 'paciente_id', 'id');
