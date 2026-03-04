@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/bienvenida'); // o la ruta que quieras
+            return redirect()->intended('/users'); // o la ruta que quieras
         }
 
         return back()->withErrors([
