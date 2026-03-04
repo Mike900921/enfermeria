@@ -1,3 +1,4 @@
+
 @extends('layouts.base')
 
 @section('titulo', 'Consulta de Pacientes')

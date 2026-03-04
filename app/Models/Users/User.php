@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Rol\Roles;
+use App\Models\Atencion\Atencion;
 
 class User extends Authenticatable
 {
@@ -54,5 +55,10 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsTo(Roles::class, 'roles_id');
+    }
+
+    public function atenciones()
+    {
+        return $this->hasMany(Atencion::class, 'usuario_id');
     }
 }

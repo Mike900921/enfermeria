@@ -1,6 +1,9 @@
 <?php
 
+<<<<<<< HEAD
 //namespace App\Models;
+=======
+>>>>>>> 932ecbc6d64266dc6ef4450f0eb9e4d0f30d82a2
 namespace App\Models\Paciente;
 
 use Illuminate\Database\Eloquent\Model;
