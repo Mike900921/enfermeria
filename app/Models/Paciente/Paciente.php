@@ -1,19 +1,19 @@
 <?php
 
-<<<<<<< HEAD
-//namespace App\Models;
-=======
->>>>>>> 932ecbc6d64266dc6ef4450f0eb9e4d0f30d82a2
 namespace App\Models\Paciente;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Atencion\Atencion; // 👈 IMPORTANTE
 
 class Paciente extends Model
 {
-    protected $connection = 'senacdti_seguimientopro'; // Conexión a la base externa
-    protected $table = 'sep_participante'; // Tabla de pacientes
-    protected $primaryKey = 'id'; // Ajusta al nombre del PK si es diferente
-    public $timestamps = false; // si la tabla no tiene created_at/updated_at
+    protected $connection = 'senacdti_seguimientopro';
+    protected $table = 'sep_participante';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
 
-    // Puedes definir un scope o método para traer solo los campos que necesites
+    public function atenciones()
+    {
+        return $this->hasMany(Atencion::class, 'paciente_id');
+    }
 }

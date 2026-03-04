@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AtencionController;
+use App\Http\Controllers\Atenciones\AtencionController;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Consulta\ConsultaController;
@@ -18,7 +18,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
-Route::get('/consultar', [ConsultaController::class, 'index'])->name('consulta.index');
+Route::get('/consulta', [ConsultaController::class, 'index'])->name('consulta.index');
 Route::post('/consulta', [ConsultaController::class, 'buscar'])->name('consulta.buscar');
 
 //rutas del crud de usuarios

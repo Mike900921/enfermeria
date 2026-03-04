@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Users\User;
 use App\Models\Paciente\Paciente;
 
-
 class Atencion extends Model
 {
     use HasFactory;
 
+    protected $connection = 'enfermeria'; // 👈 importante
     protected $table = 'atenciones';
 
     protected $fillable = [

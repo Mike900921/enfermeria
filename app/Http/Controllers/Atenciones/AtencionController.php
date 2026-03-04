@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Atenciones;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Paciente;
-use App\Models\Atencion;
+use App\Models\Paciente\Paciente;
+use App\Models\Atencion\Atencion;
 use Illuminate\Support\Facades\Auth;
 
 class AtencionController extends Controller
@@ -13,20 +14,21 @@ class AtencionController extends Controller
     public function buscarPaciente(Request $request)
     {
         $request->validate([
-            'documento' => 'required'
+            'cedula' => 'required'
         ]);
 
-        $paciente = Paciente::where('documento', $request->documento)->first();
+        $paciente = Paciente::with('atenciones.usuario')
+            ->where('par_identificacion', $request->cedula)
+            ->first();
 
         if (!$paciente) {
             return back()->with('error', 'Paciente no encontrado');
         }
 
-
         return view('atenciones.registrar', compact('paciente'));
     }
 
-    // 💾 Guardar atención
+
     public function store(Request $request)
     {
         $request->validate([
