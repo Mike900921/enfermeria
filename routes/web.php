@@ -1,29 +1,41 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AtencionController;
+use App\Http\Controllers\Atenciones\AtencionController;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Consulta\ConsultaController;
 
+/*
+|--------------------------------------------------------------------------
+| Rutas Públicas (login/logout)
+|--------------------------------------------------------------------------
+*/
 
-
-Route::post('/buscar-paciente', [AtencionController::class, 'buscarPaciente'])->name('buscar.paciente');
-Route::post('/atenciones', [AtencionController::class, 'store'])->name('atenciones.store');
-
-// Rutas de login (fuera de auth)
+// Login
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
+
+// Logout (requiere autenticación)
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
+/*
+|--------------------------------------------------------------------------
+| Rutas protegidas por middleware auth
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
 
-Route::get('/consultar', [ConsultaController::class, 'index'])->name('consulta.index');
-Route::post('/consulta', [ConsultaController::class, 'buscar'])->name('consulta.buscar');
+    // Dashboard / Consulta aprendiz
+    Route::get('/consulta', [ConsultaController::class, 'index'])->name('consulta.index');
+    Route::post('/consulta', [ConsultaController::class, 'buscar'])->name('consulta.buscar');
 
-//rutas del crud de usuarios
-//Route::resource('users', UserController::class)->middleware('auth');
+    // Registro de atenciones
+    Route::get('/registros', [AtencionController::class, 'index'])->name('registros.index');
+    Route::post('/atenciones', [AtencionController::class, 'store'])->name('atenciones.store');
+    Route::post('/buscar-paciente', [AtencionController::class, 'buscarPaciente'])->name('buscar.paciente');
 
-// CRUD completo para usuarios
-Route::resource('users', UserController::class);
-
+    // CRUD de usuarios
+    Route::resource('users', UserController::class);
+});

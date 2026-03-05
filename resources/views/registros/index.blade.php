@@ -4,10 +4,10 @@
     <div class="container">
         <h2>Atenciones Registradas</h2>
 
-        <a href="{{ route('atenciones.create') }}" class="btn btn-primary mb-3">Registrar Nueva Atención</a>
+        <a href="" class="btn btn-primary mb-3">Registrar Nueva Atención</a>
 
-        <table class="table table-bordered">
-            <thead>
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-light">
                 <tr>
                     <th>ID</th>
                     <th>Paciente</th>
@@ -22,7 +22,7 @@
                 @foreach ($atenciones as $atencion)
                     <tr>
                         <td>{{ $atencion->id }}</td>
-                        <td>{{ $atencion->paciente->nombre }}</td>
+                        <td>{{ $atencion->paciente->par_nombre }}</td>
                         <td>{{ $atencion->usuario->name }}</td>
                         <td>{{ $atencion->fecha_hora }}</td>
                         <td>{{ $atencion->motivo }}</td>
@@ -33,6 +33,5 @@
             </tbody>
         </table>
 
-        {{ $atenciones->links() }}
     </div>
 @endsection

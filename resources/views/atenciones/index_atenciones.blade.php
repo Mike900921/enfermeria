@@ -2,7 +2,9 @@
 
 @section('titulo', 'Consulta de Pacientes')
 
-@section('contenido')
+
+@section('content')
+
     <div class="container mt-4">
 
         <div class="card shadow-sm">
@@ -35,8 +37,6 @@
                     <hr>
 
                     @if ($paciente)
-
-                        {{-- DATOS DEL PACIENTE --}}
                         <div class="card mb-3 border-success">
                             <div class="card-header bg-success text-white">
                                 Datos del Paciente
@@ -45,15 +45,15 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <strong>Nombre:</strong><br>
-                                        {{ $paciente->nombre }}
+                                        {{ $paciente->par_nombres ?? '' }} {{ $paciente->par_apellidos ?? '' }}
                                     </div>
                                     <div class="col-md-4">
                                         <strong>Documento:</strong><br>
-                                        {{ $paciente->numero_documento }}
+                                        {{ $paciente->par_identificacion ?? '' }}
                                     </div>
                                     <div class="col-md-4">
                                         <strong>Programa:</strong><br>
-                                        {{ $paciente->programa ?? 'No registrado' }}
+                                        {{ $paciente->par_programa ?? 'No registrado' }}
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,6 @@
                                 Historial de Atenciones
                             </div>
                             <div class="card-body">
-
                                 @if ($paciente->atenciones->count() > 0)
                                     <table class="table table-bordered table-striped">
                                         <thead class="table-dark">
@@ -94,7 +93,6 @@
                                         Este paciente no tiene atenciones registradas.
                                     </div>
                                 @endif
-
                             </div>
                         </div>
                     @else
@@ -102,7 +100,6 @@
                             No se encontró ningún paciente con ese documento.
                         </div>
                     @endif
-
                 @endisset
 
             </div>

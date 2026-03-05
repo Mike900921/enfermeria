@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -38,7 +39,8 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        Cookie::queue(Cookie::forget(Auth::getRecallerName()));
 
-        return redirect()->route('users');
+        return redirect('/login');
     }
 }

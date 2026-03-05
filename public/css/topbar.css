@@ -29,7 +29,10 @@
         width: 250px;
         background: #eee;
         height: calc(100vh - 60px);
-        transition: 0.3s;
+    }
+
+    .sidebar.toggle-transition {
+        transition: width 0.3s;
     }
 
     /* oculto */
@@ -62,4 +65,37 @@
         justify-content: center;
         align-items: center;
         gap: 1rem;
+    }
+
+    .sidebar.closed {
+        width: 50px;
+        /* mini sidebar */
+    }
+
+    .sidebar.closed .sidebar-text {
+        display: none;
+        /* ocultamos el texto */
+    }
+
+    /* Botón de logout igual que links */
+    .logout-btn {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 0.5rem 0.75rem;
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+    }
+
+    .logout-btn:hover {
+        background-color: #dcdcdc;
+        border-radius: 5px;
+    }
+
+    /* Sidebar colapsado: solo icono */
+    .sidebar.closed .sidebar-text {
+        display: none;
     }
