@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Consulta;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\paciente\Paciente;
+use App\Models\Paciente\Paciente;
 
 class ConsultaController extends Controller
 {

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Paciente;
-use App\Models\Atencion;
+use App\Models\Paciente\Paciente;
+use App\Models\Atencion\Atencion;
 use Illuminate\Support\Facades\Auth;
 
 class AtencionController extends Controller
