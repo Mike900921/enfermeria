@@ -70,7 +70,7 @@
                 @csrf
                 <button type="submit" class="nav-link text-dark d-flex align-items-center logout-btn" title="logout">
                     <i class="bi bi-door-closed me-2 m-lg-1"></i>
-                    <span class="sidebar-text">Cerrar sesión</span>
+                    <span class="sidebar-text">logout</span>
                 </button>
             </form>
         </aside>

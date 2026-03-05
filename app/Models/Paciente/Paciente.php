@@ -4,6 +4,7 @@ namespace App\Models\Paciente;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Atencion\Atencion; // 👈 IMPORTANTE
+use App\Models\Paciente\AcudientePaciente; // 👈 IMPORTANTE
 
 class Paciente extends Model
 {
@@ -15,5 +16,10 @@ class Paciente extends Model
     public function atenciones()
     {
         return $this->hasMany(Atencion::class, 'paciente_id');
+    }
+
+    public function acudiente()
+    {
+        return $this->hasOne(AcudientePaciente::class, 'participante_id');
     }
 }

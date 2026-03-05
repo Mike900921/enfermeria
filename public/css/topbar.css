@@ -58,6 +58,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
     }
 
     .topbar .menu {
@@ -87,7 +88,6 @@
         cursor: pointer;
         display: flex;
         align-items: center;
-
     }
 
     .logout-btn:hover {
@@ -98,4 +98,6 @@
     /* Sidebar colapsado: solo icono */
     .sidebar.closed .sidebar-text {
         display: none;
+
+
     }
