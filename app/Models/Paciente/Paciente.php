@@ -10,7 +10,7 @@ class Paciente extends Model
 {
     protected $connection = 'senacdti_seguimientopro';
     protected $table = 'sep_participante';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'par_identificacion';
     public $timestamps = false;
 
     public function atenciones()
