@@ -10,4 +10,9 @@ class AcudientePaciente extends Model
     protected $table = 'sep_acudiente_participante';
     protected $primaryKey = 'id';
     public $timestamps = false;
+
+    public function paciente()
+    {
+        return $this->belongsTo(Paciente::class, 'par_identificacion_apr', 'par_identificacion');
+    }
 }

@@ -20,6 +20,6 @@ class Paciente extends Model
 
     public function acudiente()
     {
-        return $this->hasOne(AcudientePaciente::class, 'participante_id');
+        return $this->hasOne(AcudientePaciente::class, 'par_identificacion_apr', 'par_identificacion');
     }
 }

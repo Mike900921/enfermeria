@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Atenciones;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Paciente\Paciente;
+use App\Models\Paciente\AcudientePaciente;
 use App\Models\Atencion\Atencion;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,9 +14,12 @@ class AtencionController extends Controller
 
     public function index()
     {
-        $atenciones = Atencion::with('paciente', 'usuario')->get();
-        $paciente = Paciente::all();
-        return view('registros.index', compact('atenciones', 'paciente'));
+        $atenciones = Atencion::with([
+            'paciente.acudiente',
+            'usuario'
+        ])->get();
+
+        return view('registros.index', compact('atenciones'));
     }
 
     // 🔎 Buscar paciente por documento

@@ -52,6 +52,12 @@
                                 {{ $atencion->paciente->par_apellido }}</p>
                             <p><strong>Teléfono:</strong> {{ $atencion->paciente->par_telefono }}</p>
                             <p><strong>Correo:</strong> {{ $atencion->paciente->par_correo }}</p>
+                            <p><strong>Acudiente:</strong>
+                                {{ $atencion->paciente->acudiente->par_acu_nombre ?? 'No tiene acudiente' }}</p>
+                            <p><strong>Tel Acudiente:</strong>
+                                {{ $atencion->paciente->acudiente->par_acu_tel ?? 'No registrado' }}</p>
+                            <p><strong>Parentesco:</strong>
+                                {{ $atencion->paciente->acudiente->par_acu_parentesco ?? 'No registrado' }}</p>
                             <p><strong>Fecha de creacion:</strong> {{ $atencion->paciente->created_at }}</p>
                             <p><strong>Fecha ultima edicion:</strong> {{ $atencion->paciente->updated_at }}</p>
                         </div>
