@@ -9,15 +9,44 @@ use App\Models\Paciente\AcudientePaciente;
 use App\Models\Atencion\Atencion;
 use Illuminate\Support\Facades\Auth;
 
+
 class AtencionController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        $query = $request->input('query');
+        $fecha_inicio = $request->input('fecha_inicio');
+        $fecha_fin = $request->input('fecha_fin');
+
         $atenciones = Atencion::with([
             'paciente.acudiente',
             'usuario'
-        ])->get();
+        ])
+
+            ->when($query, function ($q) use ($query) {
+                $q->whereHas('usuario', function ($q2) use ($query) {
+                    $q2->where('name', 'like', "%{$query}%");
+                })
+                    ->orWhereHas('paciente', function ($q3) use ($query) {
+                        $q3->where('par_nombres', 'like', "%{$query}%");
+                    });
+            })
+
+            ->when($fecha_inicio, function ($q) use ($fecha_inicio) {
+                $q->whereDate('fecha_hora', '>=', $fecha_inicio);
+            })
+
+            ->when($fecha_fin, function ($q) use ($fecha_fin) {
+                $q->whereDate('fecha_hora', '<=', $fecha_fin);
+            })
+
+            ->latest()
+            ->get();
+
+        if ($request->ajax()) {
+            return view('registros.partials.tablaRegistro', compact('atenciones'))->render();
+        }
 
         return view('registros.index', compact('atenciones'));
     }

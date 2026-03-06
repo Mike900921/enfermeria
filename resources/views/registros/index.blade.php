@@ -4,36 +4,23 @@
     <div class="container">
         <h2>Atenciones Registradas</h2>
 
-        <a href="" class="btn btn-primary mb-3">Registrar Nueva Atención</a>
+        <div class="d-flex mb-2">
+            <input id="fecha_inicio" type="date" class="form-control me-2" placeholder="Fecha inicio">
+            <input id="fecha_fin" type="date" class="form-control me-2" placeholder="Fecha fin">
+            <input id="input-busqueda" class="form-control me-2" placeholder="Buscar Paciente..." />
+            <button id="btn-buscar" class="btn btn-outline-success" type="submit">Buscar</button>
+        </div>
 
-        <table class="table table-striped table-hover align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>ID</th>
-                    <th>Paciente</th>
-                    <th>Usuario</th>
-                    <th>Fecha y Hora</th>
-                    <th>Motivo</th>
-                    <th>Procedimientos</th>
-                    <th>Observaciones</th>
-                    <th>Accion</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($atenciones as $atencion)
-                    <tr>
-                        <td>{{ $atencion->id }}</td>
-                        <td>{{ $atencion->paciente->par_nombre }}</td>
-                        <td>{{ $atencion->usuario->name }}</td>
-                        <td>{{ $atencion->fecha_hora }}</td>
-                        <td>{{ $atencion->motivo }}</td>
-                        <td>{{ $atencion->procedimientos }}</td>
-                        <td>{{ $atencion->observaciones }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div id="tabla-pacientes" class="mt-5">
+            @include('registros.partials.tablaRegistro')
+        </div>
     </div>
+
+    <script>
+        const URL_REGISTROS = "{{ route('registros.index') }}";
+    </script>
+
+    <script src="{{ asset('js/BuscadorRegistro.js') }}"></script>
 
     <!-- Modal de Detalle del Paciente -->
     @foreach ($atenciones as $atencion)
