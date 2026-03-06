@@ -36,6 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/atenciones', [AtencionController::class, 'store'])->name('atenciones.store');
     Route::post('/buscar-paciente', [AtencionController::class, 'buscarPaciente'])->name('buscar.paciente');
 
+
+
+    Route::get('/atenciones/create', [AtencionController::class, 'create'])->name('atenciones.create');
+    Route::post('/atenciones/store', [AtencionController::class, 'store'])->name('atenciones.store');
     // CRUD de usuarios
     Route::resource('users', UserController::class);
 });

@@ -18,6 +18,12 @@ class AtencionController extends Controller
         return view('registros.index', compact('atenciones', 'paciente'));
     }
 
+    public function create()
+    {
+        $pacientes = Paciente::all();
+        return view('atenciones.create_atenciones', compact('pacientes'));
+    }
+
     // 🔎 Buscar paciente por documento
     public function buscarPaciente(Request $request)
     {

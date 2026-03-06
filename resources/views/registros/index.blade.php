@@ -23,7 +23,7 @@
                 @foreach ($atenciones as $atencion)
                     <tr>
                         <td>{{ $atencion->id }}</td>
-                        <td>{{ $atencion->paciente->par_nombre }}</td>
+                        <td>{{ $atencion->paciente->par_nombres }}</td>
                         <td>{{ $atencion->usuario->name }}</td>
                         <td>{{ $atencion->fecha_hora }}</td>
                         <td>{{ $atencion->motivo }}</td>
