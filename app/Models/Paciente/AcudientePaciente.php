@@ -3,6 +3,7 @@
 namespace App\Models\Paciente;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Atencion\Atencion;
 
 class AcudientePaciente extends Model
 {

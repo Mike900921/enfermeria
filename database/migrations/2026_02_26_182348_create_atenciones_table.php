@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Relación con el personal de enfermería
-            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('usuario_id')->references('user_id')->on('users')->onDelete('cascade');
         });
     }
 

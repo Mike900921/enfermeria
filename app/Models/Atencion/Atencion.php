@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Users\User;
 use App\Models\Paciente\Paciente;
+use App\Models\Paciente\AcudientePaciente;
 
 class Atencion extends Model
 {

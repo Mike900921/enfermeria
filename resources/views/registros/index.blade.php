@@ -11,16 +11,21 @@
             <button id="btn-buscar" class="btn btn-outline-success" type="submit">Buscar</button>
         </div>
 
+        <a id="btn-excel" href="{{ route('atenciones.export') }}" class="btn btn-success ms-2">
+            <i class="bi bi-file-earmark-excel"></i> Descargar Excel
+        </a>
+
         <div id="tabla-pacientes" class="mt-5">
             @include('registros.partials.tablaRegistro')
         </div>
     </div>
 
+    <script src="{{ asset('js/BuscadorRegistro.js') }}"></script>
     <script>
         const URL_REGISTROS = "{{ route('registros.index') }}";
+        const URL_EXCEL = "{{ route('atenciones.export') }}";
     </script>
 
-    <script src="{{ asset('js/BuscadorRegistro.js') }}"></script>
 
     <!-- Modal de Detalle del Paciente -->
     @foreach ($atenciones as $atencion)
