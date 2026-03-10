@@ -11,7 +11,8 @@ return new class extends Migration
         Schema::create('atenciones', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('paciente_id'); // ID del paciente en sep_participante
-            $table->unsignedBigInteger('usuario_id');  // ID del personal de enfermería
+            $table->unsignedBigInteger('users_id');  // ID del personal de enfermería
+            $table->unsignedBigInteger('ficha_id'); //ID de la ficha
             $table->dateTime('fecha_hora');
             $table->string('motivo');
             $table->text('procedimientos')->nullable();
@@ -28,3 +29,4 @@ return new class extends Migration
         Schema::dropIfExists('atenciones');
     }
 };
+

@@ -5,8 +5,13 @@ use App\Http\Controllers\Atenciones\AtencionController;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Consulta\ConsultaController;
+
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\PacienteExport;
+
+use App\Http\Controllers\Estadisticas\EstadisticaController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,4 +56,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/atenciones/export', [AtencionController::class, 'export'])
         ->name('atenciones.export');
+
+    //estadisticas
+    Route::get('/estadisticas', [EstadisticaController::class, 'index'])->name('estadisticas.index');
 });

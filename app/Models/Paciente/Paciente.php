@@ -5,6 +5,7 @@ namespace App\Models\Paciente;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Atencion\Atencion; // 👈 IMPORTANTE
 use App\Models\Paciente\AcudientePaciente; // 👈 IMPORTANTE
+use App\Models\Paciente\Programa;
 
 class Paciente extends Model
 {

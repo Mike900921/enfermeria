@@ -25,6 +25,8 @@ class Atencion extends Model
         'observaciones',
     ];
 
+    
+
     public function usuario()
     {
         return $this->belongsTo(User::class, 'usuario_id');

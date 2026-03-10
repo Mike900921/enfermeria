@@ -60,6 +60,12 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('estadisticas.index') }}" title="Encuesta">
+                        <i class="bi bi-bar-chart  me-2"></i>
+                        <span class="sidebar-text">Estadistica</span>
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
                     <a class="nav-link text-dark d-flex align-items-center" href="#" title="About">
                         <i class="bi bi-info-circle me-2"></i>
                         <span class="sidebar-text">About</span>
@@ -79,7 +85,7 @@
         @yield('content')
     </div>
 
-    <script src="{{ asset('js/topbar.js') }}"></script>
 </body>
+
 
 </html>
