@@ -75,7 +75,7 @@ class AtencionController extends Controller
             ->orderBy('fecha_hora', 'desc')
             ->get();
 
-        return Excel::download(new PacienteExport($atenciones), 'pacientes.xlsx');
+        return Excel::download(new PacienteExport($atenciones), 'pacientes.xlsx');// eroor
     }
 
 
@@ -118,7 +118,7 @@ class AtencionController extends Controller
         $data['user_id'] = Auth::id();
         $paciente = Paciente::find($request->paciente_id);
 
-        Atencion::create($data);
+        Atencion::create($data);//jhfyfsf
 
         return redirect()->route('registros.index')->with('success', "El paciente {$paciente->par_nombres} {$paciente->par_apellidos} registrado correctamente");
     }
