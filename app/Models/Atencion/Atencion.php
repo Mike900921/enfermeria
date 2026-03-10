@@ -18,18 +18,19 @@ class Atencion extends Model
 
     protected $fillable = [
         'paciente_id',
-        'usuario_id',
+        'user_id',
+        'ficha_id',
         'fecha_hora',
         'motivo',
         'procedimientos',
         'observaciones',
     ];
 
-    
+
 
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'usuario_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function paciente()

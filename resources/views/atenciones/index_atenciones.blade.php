@@ -43,19 +43,24 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <strong>Nombre:</strong><br>
                                         {{ $paciente->par_nombres ?? '' }} {{ $paciente->par_apellidos ?? '' }}
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <strong>Documento:</strong><br>
                                         {{ $paciente->par_identificacion ?? '' }}
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <strong>Programa:</strong><br>
                                         {{ $paciente->par_programa ?? 'No registrado' }}
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
+                                        <strong>Ficha:</strong><br>
+                                        {{ $paciente->ficha->fic_numero ?? 'No registrado' }}
+                                    </div>
+
+                                    <div class="col-12 mt-3">
                                         <button class="btn btn-success mt-4" title="Registrar nueva atención"
                                             data-bs-toggle="modal"
                                             data-bs-target="#modalCreateAtencion{{ $paciente->par_identificacion }}">
@@ -128,23 +133,29 @@
                                         <!-- DATOS DEL PACIENTE (NO EDITABLES) -->
                                         <div class="row mb-3">
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <label class="form-label"><strong>Nombre</strong></label>
                                                 <input type="text" class="form-control"
                                                     value="{{ $paciente->par_nombres ?? '' }} {{ $paciente->par_apellidos ?? '' }}"
                                                     readonly>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <label class="form-label"><strong>Documento</strong></label>
                                                 <input name="paciente_id" type="text" class="form-control"
                                                     value="{{ $paciente->par_identificacion ?? '' }}" readonly>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <label class="form-label"><strong>Programa</strong></label>
                                                 <input type="text" class="form-control"
                                                     value="{{ $paciente->par_programa ?? 'No registrado' }}" readonly>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label class="form-label"><strong>Ficha</strong></label>
+                                                <input name="ficha_id" type="text" class="form-control"
+                                                    value="{{ $paciente->ficha->fic_numero ?? 'No registrado' }}" readonly>
                                             </div>
 
                                         </div>
@@ -194,7 +205,5 @@
             </div>
         </div>
     </div>
-
-
 
 @endsection

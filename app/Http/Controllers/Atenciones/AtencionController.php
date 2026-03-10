@@ -24,7 +24,7 @@ class AtencionController extends Controller
         $atenciones = Atencion::with(['paciente.acudiente', 'usuario'])
 
             ->leftJoin('senacdti_seguimientopro.sep_participante as p', 'atenciones.paciente_id', '=', 'p.par_identificacion')
-            ->leftJoin('users as u', 'atenciones.usuario_id', '=', 'u.id')
+            ->leftJoin('users as u', 'atenciones.user_id', '=', 'u.id')
 
             ->when($query, function ($q) use ($query) {
                 $q->where('u.name', 'like', "%{$query}%")
@@ -61,7 +61,7 @@ class AtencionController extends Controller
 
         $atenciones = Atencion::with(['paciente.acudiente', 'usuario'])
             ->leftJoin('senacdti_seguimientopro.sep_participante as p', 'atenciones.paciente_id', '=', 'p.par_identificacion')
-            ->leftJoin('users as u', 'atenciones.usuario_id', '=', 'u.id')
+            ->leftJoin('users as u', 'atenciones.user_id', '=', 'u.id')
             ->when($query, function ($q) use ($query) {
                 $q->where(function ($sub) use ($query) {
                     $sub->where('u.name', 'like', "%{$query}%")
@@ -109,12 +109,13 @@ class AtencionController extends Controller
         $data = $request->validate([
             'paciente_id' => 'required',
             'motivo' => 'required',
+            'ficha_id' => 'required',
             'fecha_hora' => 'required',
             'procedimientos' => 'nullable',
             'observaciones' => 'nullable'
         ]);
 
-        $data['usuario_id'] = Auth::id();
+        $data['user_id'] = Auth::id();
         $paciente = Paciente::find($request->paciente_id);
 
         Atencion::create($data);
