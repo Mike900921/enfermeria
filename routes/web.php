@@ -5,6 +5,8 @@ use App\Http\Controllers\Atenciones\AtencionController;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Consulta\ConsultaController;
+use App\Http\Controllers\Estadisticas\EstadisticaController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +40,7 @@ Route::middleware('auth')->group(function () {
 
     // CRUD de usuarios
     Route::resource('users', UserController::class);
+
+    //estadisticas
+    Route::get('/estadisticas', [EstadisticaController::class, 'index'])->name('estadisticas.index');
 });
