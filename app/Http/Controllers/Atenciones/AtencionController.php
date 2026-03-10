@@ -106,21 +106,19 @@ class AtencionController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'paciente_id' => 'required',
             'motivo' => 'required',
-            'fecha_hora' => 'required'
+            'fecha_hora' => 'required',
+            'procedimientos' => 'nullable',
+            'observaciones' => 'nullable'
         ]);
 
-        Atencion::create([
-            'paciente_id' => $request->paciente_id,
-            'usuario_id' => Auth::id(),
-            'fecha_hora'  => $request->fecha_hora,
-            'motivo'      => $request->motivo,
-            'procedimientos' => $request->procedimientos,
-            'observaciones'  => $request->observaciones,
-        ]);
+        $data['usuario_id'] = Auth::id();
+        $paciente = Paciente::find($request->paciente_id);
 
-        return redirect()->back()->with('success', 'Atención registrada correctamente');
+        Atencion::create($data);
+
+        return redirect()->route('registros.index')->with('success', "El paciente {$paciente->par_nombres} {$paciente->par_apellidos} registrado correctamente");
     }
 }

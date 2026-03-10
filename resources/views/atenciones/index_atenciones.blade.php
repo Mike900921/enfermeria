@@ -55,8 +55,16 @@
                                         <strong>Programa:</strong><br>
                                         {{ $paciente->par_programa ?? 'No registrado' }}
                                     </div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-success mt-4" title="Registrar nueva atención"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalCreateAtencion{{ $paciente->par_identificacion }}">
+                                            Registrar Nueva Atención
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
 
                         {{-- HISTORIAL DE ATENCIONES --}}
@@ -100,9 +108,93 @@
                             No se encontró ningún paciente con ese documento.
                         </div>
                     @endif
-                @endisset
 
+                    <!-- Modal para registrar nueva atención - OJO tiene que ir dentro del if paciente--->
+                    <div class="modal fade" id="modalCreateAtencion{{ $paciente->par_identificacion }}"tabindex="-1"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-header" style="background-color: #007832;">
+                                    <h5 class="modal-title text-light">Registrar Nueva Atención</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <form action="{{ route('atenciones.store') }}" method="POST">
+                                    @csrf
+
+                                    <div class="modal-body">
+
+                                        <!-- DATOS DEL PACIENTE (NO EDITABLES) -->
+                                        <div class="row mb-3">
+
+                                            <div class="col-md-4">
+                                                <label class="form-label"><strong>Nombre</strong></label>
+                                                <input type="text" class="form-control"
+                                                    value="{{ $paciente->par_nombres ?? '' }} {{ $paciente->par_apellidos ?? '' }}"
+                                                    readonly>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label class="form-label"><strong>Documento</strong></label>
+                                                <input name="paciente_id" type="text" class="form-control"
+                                                    value="{{ $paciente->par_identificacion ?? '' }}" readonly>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label class="form-label"><strong>Programa</strong></label>
+                                                <input type="text" class="form-control"
+                                                    value="{{ $paciente->par_programa ?? 'No registrado' }}" readonly>
+                                            </div>
+
+                                        </div>
+
+
+                                        <hr>
+
+                                        <!-- CAMPOS EDITABLES -->
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Fecha y Hora</label>
+                                            <input type="datetime-local" name="fecha_hora"
+                                                value="{{ now()->format('Y-m-d\TH:i') }}" class="form-control" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Motivo</label>
+                                            <textarea name="motivo" class="form-control" required></textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Procedimientos</label>
+                                            <textarea name="procedimientos" class="form-control"></textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Observaciones</label>
+                                            <textarea name="observaciones" class="form-control"></textarea>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
+
+                                        <button type="submit" class="btn btn-primary">
+                                            Registrar Atención
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endisset
             </div>
         </div>
     </div>
+
+
+
 @endsection

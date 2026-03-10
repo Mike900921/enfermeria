@@ -62,6 +62,11 @@ $(document).ready(function () {
         console.log(url); // 👈 mira esto en la consola
 
         $('#btn-excel').attr('href', url);
+
+        // Limpia los inputs
+        $('#input-busqueda').val('');
+        $('#fecha_inicio').val('');
+        $('#fecha_fin').val('');
     }
 
 });

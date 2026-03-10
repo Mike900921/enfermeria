@@ -4,6 +4,12 @@
     <div class="container">
         <h2>Atenciones Registradas</h2>
 
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="d-flex mb-2">
             <input id="fecha_inicio" type="date" class="form-control me-2" placeholder="Fecha inicio">
             <input id="fecha_fin" type="date" class="form-control me-2" placeholder="Fecha fin">
@@ -43,16 +49,14 @@
                         <div class="card-body">
                             <p><strong>Nombre y apellido:</strong> {{ $atencion->paciente->par_nombres }}
                                 {{ $atencion->paciente->par_apellidos }}</p>
-                            <p><strong>Teléfono:</strong> {{ $atencion->paciente->par_telefono }}</p>
-                            <p><strong>Correo:</strong> {{ $atencion->paciente->par_correo }}</p>
+                            <p><strong>Teléfono:</strong> {{ $atencion->paciente->par_telefono ?? 'No registrado' }}</p>
+                            <p><strong>Correo:</strong> {{ $atencion->paciente->par_correo ?? 'No registrado' }}</p>
                             <p><strong>Acudiente:</strong>
                                 {{ $atencion->paciente->acudiente->par_acu_nombre ?? 'No registrado' }}</p>
                             <p><strong>Tel Acudiente:</strong>
                                 {{ $atencion->paciente->acudiente->par_acu_tel ?? 'No registrado' }}</p>
                             <p><strong>Parentesco:</strong>
                                 {{ $atencion->paciente->acudiente->par_acu_parentesco ?? 'No registrado' }}</p>
-                            <p><strong>Fecha de creacion:</strong> {{ $atencion->paciente->created_at }}</p>
-                            <p><strong>Fecha ultima edicion:</strong> {{ $atencion->paciente->updated_at }}</p>
                         </div>
                     </div>
                     <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cerrar</button>
