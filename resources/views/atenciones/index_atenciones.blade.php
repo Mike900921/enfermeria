@@ -72,7 +72,7 @@
 
                         </div>
 
-                        {{-- HISTORIAL DE ATENCIONES --}}
+                        {{-- HISTORIAL DE ATENCIONESese --}}
                         <div class="card border-primary">
                             <div class="card-header bg-primary text-white">
                                 Historial de Atenciones
