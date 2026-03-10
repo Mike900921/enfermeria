@@ -5,7 +5,12 @@ use App\Http\Controllers\Atenciones\AtencionController;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Consulta\ConsultaController;
+
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PacienteExport;
+
 use App\Http\Controllers\Estadisticas\EstadisticaController;
+
 
 
 /*
@@ -33,13 +38,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/consulta', [ConsultaController::class, 'index'])->name('consulta.index');
     Route::post('/consulta', [ConsultaController::class, 'buscar'])->name('consulta.buscar');
 
-    // Registro de atenciones
+    // Registro de atenciones tabla
     Route::get('/registros', [AtencionController::class, 'index'])->name('registros.index');
     Route::post('/atenciones', [AtencionController::class, 'store'])->name('atenciones.store');
     Route::post('/buscar-paciente', [AtencionController::class, 'buscarPaciente'])->name('buscar.paciente');
 
+
+
+    Route::get('/atenciones/create', [AtencionController::class, 'create'])->name('atenciones.create');
+    Route::post('/atenciones/store', [AtencionController::class, 'store'])->name('atenciones.store');
     // CRUD de usuarios
     Route::resource('users', UserController::class);
+
+
+    //RUTA BOTON PARA EXPORTAR PACIENTE A EXCEL
+    //Route::get('/atenciones/export', function () { return Excel::download(new PacienteExport, 'Pacientes.xlsx');})->name('atenciones.export');
+
+    Route::get('/atenciones/export', [AtencionController::class, 'export'])
+        ->name('atenciones.export');
 
     //estadisticas
     Route::get('/estadisticas', [EstadisticaController::class, 'index'])->name('estadisticas.index');
