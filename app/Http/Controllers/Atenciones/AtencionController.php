@@ -8,6 +8,8 @@ use App\Models\Paciente\Paciente;
 use App\Models\Paciente\AcudientePaciente;
 use App\Models\Atencion\Atencion;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\PacienteExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class AtencionController extends Controller
@@ -49,6 +51,33 @@ class AtencionController extends Controller
 
         return view('registros.index', compact('atenciones'));
     }
+
+    // Método para exportar a Excel
+    public function export(Request $request)
+    {
+        $query = $request->input('query');
+        $fecha_inicio = $request->input('fecha_inicio');
+        $fecha_fin = $request->input('fecha_fin');
+
+        $atenciones = Atencion::with(['paciente.acudiente', 'usuario'])
+            ->leftJoin('senacdti_seguimientopro.sep_participante as p', 'atenciones.paciente_id', '=', 'p.par_identificacion')
+            ->leftJoin('users as u', 'atenciones.usuario_id', '=', 'u.id')
+            ->when($query, function ($q) use ($query) {
+                $q->where(function ($sub) use ($query) {
+                    $sub->where('u.name', 'like', "%{$query}%")
+                        ->orWhere('p.par_identificacion', 'like', "%{$query}%")
+                        ->orWhere('p.par_nombres', 'like', "%{$query}%");
+                });
+            })
+            ->when($fecha_inicio, fn($q) => $q->whereDate('fecha_hora', '>=', $fecha_inicio))
+            ->when($fecha_fin, fn($q) => $q->whereDate('fecha_hora', '<=', $fecha_fin))
+            ->select('atenciones.*')
+            ->orderBy('fecha_hora', 'desc')
+            ->get();
+
+        return Excel::download(new PacienteExport($atenciones), 'pacientes.xlsx');
+    }
+
 
     public function create()
     {

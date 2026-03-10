@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/consulta', [ConsultaController::class, 'index'])->name('consulta.index');
     Route::post('/consulta', [ConsultaController::class, 'buscar'])->name('consulta.buscar');
 
-    // Registro de atenciones
+    // Registro de atenciones tabla
     Route::get('/registros', [AtencionController::class, 'index'])->name('registros.index');
     Route::post('/atenciones', [AtencionController::class, 'store'])->name('atenciones.store');
     Route::post('/buscar-paciente', [AtencionController::class, 'buscarPaciente'])->name('buscar.paciente');
@@ -47,7 +47,8 @@ Route::middleware('auth')->group(function () {
 
 
     //RUTA BOTON PARA EXPORTAR PACIENTE A EXCEL
-    Route::get('/atenciones/export', function () {
-        return Excel::download(new PacienteExport, 'Pacientes.xlsx');
-    })->name('atenciones.export');
+    //Route::get('/atenciones/export', function () { return Excel::download(new PacienteExport, 'Pacientes.xlsx');})->name('atenciones.export');
+
+    Route::get('/atenciones/export', [AtencionController::class, 'export'])
+        ->name('atenciones.export');
 });

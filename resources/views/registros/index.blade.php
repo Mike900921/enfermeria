@@ -20,11 +20,12 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/BuscadorRegistro.js') }}"></script>
+
     <script>
         const URL_REGISTROS = "{{ route('registros.index') }}";
         const URL_EXCEL = "{{ route('atenciones.export') }}";
     </script>
+    <script src="{{ asset('js/BuscadorRegistro.js') }}"></script>
 
 
     <!-- Modal de Detalle del Paciente -->
@@ -35,17 +36,17 @@
             aria-labelledby="modalShowLabel{{ $atencion->id }}" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-color: #450000;">
+                    <div class="modal-header" style="background-color: #007832;">
                         <h3 class="modal-title text-light">Detalle del Paciente</h3>
                     </div>
                     <div class="card p-3">
                         <div class="card-body">
-                            <p><strong>Nombre y apellido:</strong> {{ $atencion->paciente->par_nombre }}
-                                {{ $atencion->paciente->par_apellido }}</p>
+                            <p><strong>Nombre y apellido:</strong> {{ $atencion->paciente->par_nombres }}
+                                {{ $atencion->paciente->par_apellidos }}</p>
                             <p><strong>Teléfono:</strong> {{ $atencion->paciente->par_telefono }}</p>
                             <p><strong>Correo:</strong> {{ $atencion->paciente->par_correo }}</p>
                             <p><strong>Acudiente:</strong>
-                                {{ $atencion->paciente->acudiente->par_acu_nombre ?? 'No tiene acudiente' }}</p>
+                                {{ $atencion->paciente->acudiente->par_acu_nombre ?? 'No registrado' }}</p>
                             <p><strong>Tel Acudiente:</strong>
                                 {{ $atencion->paciente->acudiente->par_acu_tel ?? 'No registrado' }}</p>
                             <p><strong>Parentesco:</strong>

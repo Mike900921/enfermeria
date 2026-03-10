@@ -12,39 +12,53 @@ class PacienteExport implements FromCollection, WithMapping, WithHeadings
     /**
      * @return \Illuminate\Support\Collection
      */
+    protected $atenciones;
 
+    public function __construct($atenciones)
+    {
+        $this->atenciones = $atenciones;
+    }
 
     public function collection()
     {
-        return Atencion::with(['paciente.acudiente', 'usuario'])->get();
+        return $this->atenciones;
     }
+
     public function map($atencion): array
     {
+        $acudiente = optional($atencion->acudiente);
+
         return [
-            $atencion->paciente->acudiente->par_acu_nombre ?? 'N/A',
-            $atencion->paciente->acudiente->par_acu_tel ?? 'N/A',
-            $atencion->paciente->acudiente->par_acu_parentesco ?? 'N/A',
-            $atencion->paciente->par_identificacion,
-            $atencion->paciente->par_nombres,
-            $atencion->paciente->par_apellidos,
-            $atencion->paciente->par_telefono,
+            $atencion->paciente->par_identificacion ?? 'N/A',
+            $atencion->paciente->par_nombres ?? 'N/A',
+            $atencion->paciente->par_apellidos ?? 'N/A',
+            $atencion->paciente->par_telefono ?? 'N/A',
             $atencion->fecha_hora,
+            $atencion->motivo,
+            $atencion->procedimientos,
+            $atencion->observaciones,
             $atencion->usuario ? $atencion->usuario->name : 'N/A',
+            $acudiente->par_acu_nombre ?? 'No registrado',
+            $acudiente->par_acu_tel ?? 'No registrado',
+            $acudiente->par_acu_parentesco ?? 'No registrado',
         ];
     }
 
     public function headings(): array
     {
         return [
-            'Nombres Acudiente',
-            'Teléfono Acudiente',
-            'Parentesco Acudiente',
             'Identificación Paciente',
             'Nombres Paciente',
             'Apellidos Paciente',
             'Teléfono Paciente',
             'Fecha y Hora Atención',
+            'Motivo',
+            'Procedimientos',
+            'Observaciones',
             'Usuario Responsable',
+            'Nombre Acudiente',
+            'Teléfono Acudiente',
+            'Parentesco Acudiente',
         ];
     }
 }

@@ -31,8 +31,7 @@ $(document).ready(function () {
             success: function (data) {
                 $('#tabla-pacientes').html(data);
             },
-            error: function (xhr) {
-                console.log(xhr.responseText);
+            error: function () {
                 $('#tabla-pacientes').html(
                     '<div class="text-danger text-center p-3">Error al cargar los datos.</div>'
                 );
@@ -42,22 +41,25 @@ $(document).ready(function () {
 
     function actualizarLinkExcel() {
 
-        let url = URL_EXPORT_EXCEL;
+        let url = URL_EXCEL;
 
+        let query = $('#input-busqueda').val();
         let fecha_inicio = $('#fecha_inicio').val();
         let fecha_fin = $('#fecha_fin').val();
 
-        if (currentQuery.trim() !== '') {
-            url += '?query=' + encodeURIComponent(currentQuery);
+        if (query) {
+            url += '?query=' + encodeURIComponent(query);
         }
 
         if (fecha_inicio) {
-            url += (url.includes('?') ? '&' : '?') + 'fecha_inicio=' + encodeURIComponent(fecha_inicio);
+            url += (url.includes('?') ? '&' : '?') + 'fecha_inicio=' + fecha_inicio;
         }
 
         if (fecha_fin) {
-            url += (url.includes('?') ? '&' : '?') + 'fecha_fin=' + encodeURIComponent(fecha_fin);
+            url += (url.includes('?') ? '&' : '?') + 'fecha_fin=' + fecha_fin;
         }
+
+        console.log(url); // 👈 mira esto en la consola
 
         $('#btn-excel').attr('href', url);
     }
