@@ -20,6 +20,7 @@ class Atencion extends Model
         'usuario_id',
         'fecha_hora',
         'motivo',
+        'ficha_id',
         'procedimientos',
         'observaciones',
     ];
