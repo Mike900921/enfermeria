@@ -60,7 +60,8 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('estadisticas.index') }}" title="Encuesta">
+                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('estadisticas.index') }}"
+                        title="Estadistica">
                         <i class="bi bi-bar-chart  me-2"></i>
                         <span class="sidebar-text">Estadistica</span>
                     </a>
@@ -84,7 +85,7 @@
         </aside>
         @yield('content')
     </div>
-
+    <script src="{{ asset('js/topbar.js') }}"></script>
 </body>
 
 

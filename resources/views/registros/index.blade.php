@@ -57,6 +57,11 @@
                                 {{ $atencion->paciente->acudiente->par_acu_tel ?? 'No registrado' }}</p>
                             <p><strong>Parentesco:</strong>
                                 {{ $atencion->paciente->acudiente->par_acu_parentesco ?? 'No registrado' }}</p>
+                            <p><strong>Ficha:</strong>
+                                {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}</p>
+                            <p><strong>Programa:</strong>
+                                {{ $atencion->paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}</p>
+
                         </div>
                     </div>
                     <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cerrar</button>

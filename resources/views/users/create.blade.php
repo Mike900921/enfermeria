@@ -35,13 +35,13 @@
                 <label>Email</label>
                 <input type="email" name="email" class="form-control" required>
             </div>
-            
+
             <div class="mb-3">
                 <label>Rol</label>
-                <select name="role_id" class="form-control">
+                <select name="roles_id" class="form-control">
                     @foreach ($roles as $role)
                         <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
-                            {{ $role->name }}
+                            {{ $role->nombre_rol }}
                         </option>
                     @endforeach
                 </select>
@@ -57,13 +57,6 @@
                 <input type="password" name="password_confirmation" class="form-control" required>
             </div>
 
-            <div class="mb-3">
-                <label>Rol</label>
-                <select name="roles_id" class="form-control">
-                    <option value="1">Administrador</option>
-                    <option value="2">Enfermería</option>
-                </select>
-            </div>
 
             <button class="btn btn-success">Guardar</button>
             <a href="{{ route('users.index') }}" class="btn btn-secondary">

@@ -24,11 +24,14 @@
         margin-top: 60px;
     }
 
+
     /* MENU */
     .sidebar {
+
         width: 250px;
         background: #eee;
         height: calc(100vh - 60px);
+
     }
 
     .sidebar.toggle-transition {

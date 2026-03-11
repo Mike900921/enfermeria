@@ -19,10 +19,10 @@ class ConsultaController extends Controller
             'cedula' => 'required'
         ]);
 
-        // Busca paciente exacto
-        $paciente = Paciente::where('par_identificacion', $request->cedula)->first();
+        $paciente = Paciente::with('ficha')
+            ->where('par_identificacion', $request->cedula)
+            ->first();
 
-        // Retorna a la vista con la variable $paciente
         return view('atenciones.index_atenciones', compact('paciente'));
     }
 }
