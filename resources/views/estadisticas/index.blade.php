@@ -32,13 +32,20 @@
               <thead>
                 <tr>
                 @if($ver === 'programa')
-                    <th>Nombre del Programa</th>
-                    <th>Coordinador del programa</th>
-                    <th>Total Atenciones</th>
+                    <th class=" text-center">Nombre del Programa</th>
+                    <th class=" text-center">Coordinador del programa</th>
+                    <th class=" text-center">Total Atenciones</th>
+
+                @elseif($ver === 'pacientes')
+                    <th class=" text-center">Nombre del Paciente</th>
+                    <th class=" text-center">Numero de documento</th>
+                    <th class=" text-center">ficha</th>
+                    <th class=" text-center">total atenciones</th>
+                
                 @else
-                    <th>Número de Ficha</th>
-                    <th>Programa Relacionado</th>
-                    <th>Total Atenciones</th>
+                    <th class=" text-center">Número de Ficha</th>
+                    <th class=" text-center">Programa Relacionado</th>
+                    <th class=" text-center">Total Atenciones</th>
                 @endif
                 </tr>
               </thead>
@@ -47,14 +54,23 @@
                 <tr>
                   @if($ver === 'programa')
                         {{-- Vista por  Programa --}}
-                        <td>{{ $query->etiqueta }}</td>
-                        <td>{{ $query->nombre_coord .' '.$query->apellido_coord }}</td>
-                        <td><span class="badge bg-primary">{{ $query->total }}</span></td>
+                        <td class=" text-center">{{ $query->etiqueta }}</td>
+                        <td class=" text-center">{{ $query->nombre_coord .' '.$query->apellido_coord }}</td>
+                        <td class=" text-center align-middle"><span class="badge bg-primary ">{{ $query->total }}</span></td>
+                    
+                    @elseif($ver === 'pacientes')
+
+                        {{-- Vista por Pacientes --}}
+                        <td class=" text-center">{{ $query->etiqueta }}</td>
+                        <td class=" text-center">{{ $query->numeroDocumento }}</td>
+                        <td class=" text-center">{{ $query->fichaPaciente }}</td>
+                        <td class=" text-center align-middle"><span class="badge bg-info ">{{ $query->total }}</span></td>
+
                     @else
                         {{-- Vista por Ficha --}}
-                        <td>{{ $query->etiqueta }}</td>
-                        <td>{{ $query->programa }}</td>
-                        <td><span class="badge bg-success">{{ $query->total }}</span></td>
+                        <td class=" text-center">{{ $query->etiqueta }}</td>
+                        <td class=" text-center">{{ $query->programa }}</td>
+                        <td class=" text-center align-middle"><span class="badge bg-success">{{ $query->total }}</span></td>
                   @endif
 
                     @empty
@@ -84,9 +100,9 @@
                         <div class="col-md-5">
                             <label class="form-label fw-bold">Agrupar por:</label>
                             <select name="ver" class="form-control">
-                                <option value="ficha" {{ request('ver') == 'ficha' ? 'selected' : '' }}>Número de Ficha</option>
-                                <option value="programa" {{ request('ver') == 'programa' ? 'selected' : '' }}>Nombre del Programa</option>
-
+                                <option value="ficha"  @selected(request('ver') == 'ficha') >Número de Ficha</option>
+                                <option value="programa" @selected(request('ver') == 'programa') >Nombre del Programa</option>
+                                 <option value="pacientes" @selected(request('ver') == 'pacientes') >paciente</option>
                             </select>
                         </div>
 
