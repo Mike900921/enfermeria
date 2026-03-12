@@ -29,6 +29,7 @@
         </div>
     </header>
 
+    <!-- Sidebar y contenido -->
     <div class="layout">
         <aside id="sidebar" class="sidebar">
             <ul class="nav flex-column">
@@ -83,8 +84,12 @@
                 </button>
             </form>
         </aside>
+
+        <!-- Contenido principal -->
         @yield('content')
     </div>
+
+    <!-- Incluir el script para el topbar desde public/js/topbar.js -->
     <script src="{{ asset('js/topbar.js') }}"></script>
 </body>
 
