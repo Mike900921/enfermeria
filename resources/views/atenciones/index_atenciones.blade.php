@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="col-md-4 d-flex align-items-end">
-                            <button type="submit" class="btn btn-sena w-100">
+                            <button type="submit" class="btn btn-amarillo text-dark w-100">
                                 Consultar
                             </button>
                         </div>
@@ -37,8 +37,8 @@
                     <hr>
 
                     @if ($paciente)
-                        <div class="card mb-3 border-success">
-                            <div class="card-header bg-success text-white">
+                        <div class="card mb-3 border-verde">
+                            <div class="card-header bg-verde text-white">
                                 Datos del Paciente
                             </div>
                             <div class="card-body">
@@ -61,7 +61,7 @@
                                     </div>
 
                                     <div class="col-12 mt-3">
-                                        <button class="btn btn-success mt-4" title="Registrar nueva atención"
+                                        <button class="btn btn-verde mt-4" title="Registrar nueva atención"
                                             data-bs-toggle="modal"
                                             data-bs-target="#modalCreateAtencion{{ $paciente->par_identificacion }}">
                                             Registrar Nueva Atención
@@ -73,14 +73,15 @@
                         </div>
 
                         {{-- HISTORIAL DE ATENCIONESese --}}
-                        <div class="card border-primary">
-                            <div class="card-header bg-primary text-white">
+                        <div class="card border-verde">
+                            <div class="card-header bg-verde text-white">
                                 Historial de Atenciones
                             </div>
                             <div class="card-body">
                                 @if ($paciente->atenciones->count() > 0)
-                                    <table class="table table-bordered table-striped">
-                                        <thead class="table-dark">
+                                    <table
+                                        class="table table-bordered table-striped table-hover shadow-sm text-center align-middle">
+                                        <thead class="table-success">
                                             <tr>
                                                 <th>Fecha</th>
                                                 <th>Motivo</th>

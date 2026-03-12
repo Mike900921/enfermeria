@@ -18,6 +18,73 @@
         background-color: #cccccc;
         border-radius: 5px;
     }
+
+    .btn-azul {
+        background-color: #00304d;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .btn-azul-claro {
+        background-color: #50E5F9;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .btn-verde {
+        background-color: #007832;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .btn-morado {
+        background-color: #71277a;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .btn-amarillo {
+        background-color: #fdc300;
+        color: black;
+        border-radius: 5px;
+    }
+
+    /* Hover opcional */
+    .btn-azul:hover {
+        background-color: #004d7a;
+    }
+
+    .btn-azul-claro:hover {
+        background-color: #50E5F9;
+    }
+
+    .btn-verde:hover {
+        background-color: #009944;
+    }
+
+    .btn-morado:hover {
+        background-color: #8e3299;
+    }
+
+    .btn-amarillo:hover {
+        background-color: #ffdb4d;
+    }
+
+    .bg-azul-claro {
+        background-color: #50E5F9;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .bg-verde {
+        background-color: #007832;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .border-verde {
+    border: 1px solid #007832 !important;
+}
 </style>
 
 <body>

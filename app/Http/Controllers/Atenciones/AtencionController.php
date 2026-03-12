@@ -121,7 +121,7 @@ class AtencionController extends Controller
         $data['user_id'] = Auth::id();
         $paciente = Paciente::find($request->paciente_id);
 
-        Atencion::create($data);//jhfyfsf
+        Atencion::create($data);
 
         return redirect()->route('registros.index')->with('success', "El paciente {$paciente->par_nombres} {$paciente->par_apellidos} registrado correctamente");
     }
