@@ -24,11 +24,74 @@
                         </div>
                     @endforeach
                 </div>
+<<<<<<< HEAD
             @endif
+=======
+            @endforeach
+        </div>
+    @endif
+    </div>
+
+    <div class="row">
+
+        <div class="col-6 me-5 card p-3  shadow-sm">
+            <table class="table  table-striped">
+              <thead>
+                <tr>
+                @if($ver === 'programa')
+                    <th class=" text-center">Nombre del Programa</th>
+                    <th class=" text-center">Coordinador del programa</th>
+                    <th class=" text-center">Total Atenciones</th>
+
+                @elseif($ver === 'pacientes')
+                    <th class=" text-center">Nombre del Paciente</th>
+                    <th class=" text-center">Numero de documento</th>
+                    <th class=" text-center">ficha</th>
+                    <th class=" text-center">total atenciones</th>
+                
+                @else
+                    <th class=" text-center">Número de Ficha</th>
+                    <th class=" text-center">Programa Relacionado</th>
+                    <th class=" text-center">Total Atenciones</th>
+                @endif
+                </tr>
+              </thead>
+              <tbody>
+                @forelse ($topData as $query)
+                <tr>
+                  @if($ver === 'programa')
+                        {{-- Vista por  Programa --}}
+                        <td class=" text-center">{{ $query->etiqueta }}</td>
+                        <td class=" text-center">{{ $query->nombre_coord .' '.$query->apellido_coord }}</td>
+                        <td class=" text-center align-middle"><span class="badge bg-primary ">{{ $query->total }}</span></td>
+                    
+                    @elseif($ver === 'pacientes')
+
+                        {{-- Vista por Pacientes --}}
+                        <td class=" text-center">{{ $query->etiqueta }}</td>
+                        <td class=" text-center">{{ $query->numeroDocumento }}</td>
+                        <td class=" text-center">{{ $query->fichaPaciente }}</td>
+                        <td class=" text-center align-middle"><span class="badge bg-info ">{{ $query->total }}</span></td>
+
+                    @else
+                        {{-- Vista por Ficha --}}
+                        <td class=" text-center">{{ $query->etiqueta }}</td>
+                        <td class=" text-center">{{ $query->programa }}</td>
+                        <td class=" text-center align-middle"><span class="badge bg-success">{{ $query->total }}</span></td>
+                  @endif
+
+                    @empty
+                        <td colspan="3" class="text-center">No se encontraron datos para los filtros seleccionados.</td>
+                </tr>
+                @endforelse
+              </tbody>
+            </table>
+>>>>>>> 9bd74ee8547541c6bf6acc6ce9cfaba96cd0323b
         </div>
 
         <div class="row">
 
+<<<<<<< HEAD
             <div class="col-6 me-5 card p-3  shadow-sm">
                 <table class="table  table-striped">
                     <thead>
@@ -67,6 +130,31 @@
                     </tbody>
                 </table>
             </div>
+=======
+        <div class="col-5">
+             <!--filtros para buscar-->
+            <div class="row">
+                <form action="{{ route('estadisticas.index') }}" method="GET" class="card p-3 mb-4 shadow-sm">
+                    <div class="row align-items-end">
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Desde:</label>
+                            <input type="date" name="fecha_inicio" class="form-control"
+                                value="{{ request('fecha_inicio') }}">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Hasta:</label>
+                            <input type="date" name="fecha_fin" class="form-control"
+                                value="{{ request('fecha_fin') }}">
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label fw-bold">Agrupar por:</label>
+                            <select name="ver" class="form-control">
+                                <option value="ficha"  @selected(request('ver') == 'ficha') >Número de Ficha</option>
+                                <option value="programa" @selected(request('ver') == 'programa') >Nombre del Programa</option>
+                                 <option value="pacientes" @selected(request('ver') == 'pacientes') >paciente</option>
+                            </select>
+                        </div>
+>>>>>>> 9bd74ee8547541c6bf6acc6ce9cfaba96cd0323b
 
 
             <div class="col-5">
