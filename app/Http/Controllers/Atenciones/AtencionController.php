@@ -42,7 +42,7 @@ class AtencionController extends Controller
 
             ->select('atenciones.*')
             ->orderBy('fecha_hora', 'desc')
-            ->get();
+            ->paginate(5)->withQueryString();
 
 
         if ($request->ajax()) {
@@ -109,11 +109,14 @@ class AtencionController extends Controller
         $data = $request->validate([
             'paciente_id' => 'required',
             'motivo' => 'required',
-            'ficha_id' => 'required',
+            'ficha_id' => 'nullable',
             'fecha_hora' => 'required',
             'procedimientos' => 'nullable',
             'observaciones' => 'nullable'
         ]);
+
+        // valor por defecto
+        $data['ficha_id'] = is_numeric($data['ficha_id']) ? $data['ficha_id'] : 1;
 
         $data['user_id'] = Auth::id();
         $paciente = Paciente::find($request->paciente_id);
