@@ -24,12 +24,14 @@ class AtencionController extends Controller
         $atenciones = Atencion::with(['paciente.acudiente', 'usuario'])
 
             ->leftJoin('senacdti_seguimientopro.sep_participante as p', 'atenciones.paciente_id', '=', 'p.par_identificacion')
-            ->leftJoin('users as u', 'atenciones.user_id', '=', 'u.id')
+            ->leftJoin('users as u', 'atenciones.user_id', '=', 'u.user_id')
 
             ->when($query, function ($q) use ($query) {
                 $q->where('u.name', 'like', "%{$query}%")
                     ->orWhere('p.par_identificacion', 'like', "%{$query}%")
-                    ->orWhere('p.par_nombres', 'like', "%{$query}%");
+                    ->orWhere('p.par_nombres', 'like', "%{$query}%")
+                    ->orWhere('p.par_apellidos', 'like', "%{$query}%")
+                    ->orWhereRaw("CONCAT(p.par_nombres,' ',p.par_apellidos) LIKE ?", ["%{$query}%"]);
             })
 
             ->when($fecha_inicio, function ($q) use ($fecha_inicio) {
@@ -42,7 +44,7 @@ class AtencionController extends Controller
 
             ->select('atenciones.*')
             ->orderBy('fecha_hora', 'desc')
-            ->paginate(5)->withQueryString();
+            ->paginate(7)->withQueryString();
 
 
         if ($request->ajax()) {
@@ -61,12 +63,14 @@ class AtencionController extends Controller
 
         $atenciones = Atencion::with(['paciente.acudiente', 'usuario'])
             ->leftJoin('senacdti_seguimientopro.sep_participante as p', 'atenciones.paciente_id', '=', 'p.par_identificacion')
-            ->leftJoin('users as u', 'atenciones.user_id', '=', 'u.id')
+            ->leftJoin('users as u', 'atenciones.user_id', '=', 'u.user_id')
             ->when($query, function ($q) use ($query) {
                 $q->where(function ($sub) use ($query) {
                     $sub->where('u.name', 'like', "%{$query}%")
                         ->orWhere('p.par_identificacion', 'like', "%{$query}%")
-                        ->orWhere('p.par_nombres', 'like', "%{$query}%");
+                        ->orWhere('p.par_nombres', 'like', "%{$query}%")
+                        ->orWhere('p.par_apellidos', 'like', "%{$query}%")
+                        ->orWhereRaw("CONCAT(p.par_nombres,' ',p.par_apellidos) LIKE ?", ["%{$query}%"]);
                 });
             })
             ->when($fecha_inicio, fn($q) => $q->whereDate('fecha_hora', '>=', $fecha_inicio))
@@ -123,6 +127,6 @@ class AtencionController extends Controller
 
         Atencion::create($data);
 
-        return redirect()->route('registros.index')->with('success', "El paciente {$paciente->par_nombres} {$paciente->par_apellidos} registrado correctamente");
+        return redirect()->route('registros.index')->with('success', 'El paciente fue registrado correctamente.');
     }
 }

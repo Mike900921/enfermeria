@@ -10,18 +10,33 @@ use Illuminate\Support\Facades\DB;
 class EstadisticaController extends Controller
 {
    public function index(Request $request) {
-    $query = DB::table('atenciones')
-        ->join('senacdti_seguimientopro.sep_ficha', 
-            'atenciones.ficha_id', '=', 'senacdti_seguimientopro.sep_ficha.fic_numero')
 
+    //validaciones de los inputs de fecha 
+        $request->validate([
+            'fecha_inicio' => 'nullable|date|required_with:fecha_fin',
+            'fecha_fin' => 'nullable|date|after_or_equal:fecha_inicio',
+        ], [
+            'fecha_inicio.date' => 'La fecha de inicio debe ser una fecha válida.',
+            'fecha_fin.date' => 'La fecha de fin debe ser una fecha válida.',
+            'fecha_inicio.required_with' => 'La fecha de inicio es requerida cuando se proporciona la fecha fin.',
+            'fecha_fin.after_or_equal' => 'La fecha fin debe ser igual o posterior a la fecha de inicio.',
+        ]);
+
+
+
+
+    $query = DB::table('atenciones')
+
+            //instructores y estudiantes   
+        ->join('senacdti_seguimientopro.sep_ficha', function($join){
+           $join->on('atenciones.ficha_id', '=', 'senacdti_seguimientopro.sep_ficha.fic_numero') ;
+        })
             //union con programa
         ->join('senacdti_seguimientopro.sep_programa', 
             'senacdti_seguimientopro.sep_programa.prog_codigo', '=', 'senacdti_seguimientopro.sep_ficha.prog_codigo')
 
         ->join('senacdti_seguimientopro.sep_participante as aprendiz', function($join) {
-            $join->on('atenciones.paciente_id', '=', 'aprendiz.par_identificacion')
-             // Validamos que el paciente pertenezca a la ficha que estamos analizando
-                ->on('atenciones.ficha_id', '=', 'atenciones.ficha_id'); 
+            $join->on('atenciones.paciente_id', '=', 'aprendiz.par_identificacion'); 
         })
 
         // Unimos para traer al COORDINADOR
@@ -31,9 +46,9 @@ class EstadisticaController extends Controller
         });
 
 
-
         // Filtros de fecha
         if ($request->filled('fecha_inicio')) {
+
             $query->whereDate('atenciones.fecha_hora', '>=', $request->fecha_inicio);
         }
         if ($request->filled('fecha_fin')) {
@@ -42,6 +57,7 @@ class EstadisticaController extends Controller
 
         $ver = $request->get('ver', 'ficha');
 
+        //filtros de seleccion de agrupación
         if ($ver === 'programa') {
             $query->select(
                 'senacdti_seguimientopro.sep_programa.prog_nombre as etiqueta',
@@ -55,7 +71,9 @@ class EstadisticaController extends Controller
                 'coordinador.par_nombres',
                 'coordinador.par_apellidos'
             );
-        } else {
+        } 
+        
+        else {
             $query->select(
                 'senacdti_seguimientopro.sep_ficha.fic_numero as etiqueta',
                 'senacdti_seguimientopro.sep_programa.prog_nombre as programa',
@@ -66,6 +84,17 @@ class EstadisticaController extends Controller
                 'senacdti_seguimientopro.sep_ficha.fic_numero',
                 'senacdti_seguimientopro.sep_programa.prog_nombre',
             );
+        }
+
+            //buscador
+        if ($request->filled('buscador')) {
+            $busqueda = $request->input('buscador');
+
+            $query->where(function($q) use ($busqueda) {
+                $q->where('senacdti_seguimientopro.sep_ficha.fic_numero', 'like', "%$busqueda%")
+                  ->orWhere('senacdti_seguimientopro.sep_programa.prog_nombre', 'like', "%$busqueda%")
+                  ->orWhere(DB::raw("CONCAT(coordinador.par_nombres, ' ', coordinador.par_apellidos)"), 'like', "%$busqueda%");
+            });
         }
 
         $topData = $query->orderBy('total', 'desc')->limit(10)->get();

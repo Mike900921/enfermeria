@@ -51,12 +51,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class);
 
 
-    //RUTA BOTON PARA EXPORTAR PACIENTE A EXCEL
+    //RUTA BOTON PARA EXPORTAR PACIENTE A EXCEL -- NO USAR
     //Route::get('/atenciones/export', function () { return Excel::download(new PacienteExport, 'Pacientes.xlsx');})->name('atenciones.export');
 
+
+    //RUTA PARA EXPORTAR PACIENTE A EXCEL CON FILTROS DE BUSQUEDA
     Route::get('/atenciones/export', [AtencionController::class, 'export'])
         ->name('atenciones.export');
 
-    //estadisticas
+    // ruta Estadisticas
     Route::get('/estadisticas', [EstadisticaController::class, 'index'])->name('estadisticas.index');
 });
