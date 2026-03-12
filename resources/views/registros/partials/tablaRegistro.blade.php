@@ -24,7 +24,7 @@
                 <td>
                     <button class="btn btn-success p-1" title="Info usuario" style="font-size: 12px;" data-bs-toggle="modal"
                         data-bs-target="#modalShowPaciente{{ $atencion->id }}">
-                        <i class="bi bi-info-circle"></i>
+                        Info
                     </button>
                 </td>
             </tr>
@@ -35,3 +35,8 @@
         @endforelse
     </tbody>
 </table>
+@if ($atenciones->hasPages())
+    <div class="d-flex justify-content-center mt-3">
+        {{ $atenciones->links('pagination::bootstrap-5') }}
+    </div>
+@endif

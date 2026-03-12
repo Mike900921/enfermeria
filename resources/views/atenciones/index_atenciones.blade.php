@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <strong>Programa:</strong><br>
-                                        {{ $paciente->par_programa ?? 'No registrado' }}
+                                        {{ $paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}
                                     </div>
                                     <div class="col-md-3">
                                         <strong>Ficha:</strong><br>
@@ -149,7 +149,8 @@
                                             <div class="col-md-3">
                                                 <label class="form-label"><strong>Programa</strong></label>
                                                 <input type="text" class="form-control"
-                                                    value="{{ $paciente->par_programa ?? 'No registrado' }}" readonly>
+                                                    value="{{ $paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}"
+                                                    readonly>
                                             </div>
 
                                             <div class="col-md-3">

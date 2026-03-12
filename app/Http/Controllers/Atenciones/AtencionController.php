@@ -24,7 +24,7 @@ class AtencionController extends Controller
         $atenciones = Atencion::with(['paciente.acudiente', 'usuario'])
 
             ->leftJoin('senacdti_seguimientopro.sep_participante as p', 'atenciones.paciente_id', '=', 'p.par_identificacion')
-            ->leftJoin('users as u', 'atenciones.user_id', '=', 'u.id')
+            ->leftJoin('users as u', 'atenciones.user_id', '=', 'u.user_id')
 
             ->when($query, function ($q) use ($query) {
                 $q->where('u.name', 'like', "%{$query}%")
@@ -42,7 +42,7 @@ class AtencionController extends Controller
 
             ->select('atenciones.*')
             ->orderBy('fecha_hora', 'desc')
-            ->get();
+            ->paginate(5)->withQueryString();
 
 
         if ($request->ajax()) {
@@ -61,7 +61,7 @@ class AtencionController extends Controller
 
         $atenciones = Atencion::with(['paciente.acudiente', 'usuario'])
             ->leftJoin('senacdti_seguimientopro.sep_participante as p', 'atenciones.paciente_id', '=', 'p.par_identificacion')
-            ->leftJoin('users as u', 'atenciones.user_id', '=', 'u.id')
+            ->leftJoin('users as u', 'atenciones.user_id', '=', 'u.user_id')
             ->when($query, function ($q) use ($query) {
                 $q->where(function ($sub) use ($query) {
                     $sub->where('u.name', 'like', "%{$query}%")
@@ -109,11 +109,14 @@ class AtencionController extends Controller
         $data = $request->validate([
             'paciente_id' => 'required',
             'motivo' => 'required',
-            'ficha_id' => 'required',
+            'ficha_id' => 'nullable',
             'fecha_hora' => 'required',
             'procedimientos' => 'nullable',
             'observaciones' => 'nullable'
         ]);
+
+        // valor por defecto
+        $data['ficha_id'] = is_numeric($data['ficha_id']) ? $data['ficha_id'] : 1;
 
         $data['user_id'] = Auth::id();
         $paciente = Paciente::find($request->paciente_id);

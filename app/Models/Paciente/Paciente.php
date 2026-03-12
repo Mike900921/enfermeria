@@ -27,6 +27,7 @@ class Paciente extends Model
 
     public function ficha()
     {
-        return $this->hasOne(Ficha::class, 'par_identificacion', 'par_identificacion');
+        return $this->hasOne(Ficha::class, 'par_identificacion', 'par_identificacion')
+            ->latestOfMany('created_at');
     }
 }

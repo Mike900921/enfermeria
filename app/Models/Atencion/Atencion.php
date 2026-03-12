@@ -22,6 +22,7 @@ class Atencion extends Model
         'ficha_id',
         'fecha_hora',
         'motivo',
+        'ficha_id',
         'procedimientos',
         'observaciones',
     ];
