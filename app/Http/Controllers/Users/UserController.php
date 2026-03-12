@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Log;
 
 
 
-
 class UserController extends Controller
 {
     /**
@@ -24,7 +23,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource. when it is viewed.
      */
     public function create()
     {
@@ -60,7 +59,7 @@ class UserController extends Controller
 
 
         return redirect()->route('users.index')
-            ->with('success', 'Usuario creado correctamente');
+            ->with('success', 'Usuario ' . $request->name . ' ' . $request->last_name . ' creado correctamente');
     }
 
     /**
@@ -105,6 +104,6 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('users.index')
-            ->with('success', 'Usuario eliminado correctamente');
+            ->with('success', 'Usuario ' . $user->name . ' ' . $user->last_name . ' eliminado correctamente');
     }
 }

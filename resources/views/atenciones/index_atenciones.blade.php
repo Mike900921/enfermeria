@@ -11,6 +11,12 @@
             <div class="card-header header-institucional text-center">
                 <h5 class="mb-0">Consulta de Paciente</h5>
             </div>
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
 
             <div class="card-body">
 
@@ -25,7 +31,11 @@
                         </div>
 
                         <div class="col-md-4 d-flex align-items-end">
+<<<<<<< HEAD
                             <button type="submit" class="btn btn-amarillo text-dark w-100">
+=======
+                            <button type="submit" class="btn btn-success w-100">
+>>>>>>> 503cdc1d16885577152618f501e796be6f9a459a
                                 Consultar
                             </button>
                         </div>

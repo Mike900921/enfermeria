@@ -16,6 +16,7 @@
         align-items: center;
         padding: 0 20px;
         z-index: 1000;
+        user-select: none
     }
 
     /* Layout debajo del header */
@@ -24,15 +25,20 @@
         margin-top: 60px;
     }
 
+    .layout aside ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        user-select: none
+    }
 
     /* MENU */
     .sidebar {
-
         width: 250px;
         background: #eee;
         height: calc(100vh - 60px);
-
     }
+
 
     .sidebar.toggle-transition {
         transition: width 0.3s;
@@ -104,3 +110,24 @@
 
 
     }
+
+    /* Avatar de letra y circulo del header */
+    .letter-avatar {
+        width: 32px;
+        height: 32px;
+        background-color: #eef1f4;
+        color: #007832;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        /* círculo */
+        font-size: 19px;
+        text-transform: uppercase;
+        cursor: pointer;
+        user-select: none
+            /* evita selección de texto */
+    }
+
+
+    

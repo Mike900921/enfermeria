@@ -31,6 +31,8 @@
         const URL_REGISTROS = "{{ route('registros.index') }}";
         const URL_EXCEL = "{{ route('atenciones.export') }}";
     </script>
+
+    <!-- Incluir el script del buscador de public/js/BuscadorRegistro.js -->
     <script src="{{ asset('js/BuscadorRegistro.js') }}"></script>
 
 
