@@ -11,6 +11,12 @@
             <div class="card-header header-institucional text-center">
                 <h5 class="mb-0">Consulta de Paciente</h5>
             </div>
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
 
             <div class="card-body">
 
@@ -21,11 +27,12 @@
                     <div class="row">
                         <div class="col-md-8">
                             <label class="form-label">Número de Documento</label>
-                            <input type="text" name="cedula" class="form-control" required>
+                            <input type="text" name="cedula" class="form-control"
+                                value="{{ $paciente->par_identificacion ?? '' }}" required>
                         </div>
 
                         <div class="col-md-4 d-flex align-items-end">
-                            <button type="submit" class="btn btn-sena w-100">
+                            <button type="submit" class="btn btn-verde w-100">
                                 Consultar
                             </button>
                         </div>
@@ -37,8 +44,8 @@
                     <hr>
 
                     @if ($paciente)
-                        <div class="card mb-3 border-success">
-                            <div class="card-header bg-success text-white">
+                        <div class="card mb-3 border-azul-claro">
+                            <div class="card-header bg-azul-claro text-dark">
                                 Datos del Paciente
                             </div>
                             <div class="card-body">
@@ -60,33 +67,37 @@
                                         {{ $paciente->ficha->fic_numero ?? 'No registrado' }}
                                     </div>
 
-                                    <div class="col-12 mt-3">
-                                        <button class="btn btn-success mt-4" title="Registrar nueva atención"
-                                            data-bs-toggle="modal"
+                                    <div class="d-flex gap-3 mt-3">
+                                        <button class="btn btn-verde" title="Registrar nueva atención" data-bs-toggle="modal"
                                             data-bs-target="#modalCreateAtencion{{ $paciente->par_identificacion }}">
                                             Registrar Nueva Atención
                                         </button>
+
+                                        <button class="btn btn-verde" data-bs-toggle="modal"
+                                            data-bs-target="#modalShowPaciente{{ $paciente->par_identificacion }}">
+                                            Ver información del paciente
+                                        </button>
                                     </div>
+
                                 </div>
                             </div>
-
                         </div>
 
                         {{-- HISTORIAL DE ATENCIONESese --}}
-                        <div class="card border-primary">
-                            <div class="card-header bg-primary text-white">
+                        <div class="card border-azul-claro">
+                            <div class="card-header bg-azul-claro text-dark">
                                 Historial de Atenciones
                             </div>
-                            <div class="card-body">
+                            <div class="card-body ">
                                 @if ($paciente->atenciones->count() > 0)
-                                    <table class="table table-bordered table-striped">
-                                        <thead class="table-dark">
+                                    <table
+                                        class="table table-bordered table-striped table-hover shadow-sm text-center align-middle">
+                                        <thead class="table-success">
                                             <tr>
                                                 <th>Fecha</th>
                                                 <th>Motivo</th>
-                                                <th>Procedimientos</th>
-                                                <th>Observaciones</th>
                                                 <th>Enfermero</th>
+                                                <th>acción</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -94,8 +105,7 @@
                                                 <tr>
                                                     <td>{{ $atencion->fecha_hora }}</td>
                                                     <td>{{ $atencion->motivo }}</td>
-                                                    <td>{{ $atencion->procedimientos }}</td>
-                                                    <td>{{ $atencion->observaciones }}</td>
+
                                                     <td>{{ $atencion->usuario->name ?? 'No disponible' }}</td>
                                                 </tr>
                                             @endforeach
@@ -207,4 +217,61 @@
         </div>
     </div>
 
+    {{-- Modal de Detalle del Paciente --}}
+    @isset($paciente)
+        <div class="modal fade" id="modalShowPaciente{{ $paciente->par_identificacion }}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background-color:#007832;">
+                        <h5 class="modal-title text-light">Información del Paciente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <p><strong>Nombre y apellido:</strong>
+                            {{ $paciente->par_nombres }} {{ $paciente->par_apellidos }}
+                        </p>
+
+                        <p><strong>Teléfono:</strong>
+                            {{ $paciente->par_telefono ?? 'No registrado' }}
+                        </p>
+
+                        <p><strong>Correo:</strong>
+                            {{ $paciente->par_correo ?? 'No registrado' }}
+                        </p>
+
+                        <p><strong>Acudiente:</strong>
+                            {{ $paciente->acudiente->par_acu_nombre ?? 'No registrado' }}
+                        </p>
+
+                        <p><strong>Tel Acudiente:</strong>
+                            {{ $paciente->acudiente->par_acu_tel ?? 'No registrado' }}
+                        </p>
+
+                        <p><strong>Parentesco:</strong>
+                            {{ $paciente->acudiente->par_acu_parentesco ?? 'No registrado' }}
+                        </p>
+
+                        <p><strong>Ficha:</strong>
+                            {{ $paciente->ficha->fic_numero ?? 'No registrado' }}
+                        </p>
+
+                        <p><strong>Programa:</strong>
+                            {{ $paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}
+                        </p>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    @endisset
 @endsection

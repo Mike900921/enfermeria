@@ -37,9 +37,15 @@ Route::middleware('auth')->group(function () {
     // Dashboard / Consulta aprendiz
     Route::get('/consulta', [ConsultaController::class, 'index'])->name('consulta.index');
     Route::post('/consulta', [ConsultaController::class, 'buscar'])->name('consulta.buscar');
+    Route::get('/atenciones', [ConsultaController::class, 'index'])->name('atenciones.index_atenciones');
+    
+
+
+
 
     // Registro de atenciones tabla
     Route::get('/registros', [AtencionController::class, 'index'])->name('registros.index');
+
     Route::post('/atenciones', [AtencionController::class, 'store'])->name('atenciones.store');
     Route::post('/buscar-paciente', [AtencionController::class, 'buscarPaciente'])->name('buscar.paciente');
 
@@ -49,14 +55,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/atenciones/store', [AtencionController::class, 'store'])->name('atenciones.store');
     // CRUD de usuarios
     Route::resource('users', UserController::class);
+    Route::post('/users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
 
 
-    //RUTA BOTON PARA EXPORTAR PACIENTE A EXCEL
+    //RUTA BOTON PARA EXPORTAR PACIENTE A EXCEL -- NO USAR
     //Route::get('/atenciones/export', function () { return Excel::download(new PacienteExport, 'Pacientes.xlsx');})->name('atenciones.export');
 
+
+    //RUTA PARA EXPORTAR PACIENTE A EXCEL CON FILTROS DE BUSQUEDA
     Route::get('/atenciones/export', [AtencionController::class, 'export'])
         ->name('atenciones.export');
 
-    //estadisticas
+    // ruta Estadisticas
     Route::get('/estadisticas', [EstadisticaController::class, 'index'])->name('estadisticas.index');
 });

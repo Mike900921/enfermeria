@@ -1,3 +1,4 @@
+//script para el buscador de registros en la vista y filtro de descarga de registros.blade.php
 $(document).ready(function () {
 
     let currentQuery = '';
@@ -11,6 +12,7 @@ $(document).ready(function () {
         actualizarLinkExcel();
     });
 
+    // Permitir búsqueda al presionar Enter en el input
     function cargarPacientes(url) {
 
         let query = $('#input-busqueda').val();
@@ -39,6 +41,7 @@ $(document).ready(function () {
         });
     }
 
+    // Función para actualizar el enlace de descarga de Excel con los filtros actuales
     function actualizarLinkExcel() {
 
         let url = URL_EXCEL;

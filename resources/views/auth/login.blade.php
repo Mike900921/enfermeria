@@ -43,7 +43,8 @@
             background: linear-gradient(135deg, #26A743, #A7F920);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
+            /* esto sube el contenido */
             align-items: center;
             color: #fff;
             padding: 40px;
@@ -64,7 +65,8 @@
         }
 
         .login-left img {
-            max-width: 80%;
+            width: 140%;
+            max-width: none;
             opacity: 0.95;
         }
 
@@ -131,14 +133,15 @@
             position: relative;
             /* Aplicamos el radio de borde al contenedor */
             border-radius: 10px;
-            overflow: hidden; 
+            overflow: hidden;
             border: 1px solid #e0e0e0;
             transition: all 0.3s;
         }
-        
+
         /* Efecto de foco para todo el grupo (borde verde SENA) */
         .input-group:focus-within {
-            border-color: #A7F920; /* Borde más brillante en foco */
+            border-color: #A7F920;
+            /* Borde más brillante en foco */
             box-shadow: 0 0 0 0.25rem rgba(38, 167, 67, 0.25);
         }
 
@@ -155,33 +158,39 @@
             box-shadow: none;
             z-index: 3;
         }
-        
+
         .input-group-text.custom-icon {
             /* Estilo del área del icono */
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 50px; 
-            background-color: #f8f9fa; /* Fondo gris claro (puedes cambiarlo a blanco si quieres) */
+            width: 50px;
+            background-color: #f8f9fa;
+            /* Fondo gris claro (puedes cambiarlo a blanco si quieres) */
             border: none;
-            color: #26A743; /* Color SENA en estado normal */
+            color: #26A743;
+            /* Color SENA en estado normal */
             font-size: 1.2rem;
-            
+
             /* Borde de división */
             border-right: 1px solid #e0e0e0;
             transition: all 0.3s;
         }
-        
+
         /* Cambiar el color del icono y fondo en foco (verde lima) */
         .input-group:focus-within .custom-icon {
-            color: #fff; /* Color blanco para el ícono en foco */
-            background-color: #26A743; /* Fondo Verde SENA en foco */
-            border-right-color: #26A743; /* Borde de división verde SENA */
+            color: #fff;
+            /* Color blanco para el ícono en foco */
+            background-color: #26A743;
+            /* Fondo Verde SENA en foco */
+            border-right-color: #26A743;
+            /* Borde de división verde SENA */
         }
 
         .mb-3.input-group {
             margin-bottom: 20px !important;
         }
+
         /* --- FIN DE AJUSTES PARA ESTILO DE ICONO INTEGRADO Y COLORES SENA --- */
 
 
@@ -218,7 +227,7 @@
             }
 
             .login-left img {
-                max-width: 50%;
+                max-width: 100%;
                 margin-top: 5px;
             }
 
@@ -228,7 +237,7 @@
             }
 
             .login-card {
-                padding: 20px;
+                padding: 30px;
                 border: 3px solid #26A743;
                 box-shadow: 0 8px 25px rgba(38, 167, 67, 0.3);
             }
@@ -239,9 +248,9 @@
 <body>
     <div class="login-container">
         <div class="login-left">
-            <h2>¡Bienvenido al CDTI!</h2>
-            <p>Seguridad, innovación y control en cada ingreso.</p>
-            <img src="{{ asset('img/seguridadd.png') }}" alt="Seguridad CDTI">
+            <h3>¡Bienvenido al sistema de atención de enfermería!</h3>
+            <p>Cada atención cuenta, cada cuidado transforma una vida.</p>
+            <img src="{{ asset('img/personalsf.png') }}" alt="Seguridad CDTI">
         </div>
 
         <div class="login-right">
@@ -254,17 +263,19 @@
                 <form action="{{ route('login.process') }}" method="POST">
                     @csrf
                     <div class="mb-3 input-group">
-                        <span class="input-group-text custom-icon" id="email-addon"><i class="bi bi-envelope-fill"></i></span>
+                        <span class="input-group-text custom-icon" id="email-addon"><i
+                                class="bi bi-envelope-fill"></i></span>
                         <input type="email" name="email" class="form-control" placeholder="Correo Electrónico"
-                            aria-label="Correo Electrónico" aria-describedby="email-addon"
-                            value="{{ old('email') }}" required autofocus>
+                            aria-label="Correo Electrónico" aria-describedby="email-addon" value="{{ old('email') }}"
+                            required autofocus>
                     </div>
                     @error('email')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
 
                     <div class="mb-3 input-group">
-                        <span class="input-group-text custom-icon" id="password-addon"><i class="bi bi-lock-fill"></i></span>
+                        <span class="input-group-text custom-icon" id="password-addon"><i
+                                class="bi bi-lock-fill"></i></span>
                         <input type="password" name="password" class="form-control" placeholder="Contraseña"
                             aria-label="Contraseña" aria-describedby="password-addon" required>
                     </div>
@@ -272,7 +283,8 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
 
-                    <button type="submit" class="btn btn-custom">Ingresar <i class="bi bi-box-arrow-in-right"></i></button>
+                    <button type="submit" class="btn btn-custom">Ingresar <i
+                            class="bi bi-box-arrow-in-right"></i></button>
                 </form>
             </div>
         </div>

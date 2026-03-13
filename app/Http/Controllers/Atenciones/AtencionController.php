@@ -29,7 +29,9 @@ class AtencionController extends Controller
             ->when($query, function ($q) use ($query) {
                 $q->where('u.name', 'like', "%{$query}%")
                     ->orWhere('p.par_identificacion', 'like', "%{$query}%")
-                    ->orWhere('p.par_nombres', 'like', "%{$query}%");
+                    ->orWhere('p.par_nombres', 'like', "%{$query}%")
+                    ->orWhere('p.par_apellidos', 'like', "%{$query}%")
+                    ->orWhereRaw("CONCAT(p.par_nombres,' ',p.par_apellidos) LIKE ?", ["%{$query}%"]);
             })
 
             ->when($fecha_inicio, function ($q) use ($fecha_inicio) {
@@ -42,7 +44,7 @@ class AtencionController extends Controller
 
             ->select('atenciones.*')
             ->orderBy('fecha_hora', 'desc')
-            ->paginate(5)->withQueryString();
+            ->paginate(7)->withQueryString();
 
 
         if ($request->ajax()) {
@@ -66,7 +68,9 @@ class AtencionController extends Controller
                 $q->where(function ($sub) use ($query) {
                     $sub->where('u.name', 'like', "%{$query}%")
                         ->orWhere('p.par_identificacion', 'like', "%{$query}%")
-                        ->orWhere('p.par_nombres', 'like', "%{$query}%");
+                        ->orWhere('p.par_nombres', 'like', "%{$query}%")
+                        ->orWhere('p.par_apellidos', 'like', "%{$query}%")
+                        ->orWhereRaw("CONCAT(p.par_nombres,' ',p.par_apellidos) LIKE ?", ["%{$query}%"]);
                 });
             })
             ->when($fecha_inicio, fn($q) => $q->whereDate('fecha_hora', '>=', $fecha_inicio))
@@ -75,7 +79,7 @@ class AtencionController extends Controller
             ->orderBy('fecha_hora', 'desc')
             ->get();
 
-        return Excel::download(new PacienteExport($atenciones), 'pacientes.xlsx');// eroor
+        return Excel::download(new PacienteExport($atenciones), 'pacientes.xlsx');
     }
 
 
@@ -101,9 +105,10 @@ class AtencionController extends Controller
         }
 
         return view('atenciones.registrar', compact('paciente'));
+        //return view('atenciones.index_atenciones', compact('paciente'));
     }
 
-
+    // Registrar atención
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -115,14 +120,13 @@ class AtencionController extends Controller
             'observaciones' => 'nullable'
         ]);
 
-        // valor por defecto
         $data['ficha_id'] = is_numeric($data['ficha_id']) ? $data['ficha_id'] : 1;
-
         $data['user_id'] = Auth::id();
-        $paciente = Paciente::find($request->paciente_id);
 
-        Atencion::create($data);//jhfyfsf
+        Atencion::create($data);
 
-        return redirect()->route('registros.index')->with('success', "El paciente {$paciente->par_nombres} {$paciente->par_apellidos} registrado correctamente");
+        return redirect()
+            ->route('atenciones.index_atenciones', ['cedula' => $request->paciente_id])
+            ->with('success', 'Atención registrada correctamente.');
     }
 }

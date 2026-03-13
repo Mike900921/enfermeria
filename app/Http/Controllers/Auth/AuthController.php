@@ -15,8 +15,6 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-
-
     public function login(Request $request)
     {
         $request->validate([
@@ -26,7 +24,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/users'); // o la ruta que quieras
+            return redirect()->intended('consulta'); // o la ruta que quieras
         }
 
         return back()->withErrors([
