@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/consulta', [ConsultaController::class, 'index'])->name('consulta.index');
     Route::post('/consulta', [ConsultaController::class, 'buscar'])->name('consulta.buscar');
     Route::get('/atenciones', [ConsultaController::class, 'index'])->name('atenciones.index_atenciones');
+    
 
 
 

@@ -108,7 +108,7 @@ class AtencionController extends Controller
         //return view('atenciones.index_atenciones', compact('paciente'));
     }
 
-
+    // Registrar atención
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -126,7 +126,7 @@ class AtencionController extends Controller
         Atencion::create($data);
 
         return redirect()
-            ->route('atenciones.index_atenciones', ['paciente_id' => $request->paciente_id])
+            ->route('atenciones.index_atenciones', ['cedula' => $request->paciente_id])
             ->with('success', 'Atención registrada correctamente.');
     }
 }

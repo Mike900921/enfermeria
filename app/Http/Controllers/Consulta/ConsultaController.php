@@ -8,10 +8,18 @@ use App\Models\Paciente\Paciente;
 
 class ConsultaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('atenciones.index_atenciones');
+        $paciente = null;
+
+        if ($request->cedula) {
+            $paciente = Paciente::with('atenciones.usuario', 'ficha.fichapro.programa')
+                ->where('par_identificacion', $request->cedula)
+                ->first();
+        }
+        return view('atenciones.index_atenciones', compact('paciente'));
     }
+
 
     public function buscar(Request $request)
     {
