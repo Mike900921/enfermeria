@@ -248,7 +248,7 @@
         <div class="login-left">
             <h2>¡Bienvenido al sistema de atención de enfermería!</h2>
             <p>Cada atención cuenta, cada cuidado transforma una vida.</p>
-            <img src="{{ asset('img/enfermerossf.png') }}" alt="Seguridad CDTI" width="500">
+            <img src="{{ asset('img/enfermeros2.png') }}" alt="Seguridad CDTI" width="500">
         </div>
 
         <div class="login-right">
