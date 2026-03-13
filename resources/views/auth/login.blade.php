@@ -64,7 +64,8 @@
         }
 
         .login-left img {
-            max-width: 80%;
+            width: 100%;
+            max-width: 1000;
             opacity: 0.95;
         }
 
@@ -225,7 +226,7 @@
             }
 
             .login-left img {
-                max-width: 50%;
+                max-width: 100%;
                 margin-top: 5px;
             }
 
@@ -235,7 +236,7 @@
             }
 
             .login-card {
-                padding: 20px;
+                padding: 30px;
                 border: 3px solid #26A743;
                 box-shadow: 0 8px 25px rgba(38, 167, 67, 0.3);
             }
@@ -246,9 +247,9 @@
 <body>
     <div class="login-container">
         <div class="login-left">
-            <h2>¡Bienvenido al sistema de atención de enfermería!</h2>
+            <h3>¡Bienvenido al sistema de atención de enfermería!</h3>
             <p>Cada atención cuenta, cada cuidado transforma una vida.</p>
-            <img src="{{ asset('img/enfermeros2.png') }}" alt="Seguridad CDTI" width="500">
+            <img src="{{ asset('img/enfermeros2sf.png') }}" alt="Seguridad CDTI">
         </div>
 
         <div class="login-right">
