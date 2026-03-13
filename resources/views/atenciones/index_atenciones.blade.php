@@ -27,15 +27,12 @@
                     <div class="row">
                         <div class="col-md-8">
                             <label class="form-label">Número de Documento</label>
-                            <input type="text" name="cedula" class="form-control" required>
+                            <input type="text" name="cedula" class="form-control"
+                                value="{{ $paciente->par_identificacion ?? '' }}" required>
                         </div>
 
                         <div class="col-md-4 d-flex align-items-end">
-
-
-
                             <button type="submit" class="btn btn-verde w-100">
-
                                 Consultar
                             </button>
                         </div>
