@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 
 
+
 class UserController extends Controller
 {
     /**
@@ -18,8 +19,34 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('roles')->get();  // Ejecuta la consulta y trae los datos
-        return view('users.index', compact('users'));
+        // Obtenemos el filtro de la URL, por defecto "todo"
+        $filter = request()->query('filter', 'activos');
+
+        // Creamos la query base
+        $query = User::with('roles');
+
+        // Aplicamos el filtro
+        if ($filter === 'activos') {
+            $query->whereNull('deleted_at'); // solo activos
+        } elseif ($filter === 'inactivos') {
+            $query->onlyTrashed(); // solo inactivos
+        } else {
+            $query->withTrashed(); // todo
+        }
+
+        // Ejecutamos la consulta con paginación
+        $users = $query->paginate(5)->withQueryString();
+
+        return view('users.index', compact('users', 'filter'));
+    }
+
+    public function restore($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        $user->restore();
+
+        return redirect()->route('users.index')
+            ->with('success', 'Usuario ' . $user->name . ' restaurado correctamente');
     }
 
     /**
@@ -75,8 +102,13 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::withTrashed()->findOrFail($id);
         $roles = Roles::all();
+
+        if ($user->trashed()) {
+            return redirect()->route('users.index')
+                ->with('error', 'No se puede editar un usuario inactivo');
+        }
         return view('users.edit', compact('user', 'roles'));
     }
 
@@ -96,7 +128,7 @@ class UserController extends Controller
         }
 
         return redirect()->route('users.index')
-            ->with('success', 'Usuario actualizado correctamente');
+            ->with('success', 'Usuario ' . $user->name . ' ' . $user->last_name . ' actualizado correctamente');
     }
 
     public function destroy(User $user)
@@ -104,6 +136,6 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('users.index')
-            ->with('success', 'Usuario ' . $user->name . ' ' . $user->last_name . ' eliminado correctamente');
+            ->with('success', 'Usuario ' . $user->name . ' ' . $user->last_name . ' inhabilitado correctamente');
     }
 }

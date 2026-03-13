@@ -127,6 +127,6 @@ class AtencionController extends Controller
 
         Atencion::create($data);
 
-        return redirect()->route('registros.index')->with('success', 'El paciente fue registrado correctamente.');
+        return redirect()->route('registros.index')->with('success', 'El paciente ' . $paciente->par_nombres . ' ' . $paciente->par_apellidos . ' fue registrado correctamente.');
     }
 }

@@ -30,6 +30,7 @@
         padding: 0;
         margin: 0;
         user-select: none
+            /* evita selección de texto */
     }
 
     /* MENU */
@@ -67,8 +68,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
     }
+    
 
     .topbar .menu {
         display: flex;
@@ -107,8 +108,6 @@
     /* Sidebar colapsado: solo icono */
     .sidebar.closed .sidebar-text {
         display: none;
-
-
     }
 
     /* Avatar de letra y circulo del header */
@@ -126,8 +125,4 @@
         text-transform: uppercase;
         cursor: pointer;
         user-select: none
-            /* evita selección de texto */
     }
-
-
-    
