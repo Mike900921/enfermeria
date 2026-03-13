@@ -26,25 +26,25 @@
     </div>
 
     <div class="row">
-
+        <!--inicio de tabla-->
         <div class="col-6 me-5 card p-3  shadow-sm">
-            <table class="table  table-striped">
+            <table class="table  table-striped align-middle">
               <thead>
-                <tr>
+                <tr class="align-middle">
                 @if($ver === 'programa')
-                    <th class=" text-center">Nombre del Programa</th>
+                    <th class=" text-center ">Nombre del Programa</th>
                     <th class=" text-center">Coordinador del programa</th>
                     <th class=" text-center">Total Atenciones</th>
 
                 @elseif($ver === 'pacientes')
                     <th class=" text-center">Nombre del Paciente</th>
                     <th class=" text-center">Numero de documento</th>
-                    <th class=" text-center">ficha</th>
+                    <th class=" text-center ">ficha</th>
                     <th class=" text-center">total atenciones</th>
                 
                 @else
                     <th class=" text-center">Número de Ficha</th>
-                    <th class=" text-center">Programa Relacionado</th>
+                    <th class=" text-center ">Programa Relacionado</th>
                     <th class=" text-center">Total Atenciones</th>
                 @endif
                 </tr>
@@ -56,7 +56,7 @@
                         {{-- Vista por  Programa --}}
                         <td class=" text-center">{{ $query->etiqueta }}</td>
                         <td class=" text-center">{{ $query->nombre_coord .' '.$query->apellido_coord }}</td>
-                        <td class=" text-center align-middle"><span class="badge bg-primary ">{{ $query->total }}</span></td>
+                        <td class=" text-center "><span class="badge bg-primary ">{{ $query->total }}</span></td>
                     
                     @elseif($ver === 'pacientes')
 
@@ -64,13 +64,13 @@
                         <td class=" text-center">{{ $query->etiqueta }}</td>
                         <td class=" text-center">{{ $query->numeroDocumento }}</td>
                         <td class=" text-center">{{ $query->fichaPaciente }}</td>
-                        <td class=" text-center align-middle"><span class="badge bg-info ">{{ $query->total }}</span></td>
+                        <td class=" text-center "><span class="badge bg-info ">{{ $query->total }}</span></td>
 
                     @else
                         {{-- Vista por Ficha --}}
                         <td class=" text-center">{{ $query->etiqueta }}</td>
                         <td class=" text-center">{{ $query->programa }}</td>
-                        <td class=" text-center align-middle"><span class="badge bg-success">{{ $query->total }}</span></td>
+                        <td class=" text-center"><span class="badge bg-success">{{ $query->total }}</span></td>
                   @endif
 
                     @empty
@@ -97,6 +97,7 @@
                             <input type="date" name="fecha_fin" class="form-control"
                                 value="{{ request('fecha_fin') }}">
                         </div>
+                        <!--filtros por select-->
                         <div class="col-md-5">
                             <label class="form-label fw-bold">Agrupar por:</label>
                             <select name="ver" class="form-control">
@@ -105,12 +106,12 @@
                                  <option value="pacientes" @selected(request('ver') == 'pacientes') >paciente</option>
                             </select>
                         </div>
-
+                        <!--filtros por buscador-->
                         <div class="col-md-8">
                             <input type="text" placeholder="Buscar" name="buscador" class="form-control mt-4" value="{{ request('buscador') }}">
                         </div>
 
-                        {{-- Si existe algún parámetro en la URL, mostramos el botón de limpiar --}}
+                        <!--filtros para limpiar la busqueda-->
 
                         @if(request()->anyFilled(['fecha_inicio', 'fecha_fin', 'buscador']))
                         <div class="col-md-2">
@@ -129,6 +130,7 @@
                 </form>
             </div>
             <div class="row">
+                <!--estadisticas-->
                 <div class="col-12 card p-3 shadow-sm">
                     <canvas id="myChart"></canvas>
                 </div>
