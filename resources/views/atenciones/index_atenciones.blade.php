@@ -219,63 +219,59 @@
 
     {{-- Modal de Detalle del Paciente --}}
     @isset($paciente)
-        @foreach ($paciente->atenciones as $atencion)
-            <div class="modal fade" id="modalShowPaciente{{ $atencion->id }}" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
+        <div class="modal fade" id="modalShowPaciente{{ $paciente->par_identificacion }}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
-                        <div class="modal-header" style="background-color: #007832;">
-                            <h3 class="modal-title text-light">Detalle del Paciente</h3>
-                        </div>
+                    <div class="modal-header" style="background-color:#007832;">
+                        <h5 class="modal-title text-light">Información del Paciente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
 
-                        <div class="card p-3">
-                            <div class="card-body">
+                    <div class="modal-body">
 
-                                <p><strong>Nombre:</strong>
-                                    {{ $atencion->paciente->par_nombres }}
-                                    {{ $atencion->paciente->par_apellidos }}
-                                </p>
+                        <p><strong>Nombre y apellido:</strong>
+                            {{ $paciente->par_nombres }} {{ $paciente->par_apellidos }}
+                        </p>
 
-                                <p><strong>Teléfono:</strong>
-                                    {{ $atencion->paciente->par_telefono ?? 'No registrado' }}
-                                </p>
+                        <p><strong>Teléfono:</strong>
+                            {{ $paciente->par_telefono ?? 'No registrado' }}
+                        </p>
 
-                                <p><strong>Correo:</strong>
-                                    {{ $atencion->paciente->par_correo ?? 'No registrado' }}
-                                </p>
+                        <p><strong>Correo:</strong>
+                            {{ $paciente->par_correo ?? 'No registrado' }}
+                        </p>
 
-                                <p><strong>Acudiente:</strong>
-                                    {{ $atencion->paciente->acudiente->par_acu_nombre ?? 'No registrado' }}
-                                </p>
+                        <p><strong>Acudiente:</strong>
+                            {{ $paciente->acudiente->par_acu_nombre ?? 'No registrado' }}
+                        </p>
 
-                                <p><strong>Tel Acudiente:</strong>
-                                    {{ $atencion->paciente->acudiente->par_acu_tel ?? 'No registrado' }}
-                                </p>
+                        <p><strong>Tel Acudiente:</strong>
+                            {{ $paciente->acudiente->par_acu_tel ?? 'No registrado' }}
+                        </p>
 
-                                <p><strong>Parentesco:</strong>
-                                    {{ $atencion->paciente->acudiente->par_acu_parentesco ?? 'No registrado' }}
-                                </p>
+                        <p><strong>Parentesco:</strong>
+                            {{ $paciente->acudiente->par_acu_parentesco ?? 'No registrado' }}
+                        </p>
 
-                                <p><strong>Ficha:</strong>
-                                    {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}
-                                </p>
+                        <p><strong>Ficha:</strong>
+                            {{ $paciente->ficha->fic_numero ?? 'No registrado' }}
+                        </p>
 
-                                <p><strong>Programa:</strong>
-                                    {{ $atencion->paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}
-                                </p>
-
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Cerrar
-                            </button>
-                        </div>
+                        <p><strong>Programa:</strong>
+                            {{ $paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}
+                        </p>
 
                     </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+
                 </div>
             </div>
-        @endforeach
+        </div>
     @endisset
 @endsection
