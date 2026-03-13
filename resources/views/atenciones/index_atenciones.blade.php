@@ -31,11 +31,11 @@
                         </div>
 
                         <div class="col-md-4 d-flex align-items-end">
-<<<<<<< HEAD
-                            <button type="submit" class="btn btn-amarillo text-dark w-100">
-=======
-                            <button type="submit" class="btn btn-success w-100">
->>>>>>> 503cdc1d16885577152618f501e796be6f9a459a
+
+
+
+                            <button type="submit" class="btn btn-verde w-100">
+
                                 Consultar
                             </button>
                         </div>
@@ -47,8 +47,8 @@
                     <hr>
 
                     @if ($paciente)
-                        <div class="card mb-3 border-verde">
-                            <div class="card-header bg-verde text-white">
+                        <div class="card mb-3 border-azul-claro">
+                            <div class="card-header bg-azul-claro text-dark">
                                 Datos del Paciente
                             </div>
                             <div class="card-body">
@@ -83,11 +83,11 @@
                         </div>
 
                         {{-- HISTORIAL DE ATENCIONESese --}}
-                        <div class="card border-verde">
-                            <div class="card-header bg-verde text-white">
+                        <div class="card border-azul-claro">
+                            <div class="card-header bg-azul-claro text-dark">
                                 Historial de Atenciones
                             </div>
-                            <div class="card-body">
+                            <div class="card-body ">
                                 @if ($paciente->atenciones->count() > 0)
                                     <table
                                         class="table table-bordered table-striped table-hover shadow-sm text-center align-middle">
@@ -95,9 +95,8 @@
                                             <tr>
                                                 <th>Fecha</th>
                                                 <th>Motivo</th>
-                                                <th>Procedimientos</th>
-                                                <th>Observaciones</th>
                                                 <th>Enfermero</th>
+                                                <th>acción</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -105,8 +104,7 @@
                                                 <tr>
                                                     <td>{{ $atencion->fecha_hora }}</td>
                                                     <td>{{ $atencion->motivo }}</td>
-                                                    <td>{{ $atencion->procedimientos }}</td>
-                                                    <td>{{ $atencion->observaciones }}</td>
+
                                                     <td>{{ $atencion->usuario->name ?? 'No disponible' }}</td>
                                                 </tr>
                                             @endforeach

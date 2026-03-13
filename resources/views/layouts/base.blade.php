@@ -71,7 +71,7 @@
     }
 
     .bg-azul-claro {
-        background-color: #50E5F9;
+        background-color: #50e5f957;
         color: white;
         border-radius: 5px;
     }
@@ -82,9 +82,25 @@
         border-radius: 5px;
     }
 
+    .bg-azul {
+        background-color: #002f4dd3;
+        color: white;
+        border-radius: 5px;
+    }
+    .bg-morado {
+        background-color: #71277a;
+        color: white;
+        border-radius: 5px;
+    }
+    
+
     .border-verde {
-    border: 1px solid #007832 !important;
-}
+        border: 1px solid #007832 !important;
+    }
+
+    .border-azul-claro {
+        border: 1px solid #50e5f957 !important;
+    }
 </style>
 
 <body>

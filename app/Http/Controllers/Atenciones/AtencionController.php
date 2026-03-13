@@ -105,6 +105,7 @@ class AtencionController extends Controller
         }
 
         return view('atenciones.registrar', compact('paciente'));
+        //return view('atenciones.index_atenciones', compact('paciente'));
     }
 
 
@@ -127,6 +128,7 @@ class AtencionController extends Controller
 
         Atencion::create($data);
 
-        return redirect()->route('registros.index')->with('success', 'El paciente fue registrado correctamente.');
+        //return redirect()->route('registros.index')->with('success', 'El paciente fue registrado correctamente.');
+        return view('atenciones.index_atenciones', compact('paciente'))->with('success', 'Atención registrada correctamente.');
     }
 }
