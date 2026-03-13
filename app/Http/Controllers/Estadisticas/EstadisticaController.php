@@ -11,7 +11,7 @@ class EstadisticaController extends Controller
 {
    public function index(Request $request) {
 
-    //validaciones de los inputs de fecha 
+//--------------------------------------validaciones de los inputs de fecha -------------------------------------------------------------
         $request->validate([
             'fecha_inicio' => 'nullable|date|required_with:fecha_fin',
             'fecha_fin' => 'nullable|date|after_or_equal:fecha_inicio',
@@ -23,9 +23,30 @@ class EstadisticaController extends Controller
         ]);
 
 
+//-------------------------------Lógica automática,Si hay búsqueda y parece un ID de paciente------------------------------------------
+        $busqueda = $request->input('buscador');
+        $ver = $request->get('ver', 'ficha');
+
+        if ($request->filled('buscador')) {
+            
+            if (is_numeric($busqueda) && strlen($busqueda) >= 8) {
+                $ver = 'pacientes';
+            } 
+            
+            elseif (is_numeric($busqueda) && strlen($busqueda) < 8) {
+                $ver = 'ficha';
+            }
+        
+            else {
+                $ver = 'programa';
+            }
+        }
 
 
+//--------------------consulta base para las estadísticas, con joins para traer la información relacionada de fichas, programas, aprendices y coordinadores--------------------------------
     $query = DB::table('atenciones')
+
+    
 
             //instructores y estudiantes   
         ->join('senacdti_seguimientopro.sep_ficha', function($join){
@@ -55,8 +76,6 @@ class EstadisticaController extends Controller
             $query->whereDate('atenciones.fecha_hora', '<=', $request->fecha_fin);
         }
 
-        $ver = $request->get('ver', 'ficha');
-
         //filtros de seleccion de agrupación
         if ($ver === 'programa') {
             $query->select(
@@ -72,6 +91,21 @@ class EstadisticaController extends Controller
                 'coordinador.par_apellidos'
             );
         } 
+
+        elseif($ver === 'pacientes') {
+            $query->select('atenciones.ficha_id as fichaPaciente',
+                'atenciones.paciente_id as numeroDocumento',
+                DB::raw("CONCAT(aprendiz.par_nombres, ' ', aprendiz.par_apellidos) as etiqueta"),
+                DB::raw('count(atenciones.id) as total')
+            )
+
+            ->groupBy(
+                'etiqueta',
+                'fichaPaciente',
+                'numeroDocumento',
+            );
+
+        }
         
         else {
             $query->select(
@@ -93,7 +127,9 @@ class EstadisticaController extends Controller
             $query->where(function($q) use ($busqueda) {
                 $q->where('senacdti_seguimientopro.sep_ficha.fic_numero', 'like', "%$busqueda%")
                   ->orWhere('senacdti_seguimientopro.sep_programa.prog_nombre', 'like', "%$busqueda%")
-                  ->orWhere(DB::raw("CONCAT(coordinador.par_nombres, ' ', coordinador.par_apellidos)"), 'like', "%$busqueda%");
+                  ->orWhere(DB::raw("CONCAT(coordinador.par_nombres, ' ', coordinador.par_apellidos)"), 'like', "%$busqueda%")
+                  ->orWhere(DB::raw("CONCAT(aprendiz.par_nombres, ' ', aprendiz.par_apellidos)"), 'like', "%$busqueda%")
+                    ->orWhere('atenciones.paciente_id', 'like', "%$busqueda%");
             });
         }
 

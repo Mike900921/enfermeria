@@ -31,7 +31,11 @@
                         </div>
 
                         <div class="col-md-4 d-flex align-items-end">
-                            <button type="submit" class="btn btn-success w-100">
+
+
+
+                            <button type="submit" class="btn btn-verde w-100">
+
                                 Consultar
                             </button>
                         </div>
@@ -43,8 +47,8 @@
                     <hr>
 
                     @if ($paciente)
-                        <div class="card mb-3 border-success">
-                            <div class="card-header bg-success text-white">
+                        <div class="card mb-3 border-azul-claro">
+                            <div class="card-header bg-azul-claro text-dark">
                                 Datos del Paciente
                             </div>
                             <div class="card-body">
@@ -67,7 +71,7 @@
                                     </div>
 
                                     <div class="col-12 mt-3">
-                                        <button class="btn btn-success mt-4" title="Registrar nueva atención"
+                                        <button class="btn btn-verde mt-4" title="Registrar nueva atención"
                                             data-bs-toggle="modal"
                                             data-bs-target="#modalCreateAtencion{{ $paciente->par_identificacion }}">
                                             Registrar Nueva Atención
@@ -78,20 +82,20 @@
                         </div>
 
                         {{-- HISTORIAL DE ATENCIONESese --}}
-                        <div class="card border-primary">
-                            <div class="card-header bg-primary text-white">
+                        <div class="card border-azul-claro">
+                            <div class="card-header bg-azul-claro text-dark">
                                 Historial de Atenciones
                             </div>
-                            <div class="card-body">
+                            <div class="card-body ">
                                 @if ($paciente->atenciones->count() > 0)
-                                    <table class="table table-bordered table-striped">
-                                        <thead class="table-dark">
+                                    <table
+                                        class="table table-bordered table-striped table-hover shadow-sm text-center align-middle">
+                                        <thead class="table-success">
                                             <tr>
                                                 <th>Fecha</th>
                                                 <th>Motivo</th>
-                                                <th>Procedimientos</th>
-                                                <th>Observaciones</th>
                                                 <th>Enfermero</th>
+                                                <th>acción</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -99,8 +103,7 @@
                                                 <tr>
                                                     <td>{{ $atencion->fecha_hora }}</td>
                                                     <td>{{ $atencion->motivo }}</td>
-                                                    <td>{{ $atencion->procedimientos }}</td>
-                                                    <td>{{ $atencion->observaciones }}</td>
+
                                                     <td>{{ $atencion->usuario->name ?? 'No disponible' }}</td>
                                                 </tr>
                                             @endforeach

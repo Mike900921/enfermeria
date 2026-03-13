@@ -105,6 +105,7 @@ class AtencionController extends Controller
         }
 
         return view('atenciones.registrar', compact('paciente'));
+        //return view('atenciones.index_atenciones', compact('paciente'));
     }
 
 
@@ -119,14 +120,13 @@ class AtencionController extends Controller
             'observaciones' => 'nullable'
         ]);
 
-        // valor por defecto
         $data['ficha_id'] = is_numeric($data['ficha_id']) ? $data['ficha_id'] : 1;
-
         $data['user_id'] = Auth::id();
-        $paciente = Paciente::find($request->paciente_id);
 
         Atencion::create($data);
 
-        return redirect()->route('registros.index')->with('success', 'El paciente ' . $paciente->par_nombres . ' ' . $paciente->par_apellidos . ' fue registrado correctamente.');
+        return redirect()
+            ->route('atenciones.index_atenciones', ['paciente_id' => $request->paciente_id])
+            ->with('success', 'Atención registrada correctamente.');
     }
 }

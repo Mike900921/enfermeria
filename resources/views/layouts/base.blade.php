@@ -10,12 +10,97 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/topbar.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Document</title>
 </head>
 <style>
     .nav-link.text-dark:hover {
         background-color: #cccccc;
         border-radius: 5px;
+    }
+
+    .btn-azul {
+        background-color: #00304d;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .btn-azul-claro {
+        background-color: #50E5F9;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .btn-verde {
+        background-color: #007832;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .btn-morado {
+        background-color: #71277a;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .btn-amarillo {
+        background-color: #fdc300;
+        color: black;
+        border-radius: 5px;
+    }
+
+    /* Hover opcional */
+    .btn-azul:hover {
+        background-color: #004d7a;
+    }
+
+    .btn-azul-claro:hover {
+        background-color: #50E5F9;
+    }
+
+    .btn-verde:hover {
+        background-color: #009944;
+    }
+
+    .btn-morado:hover {
+        background-color: #8e3299;
+    }
+
+    .btn-amarillo:hover {
+        background-color: #ffdb4d;
+    }
+
+    .bg-azul-claro {
+        background-color: #50e5f957;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .bg-verde {
+        background-color: #007832;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .bg-azul {
+        background-color: #002f4dd3;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .bg-morado {
+        background-color: #71277a;
+        color: white;
+        border-radius: 5px;
+    }
+
+
+    .border-verde {
+        border: 1px solid #007832 !important;
+    }
+
+    .border-azul-claro {
+        border: 1px solid #50e5f957 !important;
     }
 </style>
 
@@ -38,15 +123,11 @@
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Perfil</a></li>
-                    <li><a class="dropdown-item" href="#">Configuración</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+
                     <li>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Cerrar sesión
+                            <i class="fas fa-sign-out-alt me-2 text-danger"></i> Cerrar sesión
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf

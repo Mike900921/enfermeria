@@ -37,9 +37,14 @@ Route::middleware('auth')->group(function () {
     // Dashboard / Consulta aprendiz
     Route::get('/consulta', [ConsultaController::class, 'index'])->name('consulta.index');
     Route::post('/consulta', [ConsultaController::class, 'buscar'])->name('consulta.buscar');
+    Route::get('/atenciones', [ConsultaController::class, 'index'])->name('atenciones.index_atenciones');
+
+
+
 
     // Registro de atenciones tabla
     Route::get('/registros', [AtencionController::class, 'index'])->name('registros.index');
+
     Route::post('/atenciones', [AtencionController::class, 'store'])->name('atenciones.store');
     Route::post('/buscar-paciente', [AtencionController::class, 'buscarPaciente'])->name('buscar.paciente');
 

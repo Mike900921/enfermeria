@@ -54,7 +54,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('users.edit', $user) }}" class="btn btn-warning btn-sm">
+                            <a href="{{ route('users.edit', $user) }}" class="btn btn-amarillo btn-sm">
                                 Editar
                             </a>
 
