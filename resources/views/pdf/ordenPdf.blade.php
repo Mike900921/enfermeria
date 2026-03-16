@@ -90,12 +90,24 @@
     <body>
 
         <!-- ENCABEZADO -->
-        <div class="header">
-            <div class="title">Registro de Atención</div>
-            <div style="text-align:right;">
-                Fecha: {{ date('d/m/Y') }}
-            </div>
-        </div>
+        <table style="width: 100%; border-bottom: 2px solid #39A900; padding-bottom: 10px; margin-bottom: 20px;">
+            <tr>
+                <td style="width: 20%; text-align: left; vertical-align: middle;">
+                    <img src="{{ public_path('img/logoSena.png') }}" width="70">
+                </td>
+                
+                <td style="width: 60%; text-align: center; vertical-align: middle;">
+                    <h2 class="title">
+                        Registro de Atención
+                    </h2>
+                </td>
+                
+                <td style="width: 20%; text-align: right; vertical-align: middle; font-size: 12px;">
+                    <strong>Fecha:</strong><br>
+                    {{ date('d/m/Y') }}
+                </td>
+            </tr>
+        </table>
 
 
         <!-- DATOS PACIENTE -->

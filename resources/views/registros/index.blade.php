@@ -41,7 +41,6 @@
         <div class="modal fade" id="modalShowPaciente{{ $atencion->id }}" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-
                     <!-- ENCABEZADO -->
                     <div class="modal-header text-white" style="background:#007832;">
                         <h4 class="modal-title">Informacion Médica</h4>
