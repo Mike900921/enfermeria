@@ -164,7 +164,7 @@
                     </a>
                 </li>
                 <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center" href="#" title="Encuesta">
+                  <a class="nav-link text-dark d-flex align-items-center" href="{{ route('caracterizacion') }}">
                         <i class="bi bi-card-checklist me-2"></i>
                         <span class="sidebar-text">Encuesta</span>
                     </a>
