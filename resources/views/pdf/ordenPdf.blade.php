@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>imprimir</title>
+</head>
+
+<body>
+
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="utf-8">
+
+        <style>
+            body {
+                font-family: DejaVu Sans, sans-serif;
+                font-size: 12px;
+                color: #333;
+            }
+
+            .header {
+                text-align: center;
+                border-bottom: 2px solid #198754;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+            }
+
+            .title {
+                font-size: 20px;
+                font-weight: bold;
+                color: #198754;
+            }
+
+            .section {
+                border: 1px solid #ccc;
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+
+            .section h4 {
+                margin: 0 0 10px 0;
+                color: #198754;
+            }
+
+            .row {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+
+            .col {
+                display: inline-block;
+                width: 48%;
+            }
+
+            .full {
+                width: 100%;
+            }
+
+            .label {
+                font-weight: bold;
+            }
+
+            .box {
+                border: 1px solid #ccc;
+                padding: 8px;
+                min-height: 40px;
+            }
+
+            .footer {
+                margin-top: 40px;
+                text-align: center;
+            }
+
+            .firma {
+                margin-top: 60px;
+                border-top: 1px solid #000;
+                width: 250px;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <!-- ENCABEZADO -->
+        <div class="header">
+            <div class="title">Registro de Atención</div>
+        </div>
+
+
+        <!-- DATOS PACIENTE -->
+        <div class="section">
+            <h4>Datos del Paciente</h4>
+
+            <div class="row">
+                <div class="col">
+                    <span class="label">Nombre:</span>
+                    {{ $atencion->paciente->par_nombres }} {{ $atencion->paciente->par_apellidos }}
+                </div>
+
+                <div class="col">
+                    <span class="label">Teléfono:</span>
+                    {{ $atencion->paciente->par_telefono ?? 'No registrado' }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <span class="label">Ficha:</span>
+                    {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}
+                </div>
+
+                <div class="col">
+                    <span class="label">Programa:</span>
+                    {{ $atencion->paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="full">
+                    <span class="label">Correo:</span>
+                    {{ $atencion->paciente->par_correo ?? 'No registrado' }}
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- INFORMACION CLINICA -->
+        <div class="section">
+            <h4>Información Clínica</h4>
+
+            <div class="row">
+                <div class="box">
+                    <span class="label">Motivo de consulta:</span><br>
+                    {{ $atencion->motivo ?? 'No registrado' }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="box">
+                    <span class="label">Procedimientos:</span><br>
+                    {{ $atencion->procedimientos ?? 'No registrado' }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="box">
+                    <span class="label">Observaciones:</span><br>
+                    {{ $atencion->observaciones ?? 'No registrado' }}
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- ACUDIENTE -->
+        <div class="section">
+            <h4>Datos del Acudiente</h4>
+
+            <div class="row">
+                <div class="col">
+                    <span class="label">Nombre:</span>
+                    {{ $atencion->paciente->acudiente->par_acu_nombre ?? 'No registrado' }}
+                </div>
+
+                <div class="col">
+                    <span class="label">Teléfono:</span>
+                    {{ $atencion->paciente->acudiente->par_acu_tel ?? 'No registrado' }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="full">
+                    <span class="label">Parentesco:</span>
+                    {{ $atencion->paciente->acudiente->par_acu_parentesco ?? 'No registrado' }}
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- FIRMA -->
+        <div class="footer">
+
+            <div class="firma">
+                Firma Profesional
+            </div>
+
+        </div>
+
+    </body>
+
+    </html>
+</body>
+
+</html>

@@ -102,7 +102,7 @@
                                             @foreach ($paciente->atenciones as $atencion)
                                                 <tr>
                                                     <td>{{ $atencion->fecha_hora }}</td>
-                                                    <td>{{ $atencion->motivo }}</td>
+                                                    <td class="text-truncate" style="max-width: 40px;">{{ $atencion->motivo }}</td>
                                                     <td>{{ $atencion->usuario->name ?? 'No disponible' }}</td>
                                                     <td>
                                                         <button class="btn btn-success p-1" title="Info usuario"

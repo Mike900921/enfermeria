@@ -34,7 +34,7 @@
                 @if($ver === 'programa')
                     <th class=" text-center ">Nombre del Programa</th>
                     <th class=" text-center">Coordinador del programa</th>
-                    <th class=" text-center">Total Atenciones</th>
+                    <th class=" tq1Qext-center">Total Atenciones</th>
 
                 @elseif($ver === 'pacientes')
                     <th class=" text-center">Nombre del Paciente</th>
@@ -74,7 +74,7 @@
                   @endif
 
                     @empty
-                        <td colspan="3" class="text-center">No se encontraron datos para los filtros seleccionados.</td>
+                        <td colspan="4" class="text-muted text-center" >No se encontraron datos para los filtros seleccionados.</td>
                 </tr>
                 @endforelse
               </tbody>
