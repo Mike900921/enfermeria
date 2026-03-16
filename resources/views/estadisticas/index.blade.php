@@ -74,7 +74,7 @@
                   @endif
 
                     @empty
-                        <td colspan="3" class="text-center">No se encontraron datos para los filtros seleccionados.</td>
+                        <td colspan="4" class="text-muted text-center" >No se encontraron datos para los filtros seleccionados.</td>
                 </tr>
                 @endforelse
               </tbody>
