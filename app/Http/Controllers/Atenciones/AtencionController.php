@@ -10,6 +10,7 @@ use App\Models\Atencion\Atencion;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\PacienteExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class AtencionController extends Controller
@@ -53,6 +54,25 @@ class AtencionController extends Controller
 
         return view('registros.index', compact('atenciones'));
     }
+
+    //metodo para generar PDF de la atención
+
+    public function generarPdf($id)
+    {
+        
+       
+        $atencion = Atencion::with(['paciente', 'usuario'])->findOrFail($id);
+
+        // Pasamos los datos a la vista del PDF
+        $pdf = Pdf::loadView('pdf.ordenPdf', compact('atencion'));
+
+        // Configuramos el papel (opcional, por defecto es A4)
+        $pdf->setPaper('letter', 'portrait');
+
+        // Retornamos el stream para que se abra en una pestaña nueva
+        return $pdf->stream('Atencion_'.$atencion->id.'.pdf');
+    }
+
 
     // Método para exportar a Excel
     public function export(Request $request)

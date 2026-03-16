@@ -34,7 +34,7 @@
                 @if($ver === 'programa')
                     <th class=" text-center ">Nombre del Programa</th>
                     <th class=" text-center">Coordinador del programa</th>
-                    <th class=" text-center">Total Atenciones</th>
+                    <th class=" tq1Qext-center">Total Atenciones</th>
 
                 @elseif($ver === 'pacientes')
                     <th class=" text-center">Nombre del Paciente</th>

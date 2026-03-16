@@ -38,35 +38,107 @@
 
     <!-- Modal de Detalle del Paciente -->
     @foreach ($atenciones as $atencion)
-        <!-- fila de tabla ... -->
-        <!-- Modal individual para este Paciente -->
-        <div class="modal fade" id="modalShowPaciente{{ $atencion->id }}" tabindex="-1"
-            aria-labelledby="modalShowLabel{{ $atencion->id }}" aria-hidden="true">
-            <div class="modal-dialog">
+        <div class="modal fade" id="modalShowPaciente{{ $atencion->id }}" tabindex="-1">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-color: #007832;">
-                        <h3 class="modal-title text-light">Detalle del Paciente</h3>
-                    </div>
-                    <div class="card p-3">
-                        <div class="card-body">
-                            <p><strong>Nombre y apellido:</strong> {{ $atencion->paciente->par_nombres }}
-                                {{ $atencion->paciente->par_apellidos }}</p>
-                            <p><strong>Teléfono:</strong> {{ $atencion->paciente->par_telefono ?? 'No registrado' }}</p>
-                            <p><strong>Correo:</strong> {{ $atencion->paciente->par_correo ?? 'No registrado' }}</p>
-                            <p><strong>Acudiente:</strong>
-                                {{ $atencion->paciente->acudiente->par_acu_nombre ?? 'No registrado' }}</p>
-                            <p><strong>Tel Acudiente:</strong>
-                                {{ $atencion->paciente->acudiente->par_acu_tel ?? 'No registrado' }}</p>
-                            <p><strong>Parentesco:</strong>
-                                {{ $atencion->paciente->acudiente->par_acu_parentesco ?? 'No registrado' }}</p>
-                            <p><strong>Ficha:</strong>
-                                {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}</p>
-                            <p><strong>Programa:</strong>
-                                {{ $atencion->paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}</p>
 
+                    <!-- ENCABEZADO -->
+                    <div class="modal-header text-white" style="background:#007832;">
+                        <h4 class="modal-title">Informacion Médica</h4>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <!-- INFORMACION DEL PACIENTE -->
+                        <div class="border p-3 mb-3">
+                            <h5 class="text-success">Datos del Paciente</h5>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <strong>Nombre:</strong>
+                                    {{ $atencion->paciente->par_nombres }} {{ $atencion->paciente->par_apellidos }}
+                                </div>
+
+                                <div class="col-md-3">
+                                    <strong>Teléfono:</strong>
+                                    {{ $atencion->paciente->par_telefono ?? 'No registrado' }}
+                                </div>
+
+                                <div class="col-md-3">
+                                    <strong>Ficha:</strong>
+                                    {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <strong>Programa:</strong>
+                                    {{ $atencion->paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}
+                                </div>
+
+                                <div class="col-md-6">
+                                    <strong>Correo:</strong>
+                                    {{ $atencion->paciente->par_correo ?? 'No registrado' }}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- INFORMACION CLINICA -->
+                        <div class="border p-3 mb-3 text-break">
+                            <h5 class="text-success">Información Clínica</h5>
+
+                            <p>
+                                <strong>Motivo de consulta:</strong><br>
+                                {{ $atencion->motivo ?? 'No registrado' }}
+                            </p>
+
+                            <p>
+                                <strong >Procedimientos:</strong><br>
+                                {{ $atencion->procedimientos ?? 'No registrado' }}
+                            </p>
+
+                            <p>
+                                <strong >Observaciones:</strong><br>
+                                {{ $atencion->observaciones ?? 'No registrado' }}
+                            </p>
+                        </div>
+
+
+                        <!-- ACUDIENTE -->
+                        <div class="border p-3 mb-3">
+                            <h5 class="text-success">Datos del Acudiente</h5>
+
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <strong>Nombre:</strong>
+                                    <p>{{ $atencion->paciente->acudiente->par_acu_nombre ?? 'No registrado' }}</p>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <strong>Teléfono:</strong>
+                                    <p>{{ $atencion->paciente->acudiente->par_acu_tel ?? 'No registrado' }}</p>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <strong>Parentesco:</strong>
+                                    <p>{{ $atencion->paciente->acudiente->par_acu_parentesco ?? 'No registrado' }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">Cerrar</button>
+
+                    <!-- BOTONES -->
+                    <div class="modal-footer">
+                        <a href="{{ route('atencionesPdf', $atencion->id) }}" class="btn btn-success" target="_blank">
+                            Imprimir Orden
+                        </a>
+
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

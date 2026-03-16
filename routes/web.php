@@ -61,6 +61,9 @@ Route::middleware('auth')->group(function () {
     //RUTA BOTON PARA EXPORTAR PACIENTE A EXCEL -- NO USAR
     //Route::get('/atenciones/export', function () { return Excel::download(new PacienteExport, 'Pacientes.xlsx');})->name('atenciones.export');
 
+    //RUTA PARA IMPRIMIR PDF DE LA ATENCION
+    Route::get('/atenciones/crear-pdf/{id}', [AtencionController::class, 'generarPdf'])->name('atencionesPdf');
+
 
     //RUTA PARA EXPORTAR PACIENTE A EXCEL CON FILTROS DE BUSQUEDA
     Route::get('/atenciones/export', [AtencionController::class, 'export'])
