@@ -64,10 +64,10 @@
                 font-weight: bold;
             }
 
-            .box {
-                border: 1px solid #ccc;
+            .box {  
                 padding: 8px;
                 min-height: 40px;
+                
             }
 
             .footer {
@@ -92,6 +92,9 @@
         <!-- ENCABEZADO -->
         <div class="header">
             <div class="title">Registro de Atención</div>
+            <div style="text-align:right;">
+                Fecha: {{ date('d/m/Y') }}
+            </div>
         </div>
 
 
