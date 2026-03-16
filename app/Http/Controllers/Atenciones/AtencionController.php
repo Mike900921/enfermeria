@@ -56,21 +56,17 @@ class AtencionController extends Controller
     }
 
     //metodo para generar PDF de la atención
-
     public function generarPdf($id)
     {
-        
-       
         $atencion = Atencion::with(['paciente', 'usuario'])->findOrFail($id);
-
         // Pasamos los datos a la vista del PDF
         $pdf = Pdf::loadView('pdf.ordenPdf', compact('atencion'));
 
         // Configuramos el papel (opcional, por defecto es A4)
+        // Configuramos el papel
         $pdf->setPaper('letter', 'portrait');
-
         // Retornamos el stream para que se abra en una pestaña nueva
-        return $pdf->stream('Atencion_'.$atencion->id.'.pdf');
+        return $pdf->stream('Atencion_' . $atencion->id . '.pdf');
     }
 
 

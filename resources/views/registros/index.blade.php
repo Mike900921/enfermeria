@@ -88,7 +88,6 @@
                         <!-- INFORMACION CLINICA -->
                         <div class="border p-3 mb-3 text-break">
                             <h5 class="text-success">Información diagnóstico</h5>
-
                             <p>
                                 <strong>Motivo de consulta:</strong><br>
                                 {{ $atencion->motivo ?? 'No registrado' }}

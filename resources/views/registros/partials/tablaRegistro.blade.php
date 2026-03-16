@@ -1,8 +1,3 @@
-<style>
-
-</style>
-
-
 <table class="table table-striped table-hover align-middle">
     <thead class="table-light">
         <tr>

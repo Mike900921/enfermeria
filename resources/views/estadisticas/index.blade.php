@@ -27,6 +27,8 @@
             @endif
         </div>
 
+
+
         <div class="row">
             <!--inicio de tabla-->
             <div class="col-6 me-5 card p-3  shadow-sm">
