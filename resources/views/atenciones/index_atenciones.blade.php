@@ -105,7 +105,6 @@
                                                 <tr>
                                                     <td>{{ $atencion->fecha_hora }}</td>
                                                     <td>{{ $atencion->motivo }}</td>
-
                                                     <td>{{ $atencion->usuario->name ?? 'No disponible' }}</td>
                                                 </tr>
                                             @endforeach
@@ -124,7 +123,7 @@
                         </div>
                     @endif
 
-                    <!-- Modal para registrar nueva atención - OJO tiene que ir dentro del if paciente--->
+                    <!-- Modal para registrar nueva atención - OJO tiene que ir dentro del isset paciente--->
                     <div class="modal fade" id="modalCreateAtencion{{ $paciente->par_identificacion }}"tabindex="-1"
                         aria-hidden="true">
                         <div class="modal-dialog modal-lg">
