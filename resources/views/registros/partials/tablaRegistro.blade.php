@@ -1,5 +1,5 @@
 <style>
-    
+
 </style>
 
 
@@ -11,8 +11,6 @@
             <th>Usuario</th>
             <th>Fecha y Hora</th>
             <th>Motivo</th>
-            <th>Procedimientos</th>
-            <th>Observaciones</th>
             <th>Accion</th>
         </tr>
     </thead>
@@ -23,9 +21,7 @@
                 <td>{{ $atencion->paciente->par_nombres }}</td>
                 <td>{{ $atencion->usuario->name }}</td>
                 <td>{{ $atencion->fecha_hora }}</td>
-                <td class="text-truncate" style="max-width: 40px;">{{ $atencion->motivo }}</td>
-                <td class="text-truncate" style="max-width: 40px;">{{ $atencion->procedimientos }}</td>
-                <td class="text-truncate" style="max-width: 40px;">{{ $atencion->observaciones }}</td>
+                <td class="text-truncate">{{ $atencion->motivo }}</td>
                 <td>
                     <button class="btn btn-success p-1" title="Info usuario" style="font-size: 12px;" data-bs-toggle="modal"
                         data-bs-target="#modalShowPaciente{{ $atencion->id }}">

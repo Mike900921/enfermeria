@@ -105,7 +105,6 @@
 </style>
 
 <body>
-
     <header class="topbar d-flex justify-content-between align-items-center">
         <div class="menu">
             <button onclick="toggleMenu()">☰</button>
@@ -164,7 +163,7 @@
                     </a>
                 </li>
                 <li class="nav-item mb-0 border-bottom">
-                  <a class="nav-link text-dark d-flex align-items-center" href="{{ route('caracterizacion') }}">
+                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('caracterizacion') }}">
                         <i class="bi bi-card-checklist me-2"></i>
                         <span class="sidebar-text">Encuesta</span>
                     </a>
@@ -185,16 +184,24 @@
             </ul>
         </nav>
 
-        <div class="w-100 h-auto">
-            @yield('content')
-        </div>
         <!-- Contenido principal -->
-
-
+        <main class="content w-100 h-auto">
+            @yield('content')
+        </main>
     </div>
 
     <!-- Incluir el script para el topbar desde public/js/topbar.js -->
     <script src="{{ asset('js/topbar.js') }}"></script>
+    <script>
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const main = document.getElementById('mainContent');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            main.classList.toggle('expanded');
+        });
+    </script>
 </body>
 
 
