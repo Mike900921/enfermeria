@@ -87,20 +87,19 @@
 
                         <!-- INFORMACION CLINICA -->
                         <div class="border p-3 mb-3 text-break">
-                            <h5 class="text-success">Información Clínica</h5>
-
+                            <h5 class="text-success">Información diagnóstico</h5>
                             <p>
                                 <strong>Motivo de consulta:</strong><br>
                                 {{ $atencion->motivo ?? 'No registrado' }}
                             </p>
 
                             <p>
-                                <strong >Procedimientos:</strong><br>
+                                <strong>Procedimientos:</strong><br>
                                 {{ $atencion->procedimientos ?? 'No registrado' }}
                             </p>
 
                             <p>
-                                <strong >Observaciones:</strong><br>
+                                <strong>Observaciones:</strong><br>
                                 {{ $atencion->observaciones ?? 'No registrado' }}
                             </p>
                         </div>
@@ -132,7 +131,7 @@
                     <!-- BOTONES -->
                     <div class="modal-footer">
                         <a href="{{ route('atencionesPdf', $atencion->id) }}" class="btn btn-success" target="_blank">
-                            Imprimir Orden
+                            Imprimir
                         </a>
 
                         <button class="btn btn-secondary" data-bs-dismiss="modal">

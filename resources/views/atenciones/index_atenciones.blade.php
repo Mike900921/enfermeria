@@ -4,15 +4,29 @@
 
 
 @section('content')
+
     <div class="container mt-4">
         <div class="card shadow-sm">
             <div class="card-header header-institucional text-center">
                 <h5 class="mb-0">Consulta de Paciente</h5>
+
             </div>
             @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <div
+                    style="
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: auto;
+            max-width: 90%;
+        ">
+                    <div class="alert alert-success alert-dismissible fade show shadow-lg border-0" role="alert"
+                        style="border-radius: 20px; padding-right: 50px;">
+                        <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 </div>
             @endif
 
@@ -102,7 +116,7 @@
                                             @foreach ($paciente->atenciones as $atencion)
                                                 <tr>
                                                     <td>{{ $atencion->fecha_hora }}</td>
-                                                    <td class="text-truncate" style="max-width: 40px;">{{ $atencion->motivo }}</td>
+                                                    <td>{{ $atencion->motivo }}</td>
                                                     <td>{{ $atencion->usuario->name ?? 'No disponible' }}</td>
                                                     <td>
                                                         <button class="btn btn-success p-1" title="Info usuario"
@@ -366,7 +380,7 @@
 
                                 <!-- INFORMACION CLINICA -->
                                 <div class="border p-3 mb-3">
-                                    <h5 class="text-success">Información Clínica</h5>
+                                    <h5 class="text-success">Información Atención</h5>
 
                                     <p>
                                         <strong>Motivo de consulta:</strong><br>
@@ -397,4 +411,11 @@
             </div>
         @endforeach
     @endisset
+
+    <script>
+        setTimeout(() => {
+            const alert = document.querySelector('.alert-success');
+            if (alert) alert.style.display = 'none';
+        }, 5000); // 5 segundos
+    </script>
 @endsection

@@ -25,19 +25,21 @@
         margin-top: 60px;
     }
 
+
     .layout nav ul {
         list-style: none;
         padding: 0;
         margin: 0;
         user-select: none
             /* evita selección de texto */
+
     }
 
     /* MENU */
     .sidebar {
         width: 250px;
         background: #eee;
-        height: calc(100vh - 60px);
+        min-height: calc(100vh - 60px);
     }
 
 

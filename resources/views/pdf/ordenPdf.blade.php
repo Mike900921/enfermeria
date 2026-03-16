@@ -68,21 +68,27 @@
                 border: 1px solid #ccc;
                 padding: 8px;
                 min-height: 40px;
-            }
 
-            .footer {
-                margin-top: 40px;
-                text-align: center;
-            }
+                .box {
+                    padding: 8px;
+                    min-height: 40px;
 
-            .firma {
-                margin-top: 60px;
-                border-top: 1px solid #000;
-                width: 250px;
-                margin-left: auto;
-                margin-right: auto;
-                text-align: center;
-            }
+
+                }
+
+                .footer {
+                    margin-top: 40px;
+                    text-align: center;
+                }
+
+                .firma {
+                    margin-top: 60px;
+                    border-top: 1px solid #000;
+                    width: 250px;
+                    margin-left: auto;
+                    margin-right: auto;
+                    text-align: center;
+                }
         </style>
 
     </head>
@@ -90,9 +96,25 @@
     <body>
 
         <!-- ENCABEZADO -->
-        <div class="header">
-            <div class="title">Registro de Atención</div>
-        </div>
+        <table
+            style="width: 100%; width: 100%; border-bottom: 2px solid #39A900; padding-bottom: 10px; margin-bottom: 20px;">
+            <tr>
+                <td style="width: 20%; text-align: left; vertical-align: middle;">
+                    <img src="{{ public_path('img/logoSena.png') }}" width="70">
+                </td>
+
+                <td style="width: 60%; text-align: center; vertical-align: middle;">
+                    <h2 class="title">
+                        Registro de Atención
+                    </h2>
+                </td>
+
+                <td style="width: 20%; text-align: right; vertical-align: middle; font-size: 12px;">
+                    <strong>Fecha:</strong><br>
+                    {{ date('d/m/Y') }}
+                </td>
+            </tr>
+        </table>
 
 
         <!-- DATOS PACIENTE -->
