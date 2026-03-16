@@ -140,7 +140,7 @@
 
     <!-- Sidebar y contenido -->
     <div class="layout">
-        <aside id="sidebar" class="sidebar">
+        <nav id="sidebar" class="sidebar">
             <ul class="nav flex-column">
                 <li class="nav-item mb-0 border-bottom">
                     <a class="nav-link text-dark d-flex align-items-center" href="{{ route('users.index') }}"
@@ -183,10 +183,14 @@
                     </a>
                 </li>
             </ul>
-        </aside>
+        </nav>
 
+        <div class="w-100 h-auto">
+            @yield('content')
+        </div>
         <!-- Contenido principal -->
-        @yield('content')
+
+
     </div>
 
     <!-- Incluir el script para el topbar desde public/js/topbar.js -->
