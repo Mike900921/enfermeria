@@ -54,8 +54,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/atenciones/create', [AtencionController::class, 'create'])->name('atenciones.create');
     Route::post('/atenciones/store', [AtencionController::class, 'store'])->name('atenciones.store');
     // CRUD de usuarios
-    Route::resource('users', UserController::class);
-    Route::post('/users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
+    //rutas proyegidas por el permiso gestionar-usuarios con role administrador
+    Route::middleware('can:gestionar-usuarios')->group(function () {
+        Route::resource('users', UserController::class);
+        Route::post('/users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
+    });
 
 
     //RUTA BOTON PARA EXPORTAR PACIENTE A EXCEL -- NO USAR
