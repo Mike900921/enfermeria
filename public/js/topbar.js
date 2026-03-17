@@ -1,11 +1,3 @@
-function toggleMenu() {
-    const sidebar = document.getElementById("sidebar");
-    sidebar.classList.toggle("closed");
-
-    // Guardamos el estado en localStorage
-    localStorage.setItem("sidebarClosed", sidebar.classList.contains("closed"));
-}
-
 // Al cargar la página, revisamos el estado
 window.addEventListener("DOMContentLoaded", () => {
     const sidebar = document.getElementById("sidebar");
@@ -23,13 +15,15 @@ window.addEventListener("DOMContentLoaded", () => {
 function toggleMenu() {
     const sidebar = document.getElementById("sidebar");
 
-    // Activamos transición antes de cambiar el estado
     sidebar.classList.add("toggle-transition");
-
     sidebar.classList.toggle("closed");
-    localStorage.setItem("sidebarClosed", sidebar.classList.contains("closed"));
 
-    // Quitamos la transición después de que termine
+    const isClosed = sidebar.classList.contains("closed");
+
+    document.documentElement.classList.toggle("sidebar-closed", isClosed);
+
+    localStorage.setItem("sidebarClosed", isClosed);
+
     setTimeout(() => {
         sidebar.classList.remove("toggle-transition");
     }, 300);

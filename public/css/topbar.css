@@ -16,15 +16,12 @@
         align-items: center;
         padding: 0 20px;
         z-index: 1000;
-        user-select: none
     }
 
     /* Layout debajo del header */
     .layout {
         display: flex;
-        margin-top: 60px;
     }
-
 
     .layout nav ul {
         list-style: none;
@@ -32,14 +29,22 @@
         margin: 0;
         user-select: none
             /* evita selección de texto */
-
     }
 
     /* MENU */
     .sidebar {
+        position: fixed;
+        top: 60px;
+        left: 0;
         width: 250px;
+        height: calc(100vh - 60px);
         background: #eee;
-        min-height: calc(100vh - 60px);
+        transition: width .3s;
+    }
+
+    /* SIDEBAR COLAPSADO */
+    .sidebar.closed {
+        width: 70px;
     }
 
 
@@ -55,8 +60,15 @@
 
     /* CONTENIDO */
     .content {
-        flex: 1;
+        margin-left: 250px;
+        margin-top: 60px;
         padding: 20px;
+        transition: margin-left .3s;
+    }
+
+    /* CONTENIDO CUANDO SIDEBAR ESTA CERRADO */
+    .sidebar.closed+.content {
+        margin-left: 70px;
     }
 
     .topbar .menu button {
@@ -127,4 +139,14 @@
         text-transform: uppercase;
         cursor: pointer;
         user-select: none
+    }
+
+    /* sidebar colapsado desde carga */
+    html.sidebar-closed .sidebar {
+        width: 50px;
+    }
+
+    /* contenido ajustado */
+    html.sidebar-closed .content {
+        margin-left: 70px;
     }

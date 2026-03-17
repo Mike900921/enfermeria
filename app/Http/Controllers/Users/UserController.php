@@ -8,6 +8,7 @@ use App\Models\Rol\Roles;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 
 
@@ -67,11 +68,11 @@ class UserController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:20',
+            'name' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
+            'last_name' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
+            'phone_number' => 'required|digits_between:7,15',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed|regex:/[A-Z]/|regex:/[!@#$%^&*()_\-+=.]/', // Al menos una letra mayúscula y un carácter especial
             'roles_id' => 'required|integer|exists:roles,id',
         ]);
 
@@ -115,20 +116,45 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+
     public function update(Request $request, User $user)
     {
-        $data = $request->except('password');
+        //dd($request->all());
+        $request->validate([
+            'name' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
+            'last_name' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
+            'phone_number' => 'required|digits_between:7,15',
+
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($user->user_id, 'user_id')
+            ],
+
+            'roles_id' => 'required|exists:roles,id',
+
+            'password' => [
+                'sometimes',
+                'nullable',
+                'string',
+                'min:8',
+                'confirmed',
+                'regex:/[A-Z]/',
+                'regex:/[!@#$%^&*()_\-+=.]/'
+            ],
+        ]);
+
+        $data = $request->except(['password', 'password_confirmation']);
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
 
         $user->update($data);
 
-        if ($request->filled('password')) {
-            $user->update([
-                'password' => Hash::make($request->password)
-            ]);
-        }
-
         return redirect()->route('users.index')
-            ->with('success', 'Usuario ' . $user->name . ' ' . $user->last_name . ' actualizado correctamente');
+            ->with('success', 'Usuario ' . $user->name . ' actualizado correctamente');
     }
 
     public function destroy(User $user)

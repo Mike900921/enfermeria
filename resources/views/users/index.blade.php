@@ -15,7 +15,7 @@
         }
     </style>
 
-    <div class="container">
+    <div class="container user-select-none">
         <h2>Listado de Usuarios</h2>
 
         <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">
@@ -56,12 +56,12 @@
                     </select>
                 </form>
             </div>
-
         <div class="border rounded-4 overflow-hidden shadow-sm">
             <table class="table table-striped table-hover align-middle mb-0">
+
                 <thead class="table-light">
                     <tr>
-                        <th>Nombre</th>
+                        <th>Nombre de Usuario</th>
                         <th>Email</th>
                         <th>Rol</th>
                         <th>Estado</th>
@@ -71,7 +71,7 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr @if ($user->trashed()) class="table-secondary" @endif>
-                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->name }} {{ $user->last_name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->roles->nombre_rol }}</td>
                             <td>
