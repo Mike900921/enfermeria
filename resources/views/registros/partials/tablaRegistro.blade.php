@@ -1,4 +1,9 @@
-<table class="table table-striped table-hover align-middle">
+<style>
+    .user-select-auto {
+        user-select: text !important;
+    }
+</style>
+<table class="table table-striped table-hover align-middle ">
     <thead class="table-light">
         <tr>
             <th>ID</th>
@@ -9,7 +14,7 @@
             <th>Accion</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="user-select-auto">
         @forelse ($atenciones as $atencion)
             <tr>
                 <td>{{ $atencion->paciente->par_identificacion }}</td>
@@ -36,4 +41,3 @@
         {{ $atenciones->links('pagination::bootstrap-5') }}
     </div>
 @endif
-

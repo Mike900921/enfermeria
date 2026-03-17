@@ -14,13 +14,34 @@
             </div>
 
             <div class="mb-3">
-                <label>Email</label>
-                <input type="email" name="email" value="{{ $user->email }}" class="form-control" required>
+                <label>Apellido</label>
+                <input type="text" name="last_name" value="{{ $user->last_name }}" class="form-control" required>
             </div>
 
             <div class="mb-3">
-                <label>Nueva Contraseña (opcional)</label>
-                <input type="password" name="password" class="form-control">
+                <label>Número de Teléfono</label>
+                <input type="text" name="phone_number" value="{{ $user->phone_number }}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" name="email" value="{{ $user->email }}" class="form-control" required>
+                @error('email')
+                    <div class="text-danger small position-absolute">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>Nueva Contraseña</label>
+                <input type="password" name="password" class="form-control" placeholder="Dejar vacío si no desea cambiarla">
+                @error('password')
+                    <div class="text-danger small position-absolute">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label>Confirmar Nueva Contraseña</label>
+                <input type="password" name="password_confirmation" class="form-control">
             </div>
 
             <div class="mb-3">

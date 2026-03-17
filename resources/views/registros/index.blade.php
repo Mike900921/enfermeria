@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
-    <div class="container">
+    <div class="container user-select-none">
         <h2>Atenciones Registradas</h2>
 
         @if (session('success'))
@@ -94,12 +94,12 @@
                             </p>
 
                             <p>
-                                <strong >Procedimientos:</strong><br>
+                                <strong>Procedimientos:</strong><br>
                                 {{ $atencion->procedimientos ?? 'No registrado' }}
                             </p>
 
                             <p>
-                                <strong >Observaciones:</strong><br>
+                                <strong>Observaciones:</strong><br>
                                 {{ $atencion->observaciones ?? 'No registrado' }}
                             </p>
                         </div>
