@@ -15,8 +15,8 @@
                 <td>{{ $atencion->paciente->par_identificacion }}</td>
                 <td>{{ $atencion->paciente->par_nombres }}</td>
                 <td>{{ $atencion->usuario->name }}</td>
-                <td>{{ $atencion->fecha_hora }}</td>
-                <td class="text-truncate">{{ $atencion->motivo }}</td>
+                <td style="max-width: 100px;">{{ $atencion->fecha_hora }}</td>
+                <td class="text-truncate" style="max-width: 100px;">{{ $atencion->motivo }}</td>
                 <td>
                     <button class="btn btn-success p-1" title="Info usuario" style="font-size: 12px;" data-bs-toggle="modal"
                         data-bs-target="#modalShowPaciente{{ $atencion->id }}">

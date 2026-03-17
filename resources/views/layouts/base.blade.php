@@ -105,6 +105,11 @@
 </style>
 
 <body>
+    <script id="a3x9vd">
+        if (localStorage.getItem("sidebarClosed") === "true") {
+            document.documentElement.classList.add("sidebar-closed");
+        }
+    </script>
     <header class="topbar d-flex justify-content-between align-items-center">
         <div class="menu">
             <button onclick="toggleMenu()">☰</button>
