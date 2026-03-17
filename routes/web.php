@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
     // CRUD de usuarios
     
     //rutas protegidas por el permiso gestionar-usuarios con rol administrador
-    Route::middleware(['auth'],'can:gestionar-usuarios')->group(function () {
+    Route::middleware(['auth','can:gestionar-usuarios'])->group(function () {
         Route::resource('users', UserController::class);
         Route::post('/users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
     });
