@@ -129,11 +129,16 @@ class AtencionController extends Controller
     {
         $data = $request->validate([
             'paciente_id' => 'required',
-            'motivo' => 'required',
+            'motivo' => 'required|max:255',
             'ficha_id' => 'nullable',
             'fecha_hora' => 'required',
             'procedimientos' => 'nullable',
             'observaciones' => 'nullable'
+        ],[
+            'paciente_id.required' => 'El campo paciente es obligatorio.',
+            'motivo.required' => 'El campo motivo es obligatorio.',
+            'motivo.max' => 'El campo motivo debe tener entre 2 y 255 caracteres.',
+            'fecha_hora.required' => 'El campo fecha y hora es obligatorio.'
         ]);
 
         $data['ficha_id'] = is_numeric($data['ficha_id']) ? $data['ficha_id'] : 1;
