@@ -36,3 +36,4 @@
         {{ $atenciones->links('pagination::bootstrap-5') }}
     </div>
 @endif
+
