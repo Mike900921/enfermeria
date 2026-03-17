@@ -54,7 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/atenciones/create', [AtencionController::class, 'create'])->name('atenciones.create');
     Route::post('/atenciones/store', [AtencionController::class, 'store'])->name('atenciones.store');
     // CRUD de usuarios
-    //rutas proyegidas por el permiso gestionar-usuarios con role administrador
+    
+    //rutas protegidas por el permiso gestionar-usuarios con rol administrador
     Route::middleware('can:gestionar-usuarios')->group(function () {
         Route::resource('users', UserController::class);
         Route::post('/users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
