@@ -19,7 +19,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    use AuthorizesRequests;
+    
     public function index()
     {
 
@@ -64,6 +64,12 @@ class UserController extends Controller
     public function create()
     {
         //
+                 // Validación manual
+        if (Gate::denies('gestionar-usuarios')) {
+            return redirect()->route('registros.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
+
         $roles = Roles::all();
         $user = new User();
         return view('users.create', compact('roles', 'user'));
@@ -74,7 +80,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+                 // Validación manual
+        if (Gate::denies('gestionar-usuarios')) {
+            return redirect()->route('registros.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
+
         $request->validate([
             'name' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
             'last_name' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
@@ -111,6 +123,13 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+
+                 // Validación manual
+        if (Gate::denies('gestionar-usuarios')) {
+            return redirect()->route('registros.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
+
         $user = User::withTrashed()->findOrFail($id);
         $roles = Roles::all();
 
@@ -128,6 +147,13 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+
+                 // Validación manual
+        if (Gate::denies('gestionar-usuarios')) {
+            return redirect()->route('registros.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
+
         //dd($request->all());
         $request->validate([
             'name' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
@@ -167,6 +193,13 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+
+                 // Validación manual
+        if (Gate::denies('gestionar-usuarios')) {
+            return redirect()->route('registros.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
+
         $user->delete();
 
         return redirect()->route('users.index')

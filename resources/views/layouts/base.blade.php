@@ -143,7 +143,7 @@
     </header>
 
     <!-- Sidebar y contenido -->
-    <div class="layout">
+    <div class="layout ">
         <nav id="sidebar" class="sidebar">
             <ul class="nav flex-column">
                 @can('gestionar-usuarios')
@@ -192,8 +192,13 @@
         </nav>
 
         <!-- Contenido principal -->
-        <main class="content w-100 h-auto">
-            @yield('content')
+        <main class="content w-100 h-auto fondo-global ">
+            <div class="fondo-logo">
+                <img src="/img/logoSena.png" alt="Logo" />
+            </div>
+            <div style="position: relative;">
+                @yield('content')
+            </div>
         </main>
     </div>
 

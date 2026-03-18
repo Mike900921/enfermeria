@@ -2,6 +2,30 @@
         margin: 0;
         font-family: Arial;
     }
+.fondo-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;   /* Ocupa todo el ancho del contenedor */
+    height: 100%;  /* Ocupa todo el alto del contenedor */
+    display: flex;
+    justify-content: center; /* Centrar el logo horizontalmente */
+    align-items: center;     /* Centrar el logo verticalmente */
+    pointer-events: none;    /* Para que no interfiera con clicks */
+    z-index: 0;              /* Detrás del contenido */
+    opacity: 0.2;            /* Logo semitransparente */
+}
+
+.fondo-logo img {
+    width: 70vw;        /* ajusta este valor (40–70 funciona bien) */
+    max-width: 500px;   /* nunca más grande que esto */
+    height: auto;       /* mantiene proporción */
+}
+
+.fondo-global {
+    position: relative;
+    min-height: 100vh; /* altura mínima igual al viewport */
+}
 
     /* BARRA VERDE FIJA */
     .topbar {

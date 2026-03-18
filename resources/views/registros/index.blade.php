@@ -10,7 +10,7 @@
     </div>
     @endif
 
-    @if(session('error'))
+    @if(session('error')) {{-- alerta para acceso denegado a la vista de usuarios --}}
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {{ session('error') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -21,7 +21,7 @@
         <input id="fecha_inicio" type="date" class="form-control me-2" placeholder="Fecha inicio">
         <input id="fecha_fin" type="date" class="form-control me-2" placeholder="Fecha fin">
         <input id="input-busqueda" class="form-control me-2" placeholder="Buscar Paciente..." />
-        <button id="btn-buscar" class="btn btn-outline-success" type="submit">Buscar</button>
+        <button id="btn-buscar" class="btn btn-success" type="submit" style="font-size: 20px;"> <i class="bi bi-search"></i></button>
     </div>
 
     <a id="btn-excel" href="{{ route('atenciones.export') }}" class="btn btn-success ms-2">
@@ -57,7 +57,7 @@
 
                 <!-- INFORMACION DEL PACIENTE -->
                 <div class="border p-3 mb-3">
-                    <h5 class="text-success">Datos del Paciente</h5>
+                    <h5 class="text-success fw-bold" ><i class="bi bi-person-arms-up"></i> Datos del Paciente</h5>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -92,7 +92,7 @@
 
                 <!-- INFORMACION CLINICA -->
                 <div class="border p-3 mb-3 text-break">
-                    <h5 class="text-success">Información Clínica</h5>
+                    <h5 class="text-success fw-bold"><i class="bi bi-info-circle-fill"></i> Información Del Registro</h5>
 
                     <p>
                         <strong>Motivo de consulta:</strong><br>
@@ -113,7 +113,7 @@
 
                 <!-- ACUDIENTE -->
                 <div class="border p-3 mb-3">
-                    <h5 class="text-success">Datos del Acudiente</h5>
+                    <h5 class="text-success fw-bold"><i class="bi bi-person-vcard-fill"></i> Datos del Acudiente</h5>
 
                     <div class="row">
                         <div class="col-md-5">
@@ -137,7 +137,7 @@
             <!-- BOTONES -->
             <div class="modal-footer">
                 <a href="{{ route('atencionesPdf', $atencion->id) }}" class="btn btn-success" target="_blank">
-                    Imprimir Orden
+                    <i class="bi bi-printer-fill"></i> Imprimir Orden
                 </a>
 
                 <button class="btn btn-secondary" data-bs-dismiss="modal">

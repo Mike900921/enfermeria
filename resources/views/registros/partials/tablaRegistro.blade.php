@@ -4,7 +4,7 @@
     }
 </style>
 <div class="border rounded-4 overflow-hidden shadow-sm">
-    <table class="table table-striped table-hover align-middle ">
+    <table class="table table-striped table-hover align-middle text-center mb-0">
         <thead class="table-light">
             <tr>
                 <th>ID</th>
@@ -29,9 +29,9 @@
                     </td>
                     <td class="text-truncate" style="max-width: 100px;">{{ $atencion->motivo }}</td>
                     <td>
-                        <button class="btn btn-success p-1" title="Info usuario" style="font-size: 12px;" data-bs-toggle="modal"
+                        <button class="btn btn-success p-1 " title="Info usuario" style="font-size: 15px;" data-bs-toggle="modal"
                             data-bs-target="#modalShowPaciente{{ $atencion->id }}">
-                            Info
+                            <i class="bi bi-info-circle"></i> Ver registro
                         </button>
                     </td>
                 </tr>
