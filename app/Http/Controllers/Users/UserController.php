@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Gate;
 
 
 
@@ -18,8 +19,15 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+    use AuthorizesRequests;
     public function index()
     {
+
+         // Validación manual
+        if (Gate::denies('gestionar-usuarios')) {
+            return redirect()->route('registros.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
         // Obtenemos el filtro de la URL, por defecto "todo"
         $filter = request()->query('filter', 'activos');
 
