@@ -49,6 +49,7 @@
                 </div>
             @endforeach
             @endif
+            
 
             <div class="card-body">
 
@@ -121,40 +122,41 @@
                                 Historial de Atenciones
                             </div>
                             <div class="card-body ">
-                                @if ($paciente->atenciones->count() > 0)
-                                    <table
-                                        class="table table-bordered table-striped table-hover shadow-sm text-center align-middle">
-                                        <thead class="table-success">
-                                            <tr>
-                                                <th>Fecha</th>
-                                                <th>Motivo</th>
-                                                <th>Enfermero</th>
-                                                <th>acción</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($paciente->atenciones as $atencion)
+                                <div class="border rounded-4 overflow-hidden shadow-sm">
+                                    @if ($paciente->atenciones->count() > 0)
+                                        <table
+                                            class="mb-0 table table-bordered table-striped table-hover shadow-sm text-center align-middle">
+                                            <thead class="table-success">
                                                 <tr>
-                                                    <td>{{ $atencion->fecha_hora }}</td>
-                                                    <td class="text-truncate" style="max-width: 100px;">{{ $atencion->motivo }}
-                                                    </td>
-                                                    <td>{{ $atencion->usuario->name ?? 'No disponible' }}</td>
-                                                    <td>
-                                                        <button class="btn btn-success p-1" title="Info usuario"
-                                                            style="font-size: 12px;" data-bs-toggle="modal"
-                                                            data-bs-target="#modalInfoPaciente{{ $atencion->id }}">
-                                                            Info
-                                                        </button>
-                                                    </td>
+                                                    <th>Fecha</th>
+                                                    <th>Motivo</th>
+                                                    <th>Enfermero</th>
+                                                    <th>acción</th>
                                                 </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                @else
-                                    <div class="alert alert-info">
-                                        Este paciente no tiene atenciones registradas.
-                                    </div>
-                                @endif
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($paciente->atenciones as $atencion)
+                                                    <tr>
+                                                        <td>{{ $atencion->fecha_hora }}</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">{{ $atencion->motivo }}</td>
+                                                        <td>{{ $atencion->usuario->name ?? 'No disponible' }}</td>
+                                                        <td>
+                                                            <button class="btn btn-success p-1" title="Info usuario"
+                                                                style="font-size: 12px;" data-bs-toggle="modal"
+                                                                data-bs-target="#modalInfoPaciente{{ $atencion->id }}">
+                                                                Info
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <div class="alert alert-info">
+                                            Este paciente no tiene atenciones registradas.
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     @else

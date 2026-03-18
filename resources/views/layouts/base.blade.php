@@ -146,6 +146,7 @@
     <div class="layout">
         <nav id="sidebar" class="sidebar">
             <ul class="nav flex-column">
+                @can('gestionar-usuarios')
                 <li class="nav-item mb-0 border-bottom">
                     <a class="nav-link text-dark d-flex align-items-center" href="{{ route('users.index') }}"
                         title="Usuarios">
@@ -153,6 +154,7 @@
                         <span class="sidebar-text">Usuarios</span>
                     </a>
                 </li>
+                @endcan
                 <li class="nav-item mb-0 border-bottom">
                     <a class="nav-link text-dark d-flex align-items-center" href="{{ route('consulta.index') }}"
                         title="Aprendices">

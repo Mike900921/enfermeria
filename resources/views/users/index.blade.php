@@ -56,8 +56,9 @@
                     </select>
                 </form>
             </div>
+        <div class="border rounded-4 overflow-hidden shadow-sm">
+            <table class="table table-striped table-hover align-middle mb-0">
 
-            <table class="table table-striped table-hover align-middle">
                 <thead class="table-light">
                     <tr>
                         <th>Nombre de Usuario</th>
@@ -112,6 +113,7 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
             @if ($users->hasPages())
                 <div class="d-flex justify-content-center mt-3">
                     {{ $users->links('pagination::bootstrap-5') }}
