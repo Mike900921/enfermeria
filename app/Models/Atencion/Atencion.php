@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Users\User;
 use App\Models\Paciente\Paciente;
 use App\Models\Paciente\AcudientePaciente;
-
+use App\Models\Motivo\Motivo;
 class Atencion extends Model
 {
     use HasFactory;
@@ -21,8 +21,7 @@ class Atencion extends Model
         'user_id',
         'ficha_id',
         'fecha_hora',
-        'motivo',
-        'ficha_id',
+        'motivo_id',
         'procedimientos',
         'observaciones',
     ];
@@ -49,5 +48,9 @@ class Atencion extends Model
             'paciente_id',            // Local key en Atencion
             'par_identificacion'      // Local key en Paciente
         );
+    }
+    public function motivo()
+    {
+        return $this->belongsTo(Motivo::class, 'motivo_id');
     }
 }

@@ -49,7 +49,7 @@
                 </div>
             @endforeach
             @endif
-            
+
 
             <div class="card-body">
 
@@ -138,7 +138,9 @@
                                                 @foreach ($paciente->atenciones as $atencion)
                                                     <tr>
                                                         <td>{{ $atencion->fecha_hora }}</td>
-                                                        <td class="text-truncate" style="max-width: 100px;">{{ $atencion->motivo }}</td>
+                                                        <td class="text-truncate" style="max-width: 100px;">
+                                                            {{ $atencion->motivo->motivo ?? 'No registrado' }}
+                                                        </td>
                                                         <td>{{ $atencion->usuario->name ?? 'No disponible' }}</td>
                                                         <td>
                                                             <button class="btn btn-success p-1" title="Info usuario"
@@ -225,7 +227,23 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Motivo</label>
-                                            <textarea name="motivo" class="form-control" required></textarea>
+
+                                            <div class="input-group">
+                                                <select name="motivo_id" class="form-control" required>
+                                                    <option value="">Seleccione un motivo</option>
+                                                    @foreach ($motivos as $motivo)
+                                                        <option value="{{ $motivo->id }}">
+                                                            {{ $motivo->motivo }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+
+                                                <!-- Botón para agregar -->
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#modalMotivo">
+                                                    +
+                                                </button>
+                                            </div>
                                         </div>
 
                                         <div class="mb-3">
@@ -407,7 +425,7 @@
 
                                     <p>
                                         <strong>Motivo de consulta:</strong><br>
-                                        {{ $atencion->motivo ?? 'No registrado' }}
+                                        {{ $atencion->motivo->motivo?? 'No registrado' }}
                                     </p>
 
                                     <p>
