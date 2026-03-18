@@ -157,9 +157,9 @@
                 @endcan
                 <li class="nav-item mb-0 border-bottom">
                     <a class="nav-link text-dark d-flex align-items-center" href="{{ route('consulta.index') }}"
-                        title="Aprendices">
+                        title="Consulta">
                         <i class="bi bi-person-check-fill me-2"></i>
-                        <span class="sidebar-text">Aprendices</span>
+                        <span class="sidebar-text">Consulta</span>
                     </a>
                 </li>
                 <li class="nav-item mb-0 border-bottom">
