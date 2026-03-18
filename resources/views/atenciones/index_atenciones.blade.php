@@ -4,8 +4,13 @@
 
 
 @section('content')
+    <style>
+        .user-select-auto {
+            user-select: text !important;
+        }
+    </style>
 
-    <div class="container mt-4">
+    <div class="container mt-4 user-select-none">
         <div class="card shadow-sm">
             <div class="card-header header-institucional text-center">
                 <h5 class="mb-0">Consulta de Paciente</h5>
@@ -66,7 +71,7 @@
 
                         <div class="col-md-4 d-flex align-items-end">
                             <button type="submit" class="btn btn-verde w-100">
-                                Consultar
+                                <i class="bi bi-search"></i> Consultar
                             </button>
                         </div>
                     </div>
@@ -81,7 +86,7 @@
                             <div class="card-header bg-azul-claro text-dark">
                                 Datos del Paciente
                             </div>
-                            <div class="card-body">
+                            <div class="card-body user-select-auto">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <strong>Nombre:</strong><br>
@@ -103,12 +108,12 @@
                                     <div class="d-flex gap-3 mt-3">
                                         <button class="btn btn-verde" title="Registrar nueva atención" data-bs-toggle="modal"
                                             data-bs-target="#modalCreateAtencion{{ $paciente->par_identificacion }}">
-                                            Registrar Nueva Atención
+                                            <i class="bi bi-plus-circle"></i> Registrar Nueva Atención
                                         </button>
 
                                         <button class="btn btn-verde" data-bs-toggle="modal"
                                             data-bs-target="#modalShowPaciente{{ $paciente->par_identificacion }}">
-                                            Ver información del paciente
+                                            <i class="bi bi-info-circle"></i> Ver información del paciente
                                         </button>
                                     </div>
 
@@ -121,32 +126,35 @@
                             <div class="card-header bg-azul-claro text-dark">
                                 Historial de Atenciones
                             </div>
-                            <div class="card-body ">
+                            <div class="card-body">
                                 <div class="border rounded-4 overflow-hidden shadow-sm">
                                     @if ($paciente->atenciones->count() > 0)
                                         <table
                                             class="mb-0 table table-bordered table-striped table-hover shadow-sm text-center align-middle">
                                             <thead class="table-success">
                                                 <tr>
-                                                    <th>Fecha</th>
-                                                    <th>Motivo</th>
-                                                    <th>Enfermero</th>
-                                                    <th>acción</th>
+                                                    <th><i class="bi bi-calendar"></i> Fecha</th>
+                                                    <th><i class="bi bi-chat-dots"></i> Motivo</th>
+                                                    <th><i class="bi bi-person-badge"></i> Enfermero</th>
+                                                    <th><i class="bi bi-gear"></i> Acción</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody class="user-select-auto">
                                                 @foreach ($paciente->atenciones as $atencion)
                                                     <tr>
                                                         <td>{{ $atencion->fecha_hora }}</td>
                                                         <td class="text-truncate" style="max-width: 100px;">
+
                                                             {{ $atencion->motivo->motivo ?? 'No registrado' }}
                                                         </td>
+
+
                                                         <td>{{ $atencion->usuario->name ?? 'No disponible' }}</td>
                                                         <td>
-                                                            <button class="btn btn-success p-1" title="Info usuario"
+                                                            <button class="btn btn-verde p-1" title="Info usuario"
                                                                 style="font-size: 12px;" data-bs-toggle="modal"
                                                                 data-bs-target="#modalInfoPaciente{{ $atencion->id }}">
-                                                                Info
+                                                                <i class="bi bi-info-circle"></i> Ver Registro
                                                             </button>
                                                         </td>
                                                     </tr>
@@ -278,7 +286,7 @@
 
     {{-- Modal de Detalle del Paciente --}}
     @isset($paciente)
-        <div class="modal fade" id="modalShowPaciente{{ $paciente->par_identificacion }}" tabindex="-1">
+        <div class="modal fade user-select-none" id="modalShowPaciente{{ $paciente->par_identificacion }}" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content shadow">
 
@@ -298,7 +306,7 @@
                                 <i class="bi bi-person"></i> Datos del Paciente
                             </div>
 
-                            <div class="card-body">
+                            <div class="card-body user-select-auto">
                                 <div class="row mb-2">
                                     <div class="col-md-6">
                                         <strong>Nombre:</strong><br>
@@ -324,7 +332,7 @@
                                 <i class="bi bi-people"></i> Información del Acudiente
                             </div>
 
-                            <div class="card-body">
+                            <div class="card-body user-select-auto">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <strong>Nombre:</strong><br>
@@ -350,7 +358,7 @@
                                 <i class="bi bi-folder"></i> Información de Ficha
                             </div>
 
-                            <div class="card-body">
+                            <div class="card-body user-select-auto">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <strong>Número de ficha:</strong><br>
@@ -382,7 +390,7 @@
     {{-- Modal para mas info del Paciente -- mostrar = Procedimientos -> Observaciones --}}
     @isset($paciente)
         @foreach ($paciente->atenciones as $atencion)
-            <div class="modal fade" id="modalInfoPaciente{{ $atencion->id }}" tabindex="-1">
+            <div class="modal fade user-select-none" id="modalInfoPaciente{{ $atencion->id }}" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
 
@@ -394,7 +402,7 @@
                         <div class="modal-body">
 
                             <!-- INFORMACION DEL PACIENTE -->
-                            <div class="border p-3 mb-3">
+                            <div class="border p-3 mb-3 user-select-auto">
                                 <h5 class="text-success">Datos del Paciente</h5>
 
                                 <div class="row mb-2">

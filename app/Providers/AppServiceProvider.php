@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+
 use Illuminate\Support\Facades\Gate;
 
 use Illuminate\Support\ServiceProvider;
@@ -21,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('gestionar-usuarios', function ($user) {
-        return $user->roles_id === 2; 
+            return $user->roles_id === 1;
         });
     }
 }

@@ -111,7 +111,7 @@
         }
     </script>
     <header class="topbar d-flex justify-content-between align-items-center">
-        <div class="menu">
+        <div class="menu user-select-none">
             <button onclick="toggleMenu()">☰</button>
             <h3>Consultas enfermería</h3>
         </div>
@@ -147,13 +147,13 @@
         <nav id="sidebar" class="sidebar">
             <ul class="nav flex-column">
                 @can('gestionar-usuarios')
-                <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('users.index') }}"
-                        title="Usuarios">
-                        <i class="bi bi-people-fill me-2"></i>
-                        <span class="sidebar-text">Usuarios</span>
-                    </a>
-                </li>
+                    <li class="nav-item mb-0 border-bottom">
+                        <a class="nav-link text-dark d-flex align-items-center" href="{{ route('users.index') }}"
+                            title="Usuarios">
+                            <i class="bi bi-people-fill me-2"></i>
+                            <span class="sidebar-text">Usuarios</span>
+                        </a>
+                    </li>
                 @endcan
                 <li class="nav-item mb-0 border-bottom">
                     <a class="nav-link text-dark d-flex align-items-center" href="{{ route('consulta.index') }}"
@@ -200,7 +200,7 @@
 
     <!-- Incluir el script para el topbar desde public/js/topbar.js -->
     <script src="{{ asset('js/topbar.js') }}"></script>
-    
+
     <script>
         const toggleBtn = document.getElementById('toggleSidebar');
         const sidebar = document.getElementById('sidebar');
