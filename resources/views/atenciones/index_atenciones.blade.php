@@ -30,8 +30,8 @@
                 </div>
             @endif
 
-            @if($errors->any())
-             <div
+            @if ($errors->any())
+                <div
                     style="
                     position: fixed;
                     top: 20px;
@@ -39,15 +39,15 @@
                     transform: translateX(-50%);
                     z-index: 9999;
                     width: auto;
-                    max-width: 90%;">          
-                @foreach ( $errors->all() as $error) 
-                    <div class="alert alert-danger alert-dismissible fade show shadow-lg border-0" role="alert"
-                        style="border-radius: 20px; padding-right: 50px;">
-                        <i class="fas fa-check-circle me-2"></i> {{ $error }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-            </div>
-                @endforeach
+                    max-width: 90%;">
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger alert-dismissible fade show shadow-lg border-0" role="alert"
+                            style="border-radius: 20px; padding-right: 50px;">
+                            <i class="fas fa-check-circle me-2"></i> {{ $error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                </div>
+            @endforeach
             @endif
 
             <div class="card-body">
@@ -223,17 +223,17 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Motivo</label>
-                                            <textarea name="motivo"  class="form-control" required></textarea>
+                                            <textarea name="motivo" class="form-control" required></textarea>
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Procedimientos</label>
-                                            <textarea name="procedimientos"  class="form-control"></textarea>
+                                            <textarea name="procedimientos" class="form-control"></textarea>
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Observaciones</label>
-                                            <textarea name="observaciones"  class="form-control"></textarea>
+                                            <textarea name="observaciones" class="form-control"></textarea>
                                         </div>
 
                                     </div>
@@ -274,7 +274,7 @@
 
                         <!-- DATOS DEL PACIENTE -->
                         <div class="card border-0 shadow-sm mb-3">
-                            <div class="card-header bg-success text-white">
+                            <div class="card-header bg-verde text-white">
                                 <i class="bi bi-person"></i> Datos del Paciente
                             </div>
 
@@ -300,7 +300,7 @@
 
                         <!-- ACUDIENTE -->
                         <div class="card border-0 shadow-sm mb-3">
-                            <div class="card-header bg-secondary text-white">
+                            <div class="card-header bg-azul text-white">
                                 <i class="bi bi-people"></i> Información del Acudiente
                             </div>
 
@@ -326,7 +326,7 @@
 
                         <!-- INFORMACION ACADEMICA -->
                         <div class="card border-0 shadow-sm">
-                            <div class="card-header bg-dark text-white">
+                            <div class="card-header bg-verde text-white">
                                 <i class="bi bi-folder"></i> Información de Ficha
                             </div>
 

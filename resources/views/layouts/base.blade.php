@@ -168,7 +168,8 @@
                     </a>
                 </li>
                 <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('caracterizacion') }}">
+                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('caracterizacion') }}"
+                        title="Encuesta">
                         <i class="bi bi-card-checklist me-2"></i>
                         <span class="sidebar-text">Encuesta</span>
                     </a>
@@ -197,6 +198,7 @@
 
     <!-- Incluir el script para el topbar desde public/js/topbar.js -->
     <script src="{{ asset('js/topbar.js') }}"></script>
+    
     <script>
         const toggleBtn = document.getElementById('toggleSidebar');
         const sidebar = document.getElementById('sidebar');
