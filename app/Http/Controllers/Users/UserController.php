@@ -12,28 +12,25 @@ use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Gate;
 
-
-
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     use AuthorizesRequests;
+
     public function index()
     {
-
-         // Validación manual
+        // Validación manual
         if (Gate::denies('gestionar-usuarios')) {
             return redirect()->route('registros.index')
                 ->with('error', 'No tienes permisos para acceder');
         }
+
         // Obtenemos el filtro de la URL, por defecto "todo"
         $filter = request()->query('filter', 'activos');
-
         // Creamos la query base
         $query = User::with('roles');
-
         // Aplicamos el filtro
         if ($filter === 'activos') {
             $query->whereNull('deleted_at'); // solo activos
@@ -44,13 +41,18 @@ class UserController extends Controller
         }
 
         // Ejecutamos la consulta con paginación
-        $users = $query->paginate(5)->withQueryString();
+        $users = $query->paginate(8)->withQueryString();
 
         return view('users.index', compact('users', 'filter'));
     }
 
     public function restore($id)
     {
+        if (Gate::denies('gestionar-usuarios')) {
+            return redirect()->route('registros.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
+
         $user = User::withTrashed()->findOrFail($id);
         $user->restore();
 
@@ -63,6 +65,11 @@ class UserController extends Controller
      */
     public function create()
     {
+        // Validación manual
+        if (Gate::denies('gestionar-usuarios')) {
+            return redirect()->route('registros.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
         //
         $roles = Roles::all();
         $user = new User();
@@ -74,6 +81,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('gestionar-usuarios')) {
+            return redirect()->route('registros.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
         //
         $request->validate([
             'name' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
@@ -111,6 +122,11 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+        if (Gate::denies('gestionar-usuarios')) {
+            return redirect()->route('registros.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
+
         $user = User::withTrashed()->findOrFail($id);
         $roles = Roles::all();
 
@@ -128,6 +144,11 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+
+        if (Gate::denies('gestionar-usuarios')) {
+            return redirect()->route('registros.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
         //dd($request->all());
         $request->validate([
             'name' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
@@ -167,6 +188,11 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        if (Gate::denies('gestionar-usuarios')) {
+            return redirect()->route('registros.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
+
         $user->delete();
 
         return redirect()->route('users.index')
