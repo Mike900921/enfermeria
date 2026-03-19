@@ -126,10 +126,11 @@ class UserController extends Controller
             return redirect()->route('registros.index')
                 ->with('error', 'No tienes permisos para acceder');
         }
-
+        // Se obtiene el usuario con el método withTrashed //
         $user = User::withTrashed()->findOrFail($id);
         $roles = Roles::all();
 
+        // Si el usuario está inactivo (eliminado), se redirige a la lista de usuarios con un mensaje de error indicando que no se puede editar un usuario inactivo. //
         if ($user->trashed()) {
             return redirect()->route('users.index')
                 ->with('error', 'No se puede editar un usuario inactivo');
@@ -164,8 +165,8 @@ class UserController extends Controller
             'roles_id' => 'required|exists:roles,id',
 
             'password' => [
-                'sometimes',
-                'nullable',
+                'sometimes', // Solo validar si el campo está presente en la solicitud
+                'nullable', // Permitir que el campo sea nulo (no obligatorio)
                 'string',
                 'min:8',
                 'confirmed',
@@ -191,6 +192,12 @@ class UserController extends Controller
         if (Gate::denies('gestionar-usuarios')) {
             return redirect()->route('registros.index')
                 ->with('error', 'No tienes permisos para acceder');
+        }
+
+        // Evitar eliminar administradores
+        if ($user->roles->nombre_rol === 'Administrador') {
+            return redirect()->route('users.index')
+                ->with('error', 'No puedes inhabilitar un usuario administrador');
         }
 
         $user->delete();

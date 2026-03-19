@@ -4,9 +4,11 @@
 
 
 @section('content')
+    {{-- Estilos específicos para esta vista --}}
     <style>
         .user-select-auto {
             user-select: text !important;
+            /* Permitir selección de texto en elementos con esta clase */
         }
     </style>
 
@@ -16,6 +18,7 @@
                 <h5 class="mb-0">Consulta de Paciente</h5>
 
             </div>
+            {{-- Alertas de éxito --}}
             @if (session('success'))
                 <div
                     style="
@@ -35,24 +38,26 @@
                 </div>
             @endif
 
+            {{-- Alertas de error --}}
             @if ($errors->any())
                 <div
                     style="
-                    position: fixed;
-                    top: 20px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    z-index: 9999;
-                    width: auto;
-                    max-width: 90%;">
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: auto;
+            max-width: 90%;
+        ">
                     @foreach ($errors->all() as $error)
                         <div class="alert alert-danger alert-dismissible fade show shadow-lg border-0" role="alert"
                             style="border-radius: 20px; padding-right: 50px;">
-                            <i class="fas fa-check-circle me-2"></i> {{ $error }}
+                            <i class="fas fa-exclamation-circle me-2"></i> {{ $error }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                    @endforeach
                 </div>
-            @endforeach
             @endif
 
 
@@ -227,9 +232,9 @@
 
                                         <!-- CAMPOS EDITABLES -->
 
+                                        {{-- Fecha y hora actual (oculto) --}}
                                         <div class="mb-3">
-                                            <label class="form-label">Fecha y Hora</label>
-                                            <input type="datetime-local" name="fecha_hora"
+                                            <input type="hidden" name="fecha_hora"
                                                 value="{{ now()->format('Y-m-d\TH:i') }}" class="form-control" required>
                                         </div>
 
@@ -433,7 +438,7 @@
 
                                     <p>
                                         <strong>Motivo de consulta:</strong><br>
-                                        {{ $atencion->motivo->motivo?? 'No registrado' }}
+                                        {{ $atencion->motivo->motivo ?? 'No registrado' }}
                                     </p>
 
                                     <p>
@@ -461,10 +466,12 @@
         @endforeach
     @endisset
 
+    {{-- script para ocultar alertas de mensajes automaticamente --}}
     <script>
         setTimeout(() => {
             const alert = document.querySelector('.alert-success');
             if (alert) alert.style.display = 'none';
         }, 5000); // 5 segundos
     </script>
+
 @endsection

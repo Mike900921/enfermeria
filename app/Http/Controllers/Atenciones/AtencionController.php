@@ -76,7 +76,7 @@ class AtencionController extends Controller
     }
 
 
-    // Método para exportar a Excel
+    // Método para exportar a Excel con filtros de búsqueda y fecha
     public function export(Request $request)
     {
         $query = $request->input('query');

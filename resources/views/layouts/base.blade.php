@@ -6,15 +6,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery -->
+    <!-- Estilos personalizados para el topbar -- Ruta = public/css/topbar.css -->
     <link rel="stylesheet" href="{{ asset('css/topbar.css') }}">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="{{ asset('img/logoSena.png') }}">
     <title>Enfermería</title>
 </head>
+
 <style>
     .nav-link.text-dark:hover {
         background-color: #cccccc;
@@ -107,11 +113,13 @@
 </style>
 
 <body>
+    {{-- Script para recordar estado del sidebar --}}
     <script id="a3x9vd">
         if (localStorage.getItem("sidebarClosed") === "true") {
             document.documentElement.classList.add("sidebar-closed");
         }
     </script>
+
     <header class="topbar d-flex justify-content-between align-items-center">
         <div class="menu user-select-none">
             <button onclick="toggleMenu()">☰</button>
@@ -146,6 +154,7 @@
 
     <!-- Sidebar y contenido -->
     <div class="layout">
+        <!-- Sidebar -->
         <nav id="sidebar" class="sidebar">
             <ul class="nav flex-column">
                 @can('gestionar-usuarios')
@@ -203,6 +212,7 @@
     <!-- Incluir el script para el topbar desde public/js/topbar.js -->
     <script src="{{ asset('js/topbar.js') }}"></script>
 
+    {{-- Script para el toggle del sidebar --}}
     <script>
         const toggleBtn = document.getElementById('toggleSidebar');
         const sidebar = document.getElementById('sidebar');
