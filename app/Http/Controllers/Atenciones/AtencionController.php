@@ -49,7 +49,7 @@ class AtencionController extends Controller
 
             ->select('atenciones.*')
             ->orderBy('fecha_hora', 'desc')
-            ->paginate(7)->withQueryString();
+            ->paginate(10)->withQueryString();
 
 
         if ($request->ajax()) {
