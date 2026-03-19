@@ -96,7 +96,7 @@
 
                     <p>
                         <strong>Motivo de consulta:</strong><br>
-                        {{ $atencion->motivo ?? 'No registrado' }}
+                        {{ $atencion->motivo->motivo ?? 'No registrado' }}
                     </p>
 
                     <p>

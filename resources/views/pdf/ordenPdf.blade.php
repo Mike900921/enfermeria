@@ -146,7 +146,7 @@
             <div class="row">
                 <div class="box">
                     <span class="label">Motivo de consulta:</span><br>
-                    {{ $atencion->motivo ?? 'No registrado' }}
+                    {{ $atencion->motivo->motivo ?? 'No registrado' }}
                 </div>
             </div>
 

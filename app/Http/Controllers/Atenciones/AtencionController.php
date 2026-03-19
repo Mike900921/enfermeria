@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Paciente\Paciente;
 use App\Models\Paciente\AcudientePaciente;
 use App\Models\Atencion\Atencion;
+use App\Models\Motivo\Motivo;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\PacienteExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -21,8 +22,11 @@ class AtencionController extends Controller
         $query = $request->input('query');
         $fecha_inicio = $request->input('fecha_inicio');
         $fecha_fin = $request->input('fecha_fin');
+        $motivos = Motivo::all();
+
 
         $atenciones = Atencion::with(['paciente.acudiente', 'usuario'])
+
 
             ->leftJoin('senacdti_seguimientopro.sep_participante as p', 'atenciones.paciente_id', '=', 'p.par_identificacion')
             ->leftJoin('users as u', 'atenciones.user_id', '=', 'u.user_id')
@@ -49,20 +53,22 @@ class AtencionController extends Controller
 
 
         if ($request->ajax()) {
-            return view('registros.partials.tablaRegistro', compact('atenciones'))->render();
+            // return view('registros.partials.tablaRegistro', compact('atenciones'))->render();
+            return view('registros.partials.tablaRegistro', compact('atenciones', 'motivos'))->render();
         }
 
-        return view('registros.index', compact('atenciones'));
+
+        return view('registros.index', compact('atenciones', 'motivos'));
     }
 
     //metodo para generar PDF de la atención
     public function generarPdf($id)
     {
         $atencion = Atencion::with(['paciente', 'usuario'])->findOrFail($id);
+        $motivos = Motivo::all();
         // Pasamos los datos a la vista del PDF
-        $pdf = Pdf::loadView('pdf.ordenPdf', compact('atencion'));
+        $pdf = Pdf::loadView('pdf.ordenPdf', compact('atencion', 'motivos'));
 
-        // Configuramos el papel (opcional, por defecto es A4)
         // Configuramos el papel
         $pdf->setPaper('letter', 'portrait');
         // Retornamos el stream para que se abra en una pestaña nueva
@@ -120,7 +126,9 @@ class AtencionController extends Controller
             return back()->with('error', 'Paciente no encontrado');
         }
 
-        return view('atenciones.registrar', compact('paciente'));
+        $motivos = Motivo::all();
+        return view('atenciones.registrar', compact('paciente', 'motivos'));
+        //return view('atenciones.registrar', compact('paciente'));
         //return view('atenciones.index_atenciones', compact('paciente'));
     }
 
@@ -129,14 +137,16 @@ class AtencionController extends Controller
     {
         $data = $request->validate([
             'paciente_id' => 'required',
-            'motivo' => 'required|max:255',
+            //'motivo' => 'required|max:255',
+            'motivo_id' => 'required|exists:motivos,id',
             'ficha_id' => 'nullable',
             'fecha_hora' => 'required',
             'procedimientos' => 'nullable',
             'observaciones' => 'nullable'
-        ],[
+        ], [
             'paciente_id.required' => 'El campo paciente es obligatorio.',
-            'motivo.required' => 'El campo motivo es obligatorio.',
+            //'motivo.required' => 'El campo motivo es obligatorio.',
+            'motivo_id.required' => 'El campo motivo es obligatorio.',
             'motivo.max' => 'El campo motivo debe tener entre 2 y 255 caracteres.',
             'fecha_hora.required' => 'El campo fecha y hora es obligatorio.'
         ]);

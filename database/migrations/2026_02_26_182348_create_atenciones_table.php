@@ -14,7 +14,6 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');     // ID del personal de enfermería
             $table->unsignedBigInteger('ficha_id');    // ID de la ficha
             $table->dateTime('fecha_hora');
-            $table->string('motivo');
             $table->text('procedimientos')->nullable();
             $table->text('observaciones')->nullable();
             $table->timestamps();

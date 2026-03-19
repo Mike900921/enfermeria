@@ -13,8 +13,8 @@
             <div class="card-body text-center">
                 <p>Haz clic en el botón para ingresar a SETALPRO y diligenciar la encuesta de caracterización.</p>
 
-                <a href="https://setalpro.senacdti.com" class="btn btn-verde" class="btn btn-primary" target="_blank">
-                    Ir a setalpro
+                <a href="https://setalpro.senacdti.com" class=" btn btn-verde" target="_blank">
+                   <i class="bi bi-search"></i> Ir a setalpro
                 </a>
             </div>
         </div>

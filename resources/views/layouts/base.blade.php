@@ -111,7 +111,7 @@
         }
     </script>
     <header class="topbar d-flex justify-content-between align-items-center">
-        <div class="menu">
+        <div class="menu user-select-none">
             <button onclick="toggleMenu()">☰</button>
             <h3>Consultas enfermería</h3>
         </div>
@@ -147,19 +147,19 @@
         <nav id="sidebar" class="sidebar">
             <ul class="nav flex-column">
                 @can('gestionar-usuarios')
-                <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('users.index') }}"
-                        title="Usuarios">
-                        <i class="bi bi-people-fill me-2"></i>
-                        <span class="sidebar-text">Usuarios</span>
-                    </a>
-                </li>
+                    <li class="nav-item mb-0 border-bottom">
+                        <a class="nav-link text-dark d-flex align-items-center" href="{{ route('users.index') }}"
+                            title="Usuarios">
+                            <i class="bi bi-people-fill me-2"></i>
+                            <span class="sidebar-text">Usuarios</span>
+                        </a>
+                    </li>
                 @endcan
                 <li class="nav-item mb-0 border-bottom">
                     <a class="nav-link text-dark d-flex align-items-center" href="{{ route('consulta.index') }}"
-                        title="Aprendices">
+                        title="Consulta">
                         <i class="bi bi-person-check-fill me-2"></i>
-                        <span class="sidebar-text">Aprendices</span>
+                        <span class="sidebar-text">Consulta</span>
                     </a>
                 </li>
                 <li class="nav-item mb-0 border-bottom">
@@ -170,7 +170,8 @@
                     </a>
                 </li>
                 <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('caracterizacion') }}">
+                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('caracterizacion') }}"
+                        title="Encuesta">
                         <i class="bi bi-card-checklist me-2"></i>
                         <span class="sidebar-text">Encuesta</span>
                     </a>
@@ -183,9 +184,9 @@
                     </a>
                 </li>
                 <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center" href="#" title="About">
-                        <i class="bi bi-info-circle me-2"></i>
-                        <span class="sidebar-text">About</span>
+                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('motivos.index') }}" title="About">
+                        <i class="bi bi-gear me-2"></i>
+                        <span class="sidebar-text">Motivos</span>
                     </a>
                 </li>
             </ul>
@@ -204,6 +205,7 @@
 
     <!-- Incluir el script para el topbar desde public/js/topbar.js -->
     <script src="{{ asset('js/topbar.js') }}"></script>
+
     <script>
         const toggleBtn = document.getElementById('toggleSidebar');
         const sidebar = document.getElementById('sidebar');
