@@ -57,7 +57,7 @@ $filter = request()->query('filter', 'todo');
             'motivo' => $request->input('nombre'),
         ]);
 
-        return redirect()->route('motivos.index')->with('success', 'Motivo creado exitosamente.');
+        return back()->with('success', 'Motivo creado exitosamente.');
     }
 
 
