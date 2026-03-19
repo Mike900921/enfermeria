@@ -15,9 +15,10 @@
                     <td>{{ $motivo->id }}</td>
                     <td>{{ $motivo->motivo }}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm"
+                        <button class="btn btn-amarillo btn-sm"
                             data-bs-toggle="modal"
                             data-bs-target="#editarMotivoModal{{ $motivo->id }}">
+                            <i class="bi bi-pencil-square"></i>
                             Editar
                         </button>
                     </td>
