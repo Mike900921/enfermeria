@@ -11,21 +11,23 @@ use Illuminate\Support\Facades\Gate;
 
 class MotivoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-$filter = request()->query('filter', 'todo');
+        $filter = $request->query('filter', 'todo');
 
-    // Iniciamos la consulta permitiendo eliminados
-    $query = Motivo::withTrashed();
+        $query = Motivo::withTrashed();
 
-    if ($filter === 'activos') {
-        $query->whereNull('deleted_at'); // Filtro en la base de datos
-    } elseif ($filter === 'inactivos') {
-        $query->onlyTrashed(); // Método nativo de Laravel para traer solo eliminados
-    }
+        if ($filter === 'activos') {
+            $query->whereNull('deleted_at');
+        } elseif ($filter === 'inactivos') {
+            $query->onlyTrashed();
+        }
 
-    // Ahora sí, ejecutamos la consulta
-    $motivos = $query->get();
+        $motivos = $query->paginate(10);
+
+        if ($request->ajax()) {
+            return view('motivos.partials.tablaMotivos', compact('motivos'))->render();
+        }
 
         return view('motivos.motivos', compact('motivos'));
     }
@@ -34,17 +36,16 @@ $filter = request()->query('filter', 'todo');
     {
         $texto = $request->get('q');
 
-        $motivos = Motivo::withTrashed()->when($texto, function ($query, $texto) {
-            $query->where('motivo', 'like', "%$texto%")
-                ->orWhere('id', 'like', "%$texto%");
-        })->get();
+        $motivos = Motivo::withTrashed()
+            ->when($texto, function ($query, $texto) {
+                $query->where('motivo', 'like', "%$texto%")
+                    ->orWhere('id', 'like', "%$texto%");
+            })
+            ->paginate(10);
 
         return view('motivos.partials.tablaMotivos', compact('motivos'))->render();
     }
-
-    public function create(Request $request) {
-
-    }
+    public function create(Request $request) {}
 
     //creación de motivo
     public function store(Request $request)
@@ -62,7 +63,8 @@ $filter = request()->query('filter', 'todo');
 
 
     //actualización de motivo
-    public function update (Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $request->validate([
             'nombre' => 'required|string|max:255',
         ]);
