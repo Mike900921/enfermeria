@@ -35,8 +35,8 @@
                     </td>
                     <td class="text-truncate" style="max-width: 100px;">{{ $atencion->motivo->motivo }}</td>
                     <td>
-                        <button class="btn btn-success p-1" title="Info usuario" style="font-size: 12px;"
-                            data-bs-toggle="modal" data-bs-target="#modalShowPaciente{{ $atencion->id }}">
+                        <button class="btn btn-success p-1" title="Info usuario" style="font-size: 12px;" data-bs-toggle="modal"
+                            data-bs-target="#modalShowPaciente{{ $atencion->id }}">
                             Info
                         </button>
                     </td>

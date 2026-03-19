@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('motivos', function (Blueprint $table) {
-            $table->id();
-            $table->string('motivo');
-            $table->timestamps();
+        
+        Schema::table('motivos', function (Blueprint $table) {
+            
+            $table->softDeletes(); // Esto crea la columna deleted_at
+
         });
     }
 
@@ -23,6 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('atenciones');
+        Schema::table('motivos', function (Blueprint $table) {
+            //
+        });
     }
 };

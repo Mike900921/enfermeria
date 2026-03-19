@@ -65,10 +65,10 @@ class AtencionController extends Controller
     public function generarPdf($id)
     {
         $atencion = Atencion::with(['paciente', 'usuario'])->findOrFail($id);
+        $motivos = Motivo::all();
         // Pasamos los datos a la vista del PDF
-        $pdf = Pdf::loadView('pdf.ordenPdf', compact('atencion'));
+        $pdf = Pdf::loadView('pdf.ordenPdf', compact('atencion', 'motivos'));
 
-        // Configuramos el papel (opcional, por defecto es A4)
         // Configuramos el papel
         $pdf->setPaper('letter', 'portrait');
         // Retornamos el stream para que se abra en una pestaña nueva

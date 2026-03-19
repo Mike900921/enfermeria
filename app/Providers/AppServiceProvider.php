@@ -24,5 +24,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('gestionar-usuarios', function ($user) {
             return $user->roles_id === 1;
         });
+
+
     }
 }

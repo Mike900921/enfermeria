@@ -153,6 +153,7 @@
     </header>
 
     <!-- Sidebar y contenido -->
+
     <div class="layout">
         <!-- Sidebar -->
         <nav id="sidebar" class="sidebar">
@@ -195,17 +196,22 @@
                     </a>
                 </li>
                 <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center" href="#" title="About">
-                        <i class="bi bi-info-circle me-2"></i>
-                        <span class="sidebar-text">About</span>
+                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('motivos.index') }}" title="About">
+                        <i class="bi bi-gear me-2"></i>
+                        <span class="sidebar-text">Motivos</span>
                     </a>
                 </li>
             </ul>
         </nav>
 
         <!-- Contenido principal -->
-        <main class="content w-100 h-auto">
-            @yield('content')
+        <main class="content w-100 h-auto fondo-global ">
+            <div class="fondo-logo">
+                <img src="/img/logoSena.png" alt="Logo" />
+            </div>
+            <div style="position: relative;">
+                @yield('content')
+            </div>
         </main>
     </div>
 
