@@ -49,7 +49,7 @@ class AtencionController extends Controller
 
             ->select('atenciones.*')
             ->orderBy('fecha_hora', 'desc')
-            ->paginate(7)->withQueryString();
+            ->paginate(10)->withQueryString();
 
 
         if ($request->ajax()) {
@@ -76,7 +76,7 @@ class AtencionController extends Controller
     }
 
 
-    // Método para exportar a Excel
+    // Método para exportar a Excel con filtros de búsqueda y fecha
     public function export(Request $request)
     {
         $query = $request->input('query');

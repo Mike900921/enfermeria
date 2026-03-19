@@ -22,6 +22,7 @@
             <i class="bi bi-person-add"></i> Crear Usuario
         </a>
 
+        {{-- Alertas de éxito o error --}}
         @if (session('success') || session('error'))
             <div
                 style="
@@ -46,6 +47,7 @@
 
 
         <div class="">
+            {{-- Filtro de usuarios --}}
             <div>
                 <form method="GET" action="{{ route('users.index') }}" class="mb-3 d-flex align-items-center gap-2">
                     <label for="filter">Filtrar:</label>
@@ -56,10 +58,10 @@
                     </select>
                 </form>
             </div>
+
             <div class="border rounded-4 overflow-hidden shadow-sm">
                 <table class="table table-striped table-hover align-middle mb-0">
-
-                    <thead class="table-light">
+                    <thead class="table-info">
                         <tr>
                             <th><i class="bi bi-person"></i> Nombre de Usuario</th>
                             <th><i class="bi bi-envelope"></i> Email</th>
@@ -114,15 +116,17 @@
                     </tbody>
                 </table>
             </div>
+
+            {{-- Paginación de bootstrap --}}
             @if ($users->hasPages())
                 <div class="d-flex justify-content-center mt-3">
                     {{ $users->links('pagination::bootstrap-5') }}
                 </div>
             @endif
         </div>
-
     </div>
 
+    {{-- script para ocultar alertas de mensajes automaticamente --}}
     <script>
         setTimeout(() => {
             const alert = document.querySelector('.alert-danger, .alert-success');

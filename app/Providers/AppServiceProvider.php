@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
-
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('gestionar-usuarios', function ($user) {
             return $user->roles_id === 1;
         });
+        Paginator::useBootstrap();
 
 
     }

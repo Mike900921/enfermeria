@@ -490,20 +490,7 @@
 @endforeach
 @endisset
 
-@if(session('open_modal'))
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Obtenemos el ID que enviamos desde el controlador
-        var modalId = "{{ session('open_modal') }}";
-        var el = document.getElementById(modalId);
-        
-        if (el) {
-            var myModal = new bootstrap.Modal(el);
-            myModal.show();
-        }
-    });
-</script>
-@endif
+
 
 <script>
     setTimeout(() => {

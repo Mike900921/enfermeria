@@ -34,7 +34,7 @@ class PacienteExport implements FromCollection, WithMapping, WithHeadings
             $atencion->paciente->par_apellidos ?? 'N/A',
             $atencion->paciente->par_telefono ?? 'N/A',
             $atencion->fecha_hora,
-            $atencion->motivo,
+            $atencion->motivo->motivo,
             $atencion->procedimientos,
             $atencion->observaciones,
             $atencion->usuario ? $atencion->usuario->name : 'N/A',

@@ -1,25 +1,46 @@
+<div class="border rounded-4 overflow-hidden shadow-sm" style="min-width:600px;">
 
-<div class="border rounded-4 overflow-hidden shadow-sm " style="width: fit-content; min-width: 600px;">
-    <table class="table table-bordered text-center  m-0 border table-striped">
+    <table class="table table-bordered text-center m-0 table-striped">
         <thead>
             <tr>
-                <th style="width: 10%; white-space: nowrap; text-align: center;">ID</th>
-                <th style="width: 20%; white-space: nowrap; text-align: center;">Motivo</th>
-                <th style="width: 20%; white-space: nowrap; text-align: center;">Acciones</th>
+                <th>ID</th>
+                <th>Motivo</th>
+                <th>Acciones</th>
             </tr>
         </thead>
+
         <tbody>
-            @foreach($motivos as $motivo)
-            <tr>
-                <td>{{ $motivo->id }}</td>
-                <td>{{ $motivo->motivo }}</td>
-                <td>
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editarMotivoModal{{ $motivo->id }}">Editar</button>
-                </td>
-            </tr>
-            <!-- Aquí se incluye el componente del modal para editar, pasando el motivo actual -->
-            @include('components.modal-motivos.editar-motivo', ['motivo' => $motivo])
-            @endforeach
+            @forelse($motivos as $motivo)
+                <tr>
+                    <td>{{ $motivo->id }}</td>
+                    <td>{{ $motivo->motivo }}</td>
+                    <td>
+                        <button class="btn btn-amarillo btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editarMotivoModal{{ $motivo->id }}">
+                            <i class="bi bi-pencil-square"></i>
+                            Editar
+                        </button>
+                    </td>
+                </tr>
+
+                @include('components.modal-motivos.editar-motivo', ['motivo' => $motivo])
+
+            @empty
+                <tr>
+                    <td colspan="3">
+                        <div class="text-center p-3">
+                            ❌ No se encontraron resultados
+                        </div>
+                    </td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
+
+    {{-- PAGINACIÓN --}}
+    <div class="p-3 d-flex justify-content-center">
+        {{ $motivos->appends(request()->query())->links() }}
+    </div>
+
 </div>
