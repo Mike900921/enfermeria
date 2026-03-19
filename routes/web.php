@@ -81,7 +81,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/motivos',[MotivoController::class, 'index'])->name('motivos.index');
     Route::get('/buscarMotivos', [MotivoController::class, 'buscar'])->name('motivos.buscar');
     
-    //validaciones rutas
+    //validaciones rutas motivo
         //crear motivo
         Route::post('/motivos', [MotivoController::class, 'store'])->name('motivos.store');
         //editar motivo

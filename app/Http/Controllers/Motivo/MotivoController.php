@@ -13,15 +13,19 @@ class MotivoController extends Controller
 {
     public function index()
     {
-        $filter = request()->query('filter', 'todo');
-        $motivos = Motivo::withTrashed()->get();
-            if ($filter === 'activos') {
-                $motivos = $motivos->whereNull('deleted_at'); // solo activos
-            } elseif ($filter === 'inactivos') {
-                $motivos = $motivos->whereNotNull('deleted_at'); // solo inactivos
-            } else {
-                $motivos = $motivos; // todo
-            }
+$filter = request()->query('filter', 'todo');
+
+    // Iniciamos la consulta permitiendo eliminados
+    $query = Motivo::withTrashed();
+
+    if ($filter === 'activos') {
+        $query->whereNull('deleted_at'); // Filtro en la base de datos
+    } elseif ($filter === 'inactivos') {
+        $query->onlyTrashed(); // Método nativo de Laravel para traer solo eliminados
+    }
+
+    // Ahora sí, ejecutamos la consulta
+    $motivos = $query->get();
 
         return view('motivos.motivos', compact('motivos'));
     }
