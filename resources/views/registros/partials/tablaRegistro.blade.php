@@ -14,7 +14,7 @@
             <tr>
                 <th>ID</th>
                 <th>Paciente</th>
-                <th>Usuario</th>
+                <th>Responsable</th>
                 <th>Fecha y Hora</th>
                 <th>Motivo</th>
                 <th>Accion</th>
