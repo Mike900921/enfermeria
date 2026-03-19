@@ -1,11 +1,16 @@
+{{-- Este archivo es incluido en registros/index.blade.php para mostrar la tabla de atenciones --}}
+
+
+{{-- Estilos específicos para esta vista --}}
 <style>
     .user-select-auto {
         user-select: text !important;
     }
 </style>
+
 <div class="border rounded-4 overflow-hidden shadow-sm">
     <table class="table table-striped table-hover align-middle ">
-        <thead class="table-light">
+        <thead class="table-info">
             <tr>
                 <th>ID</th>
                 <th>Paciente</th>
@@ -15,8 +20,9 @@
                 <th>Accion</th>
             </tr>
         </thead>
+
         <tbody class="user-select-auto">
-            @forelse ($atenciones as $atencion) 
+            @forelse ($atenciones as $atencion)
                 <tr>
                     <td>{{ $atencion->paciente->par_identificacion }}</td>
                     <td>{{ $atencion->paciente->par_nombres }}</td>
@@ -29,8 +35,8 @@
                     </td>
                     <td class="text-truncate" style="max-width: 100px;">{{ $atencion->motivo->motivo }}</td>
                     <td>
-                        <button class="btn btn-success p-1" title="Info usuario" style="font-size: 12px;" data-bs-toggle="modal"
-                            data-bs-target="#modalShowPaciente{{ $atencion->id }}">
+                        <button class="btn btn-success p-1" title="Info usuario" style="font-size: 12px;"
+                            data-bs-toggle="modal" data-bs-target="#modalShowPaciente{{ $atencion->id }}">
                             Info
                         </button>
                     </td>
@@ -43,8 +49,10 @@
         </tbody>
     </table>
 </div>
+
+{{-- Paginación --}}
 @if ($atenciones->hasPages())
-<div class="d-flex justify-content-center mt-3">
-    {{ $atenciones->links('pagination::bootstrap-5') }}
-</div>
+    <div class="d-flex justify-content-center mt-3">
+        {{ $atenciones->links('pagination::bootstrap-5') }}
+    </div>
 @endif
