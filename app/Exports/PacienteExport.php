@@ -9,9 +9,6 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class PacienteExport implements FromCollection, WithMapping, WithHeadings
 {
-    /**
-     * @return \Illuminate\Support\Collection
-     */
     protected $atenciones;
 
     public function __construct($atenciones)
@@ -26,18 +23,26 @@ class PacienteExport implements FromCollection, WithMapping, WithHeadings
 
     public function map($atencion): array
     {
+        // Usar `optional` para los datos relacionados
+        $paciente = $atencion->paciente;
         $acudiente = optional($atencion->acudiente);
+        $usuario = optional($atencion->usuario);
+
+        // Concatenar nombre y apellido del usuario
+        $nombreCompletoUsuario = trim(
+            ($usuario->name ?? '') . ' ' . ($usuario->last_name ?? '')
+        ) ?: 'No registrado';
 
         return [
-            $atencion->paciente->par_identificacion ?? 'N/A',
-            $atencion->paciente->par_nombres ?? 'N/A',
-            $atencion->paciente->par_apellidos ?? 'N/A',
-            $atencion->paciente->par_telefono ?? 'N/A',
+            optional($paciente)->par_identificacion ?? 'No registrado',
+            optional($paciente)->par_nombres ?? 'No registrado',
+            optional($paciente)->par_apellidos ?? 'No registrado',
+            optional($paciente)->par_telefono ?? 'No registrado',
             $atencion->fecha_hora,
             $atencion->motivo->motivo,
             $atencion->procedimientos,
             $atencion->observaciones,
-            $atencion->usuario ? $atencion->usuario->name : 'N/A',
+            $nombreCompletoUsuario,
             $acudiente->par_acu_nombre ?? 'No registrado',
             $acudiente->par_acu_tel ?? 'No registrado',
             $acudiente->par_acu_parentesco ?? 'No registrado',

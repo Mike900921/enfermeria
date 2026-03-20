@@ -15,6 +15,8 @@ class Paciente extends Model
     protected $primaryKey = 'par_identificacion';
     public $timestamps = false;
 
+    
+
     public function atenciones()
     {
         return $this->hasMany(Atencion::class, 'paciente_id');

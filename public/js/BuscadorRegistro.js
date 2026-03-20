@@ -7,6 +7,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         currentQuery = $('#input-busqueda').val();
+        //console.log("BUSCANDO:", currentQuery);
 
         cargarPacientes(URL_REGISTROS);
         actualizarLinkExcel();
@@ -33,7 +34,8 @@ $(document).ready(function () {
             success: function (data) {
                 $('#tabla-pacientes').html(data);
             },
-            error: function () {
+            error: function (xhr) {
+                console.log(xhr.responseText);
                 $('#tabla-pacientes').html(
                     '<div class="text-danger text-center p-3">Error al cargar los datos.</div>'
                 );

@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/atenciones/create', [AtencionController::class, 'create'])->name('atenciones.create');
     Route::post('/atenciones/store', [AtencionController::class, 'store'])->name('atenciones.store');
     // CRUD de usuarios
-    
+
     //rutas protegidas por el permiso gestionar-usuarios con rol administrador
     Route::middleware(['auth',])->group(function () {
         Route::resource('users', UserController::class);

@@ -12,44 +12,54 @@ use Illuminate\Support\Facades\Auth;
 use App\Exports\PacienteExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Cache;
 
 
 class AtencionController extends Controller
 {
-
     public function index(Request $request)
     {
-        $query = $request->input('query');
+        $query = trim($request->input('query'));
         $fecha_inicio = $request->input('fecha_inicio');
         $fecha_fin = $request->input('fecha_fin');
-        $motivos = Motivo::all();
+        $motivos = Cache::remember('motivos', 3600, function () {
+            return Motivo::all();
+        });
 
+        // Buscar pacientes en la conexión externa si hay query
+        $pacienteIds = collect(); // inicializar vacío por defecto
+        if (!empty(trim($query))) {
+            $pacienteIds = \App\Models\Paciente\Paciente::on('senacdti_seguimientopro')
+                ->whereRaw("CONCAT(par_nombres, ' ', par_apellidos) LIKE ?", ["%{$query}%"])
+                ->orWhere('par_nombres', 'like', "{$query}%")
+                ->orWhere('par_apellidos', 'like', "{$query}%")
+                ->orWhere('par_identificacion', 'like', "{$query}%")
+                ->pluck('par_identificacion');
+        }
 
+        // Tipo de búsqueda: 'usuario' por defecto
         $atenciones = Atencion::with(['paciente.acudiente', 'usuario'])
-
-
-            ->leftJoin('senacdti_seguimientopro.sep_participante as p', 'atenciones.paciente_id', '=', 'p.par_identificacion')
-            ->leftJoin('users as u', 'atenciones.user_id', '=', 'u.user_id')
-
-            ->when($query, function ($q) use ($query) {
-                $q->where('u.name', 'like', "%{$query}%")
-                    ->orWhere('p.par_identificacion', 'like', "%{$query}%")
-                    ->orWhere('p.par_nombres', 'like', "%{$query}%")
-                    ->orWhere('p.par_apellidos', 'like', "%{$query}%")
-                    ->orWhereRaw("CONCAT(p.par_nombres,' ',p.par_apellidos) LIKE ?", ["%{$query}%"]);
+            ->when(!empty($query), function ($q) use ($query, $pacienteIds) {
+                $q->where(function ($sub) use ($query, $pacienteIds) {
+                    $sub->whereHas('usuario', function ($q1) use ($query) {
+                        $q1->whereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$query}%"]);
+                    })
+                        ->orWhereIn('paciente_id', $pacienteIds);
+                });
             })
 
             ->when($fecha_inicio, function ($q) use ($fecha_inicio) {
                 $q->whereDate('fecha_hora', '>=', $fecha_inicio);
             })
-
             ->when($fecha_fin, function ($q) use ($fecha_fin) {
                 $q->whereDate('fecha_hora', '<=', $fecha_fin);
             })
-
             ->select('atenciones.*')
             ->orderBy('fecha_hora', 'desc')
-            ->paginate(10)->withQueryString();
+
+            ->paginate(10)
+            ->withQueryString();
+
 
 
         if ($request->ajax()) {
@@ -83,16 +93,28 @@ class AtencionController extends Controller
         $fecha_inicio = $request->input('fecha_inicio');
         $fecha_fin = $request->input('fecha_fin');
 
+        $motivos = Cache::remember('motivos', 3600, function () {
+            return Motivo::all();
+        });
+
+        // Buscar pacientes en la conexión externa si hay query
+        $pacienteIds = collect(); // inicializar vacío por defecto
+        if (!empty(trim($query))) {
+            $pacienteIds = \App\Models\Paciente\Paciente::on('senacdti_seguimientopro')
+                ->where('par_nombres', 'like', "{$query}%")
+                ->orWhere('par_apellidos', 'like', "{$query}%")
+                ->orWhere('par_identificacion', 'like', "{$query}%")
+                ->pluck('par_identificacion');
+        }
+
+        // Tipo de búsqueda: 'usuario' por defecto
         $atenciones = Atencion::with(['paciente.acudiente', 'usuario'])
-            ->leftJoin('senacdti_seguimientopro.sep_participante as p', 'atenciones.paciente_id', '=', 'p.par_identificacion')
-            ->leftJoin('users as u', 'atenciones.user_id', '=', 'u.user_id')
-            ->when($query, function ($q) use ($query) {
-                $q->where(function ($sub) use ($query) {
-                    $sub->where('u.name', 'like', "%{$query}%")
-                        ->orWhere('p.par_identificacion', 'like', "%{$query}%")
-                        ->orWhere('p.par_nombres', 'like', "%{$query}%")
-                        ->orWhere('p.par_apellidos', 'like', "%{$query}%")
-                        ->orWhereRaw("CONCAT(p.par_nombres,' ',p.par_apellidos) LIKE ?", ["%{$query}%"]);
+            ->when(!empty($query), function ($q) use ($query, $pacienteIds) {
+                $q->where(function ($sub) use ($query, $pacienteIds) {
+                    $sub->whereHas('usuario', function ($q1) use ($query) {
+                        $q1->whereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$query}%"]);
+                    })
+                        ->orWhereIn('paciente_id', $pacienteIds);
                 });
             })
             ->when($fecha_inicio, fn($q) => $q->whereDate('fecha_hora', '>=', $fecha_inicio))

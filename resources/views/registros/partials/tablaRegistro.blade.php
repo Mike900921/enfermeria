@@ -26,7 +26,8 @@
                 <tr>
                     <td>{{ $atencion->paciente->par_identificacion }}</td>
                     <td>{{ $atencion->paciente->par_nombres }}</td>
-                    <td>{{ $atencion->usuario->name ?? 'N/A' }}</td>
+                    <td>{{ $atencion->usuario ? $atencion->usuario->name . ' ' . $atencion->usuario->last_name : 'N/A' }}
+                    </td>
                     <td style="max-width: 150px;"> {{-- Aumenté un poco el max-width para que no se amontone --}}
                         {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('d/m/Y') }}
                         <span style="margin-left: 10px;">

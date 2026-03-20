@@ -11,6 +11,7 @@ use App\Models\Paciente\AcudientePaciente;
 use App\Models\Motivo\Motivo;
 use App\Models\Ficha\Ficha;
 
+
 class Atencion extends Model
 {
     use HasFactory;
