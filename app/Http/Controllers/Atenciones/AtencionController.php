@@ -123,7 +123,7 @@ class AtencionController extends Controller
             ->orderBy('fecha_hora', 'desc')
             ->get();
 
-        return Excel::download(new PacienteExport($atenciones), 'pacientes.xlsx');
+        return Excel::download(new PacienteExport($atenciones), 'pacientes_SenaCDTI.xlsx');
     }
 
 
