@@ -30,7 +30,8 @@ class AtencionController extends Controller
         $pacienteIds = collect(); // inicializar vacío por defecto
         if (!empty(trim($query))) {
             $pacienteIds = \App\Models\Paciente\Paciente::on('senacdti_seguimientopro')
-                ->where('par_nombres', 'like', "{$query}%")
+                ->whereRaw("CONCAT(par_nombres, ' ', par_apellidos) LIKE ?", ["%{$query}%"])
+                ->orwhere('par_nombres', 'like', "{$query}%")
                 ->orWhere('par_apellidos', 'like', "{$query}%")
                 ->orWhere('par_identificacion', 'like', "{$query}%")
                 ->pluck('par_identificacion');
@@ -120,7 +121,7 @@ class AtencionController extends Controller
             ->orderBy('fecha_hora', 'desc')
             ->get();
 
-        return Excel::download(new PacienteExport($atenciones), 'pacientes.xlsx');
+        return Excel::download(new PacienteExport($atenciones), 'pacientes_SenaCDTI.xlsx');
     }
 
 
