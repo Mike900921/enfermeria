@@ -159,7 +159,7 @@
             <ul class="nav flex-column">
                 @can('gestionar-usuarios')
                     <li class="nav-item mb-0 border-bottom">
-                        <a class="nav-link text-dark d-flex align-items-center" href="{{ route('users.index') }}"
+                        <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('users.index') ? 'active bg-success text-white' : ''}}" href="{{ route('users.index') }}"
                             title="Usuarios">
                             <i class="bi bi-people-fill me-2"></i>
                             <span class="sidebar-text">Usuarios</span>
@@ -167,35 +167,35 @@
                     </li>
                 @endcan
                 <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('consulta.index') }}"
+                    <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('consulta.index') ? 'active bg-success text-white' : ''}}" href="{{ route('consulta.index') }}"
                         title="Consulta">
                         <i class="bi bi-person-check-fill me-2"></i>
                         <span class="sidebar-text">Consulta</span>
                     </a>
                 </li>
                 <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('registros.index') }}"
+                    <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('registros.index') ? 'active bg-success text-white' : ''}}" href="{{ route('registros.index') }}"
                         title="Atenciones">
                         <i class="bi bi-journal-text me-2"></i>
                         <span class="sidebar-text">Atenciones</span>
                     </a>
                 </li>
                 <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('caracterizacion') }}"
+                    <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('caracterizacion') ? 'active bg-success text-white' : ''}}" href="{{ route('caracterizacion') }}"
                         title="Encuesta">
                         <i class="bi bi-card-checklist me-2"></i>
                         <span class="sidebar-text">Encuesta</span>
                     </a>
                 </li>
                 <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('estadisticas.index') }}"
+                    <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('estadisticas.index') ? 'active bg-success text-white' : ''}}" href="{{ route('estadisticas.index') }}"
                         title="Estadistica">
                         <i class="bi bi-bar-chart  me-2"></i>
                         <span class="sidebar-text">Estadistica</span>
                     </a>
                 </li>
                 <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('motivos.index') }}" title="About">
+                    <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('motivos.index') ? 'active bg-success text-white' : ''}}" href="{{ route('motivos.index') }}" title="About">
                         <i class="bi bi-gear me-2"></i>
                         <span class="sidebar-text">Motivos</span>
                     </a>
