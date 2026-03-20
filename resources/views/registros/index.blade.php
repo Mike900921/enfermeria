@@ -23,7 +23,7 @@
             <input id="fecha_inicio" type="date" class="form-control me-2" placeholder="Fecha inicio">
             <input id="fecha_fin" type="date" class="form-control me-2" placeholder="Fecha fin">
             <input id="input-busqueda" class="form-control me-2" placeholder="Buscar Paciente..." />
-            <button id="btn-buscar" class="btn btn-outline-success" type="submit">Buscar</button>
+            <button id="btn-buscar" class="btn btn-outline-success" type="button">Buscar</button>
         </div>
 
         {{-- Botón para descargar registro en Excel --}}

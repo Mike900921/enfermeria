@@ -9,6 +9,7 @@ use App\Models\Users\User;
 use App\Models\Paciente\Paciente;
 use App\Models\Paciente\AcudientePaciente;
 use App\Models\Motivo\Motivo;
+
 class Atencion extends Model
 {
     use HasFactory;

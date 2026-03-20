@@ -195,7 +195,7 @@ class UserController extends Controller
         }
 
         // Evitar eliminar administradores
-        if ($user->roles->nombre_rol === 'Administrador') {
+        if ($user->roles_id === 1) {
             return redirect()->route('users.index')
                 ->with('error', 'No puedes inhabilitar un usuario administrador');
         }
