@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head>    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="{{ asset('css/topbar.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <title>Document</title>
+    <link rel="icon" type="image/png" href="{{ asset('img/logoSena.png') }}">
+    <title>Enfermería</title>
 </head>
 
 <style>
@@ -151,6 +152,7 @@
     </header>
 
     <!-- Sidebar y contenido -->
+
     <div class="layout">
         <!-- Sidebar -->
         <nav id="sidebar" class="sidebar">
@@ -193,17 +195,22 @@
                     </a>
                 </li>
                 <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center" href="#" title="About">
-                        <i class="bi bi-info-circle me-2"></i>
-                        <span class="sidebar-text">About</span>
+                    <a class="nav-link text-dark d-flex align-items-center" href="{{ route('motivos.index') }}" title="About">
+                        <i class="bi bi-gear me-2"></i>
+                        <span class="sidebar-text">Motivos</span>
                     </a>
                 </li>
             </ul>
         </nav>
 
         <!-- Contenido principal -->
-        <main class="content w-100 h-auto">
-            @yield('content')
+        <main class="content w-100 h-auto fondo-global ">
+            <div class="fondo-logo">
+                <img src="/img/logoSena.png" alt="Logo" />
+            </div>
+            <div style="position: relative;">
+                @yield('content')
+            </div>
         </main>
     </div>
 

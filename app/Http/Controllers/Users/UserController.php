@@ -14,11 +14,7 @@ use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    use AuthorizesRequests;
-
+    /*Display a listing of the resource.*/
     public function index()
     {
         // Validación manual
@@ -65,12 +61,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        // Validación manual
+     // Validación manual
         if (Gate::denies('gestionar-usuarios')) {
             return redirect()->route('registros.index')
                 ->with('error', 'No tienes permisos para acceder');
         }
-        //
+
         $roles = Roles::all();
         $user = new User();
         return view('users.create', compact('roles', 'user'));
@@ -85,7 +81,7 @@ class UserController extends Controller
             return redirect()->route('registros.index')
                 ->with('error', 'No tienes permisos para acceder');
         }
-        //
+
         $request->validate([
             'name' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
             'last_name' => 'required|string|max:50|regex:/^[\pL\s]+$/u',
@@ -122,6 +118,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+
         if (Gate::denies('gestionar-usuarios')) {
             return redirect()->route('registros.index')
                 ->with('error', 'No tienes permisos para acceder');
@@ -145,7 +142,6 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-
         if (Gate::denies('gestionar-usuarios')) {
             return redirect()->route('registros.index')
                 ->with('error', 'No tienes permisos para acceder');
@@ -189,6 +185,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+
         if (Gate::denies('gestionar-usuarios')) {
             return redirect()->route('registros.index')
                 ->with('error', 'No tienes permisos para acceder');

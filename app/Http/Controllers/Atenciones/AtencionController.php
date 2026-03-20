@@ -31,7 +31,7 @@ class AtencionController extends Controller
         if (!empty(trim($query))) {
             $pacienteIds = \App\Models\Paciente\Paciente::on('senacdti_seguimientopro')
                 ->whereRaw("CONCAT(par_nombres, ' ', par_apellidos) LIKE ?", ["%{$query}%"])
-                ->orwhere('par_nombres', 'like', "{$query}%")
+                ->orWhere('par_nombres', 'like', "{$query}%")
                 ->orWhere('par_apellidos', 'like', "{$query}%")
                 ->orWhere('par_identificacion', 'like', "{$query}%")
                 ->pluck('par_identificacion');
@@ -56,8 +56,10 @@ class AtencionController extends Controller
             })
             ->select('atenciones.*')
             ->orderBy('fecha_hora', 'desc')
+
             ->paginate(10)
             ->withQueryString();
+
 
 
         if ($request->ajax()) {
@@ -73,10 +75,10 @@ class AtencionController extends Controller
     public function generarPdf($id)
     {
         $atencion = Atencion::with(['paciente', 'usuario'])->findOrFail($id);
+        $motivos = Motivo::all();
         // Pasamos los datos a la vista del PDF
-        $pdf = Pdf::loadView('pdf.ordenPdf', compact('atencion'));
+        $pdf = Pdf::loadView('pdf.ordenPdf', compact('atencion', 'motivos'));
 
-        // Configuramos el papel (opcional, por defecto es A4)
         // Configuramos el papel
         $pdf->setPaper('letter', 'portrait');
         // Retornamos el stream para que se abra en una pestaña nueva

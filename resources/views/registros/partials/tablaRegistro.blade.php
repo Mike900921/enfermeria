@@ -12,12 +12,12 @@
     <table class="table table-striped table-hover align-middle ">
         <thead class="table-info">
             <tr>
-                <th>ID</th>
-                <th>Paciente</th>
-                <th>Usuario</th>
-                <th>Fecha y Hora</th>
-                <th>Motivo</th>
-                <th>Accion</th>
+                <th><i class="bi bi-hash me-1"></i> ID</th>
+                <th><i class="bi bi-person me-1"></i> Paciente</th>
+                <th><i class="bi bi-person-badge me-1"></i> Responsable</th>
+                <th><i class="bi bi-calendar me-1"></i> Fecha y Hora</th>
+                <th><i class="bi bi-chat-dots me-1"></i> Motivo</th>
+                <th><i class="bi bi-gear me-1"></i> Acción</th>
             </tr>
         </thead>
 
@@ -34,11 +34,13 @@
                             {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('h:i a') }}
                         </span>
                     </td>
-                    <td class="text-truncate" style="max-width: 100px;">{{ $atencion->motivo->motivo }}</td>
+                    <td class="text-truncate" style="max-width: 100px;">{{ $atencion->motivo?->motivo ?? 'Sin motivo' }}
+                    </td>
                     <td>
                         <button class="btn btn-success p-1" title="Info usuario" style="font-size: 12px;"
-                            data-bs-toggle="modal" data-bs-target="#modalShowPaciente{{ $atencion->id }}">
-                            Info
+                            data-bs-toggle="modal" data-bs-target="#modalShowPaciente{{ $atencion->id }}"><i
+                                class="bi bi-info-circle me-1"></i>
+                            Ver Registro
                         </button>
                     </td>
                 </tr>
@@ -51,7 +53,16 @@
     </table>
 </div>
 
-<!-- Modal de Detalle del Paciente -->
+
+{{-- Paginación --}}
+@if ($atenciones->hasPages())
+    <div class="d-flex justify-content-center mt-3">
+        {{ $atenciones->links('pagination::bootstrap-5') }}
+    </div>
+@endif
+
+
+<!-- Modal de Detalle del Paciente (boton ver registro) -->
 @foreach ($atenciones as $atencion)
     <div class="modal fade" id="modalShowPaciente{{ $atencion->id }}" tabindex="-1">
         <div class="modal-dialog modal-lg">
@@ -65,7 +76,7 @@
 
                     <!-- INFORMACION DEL PACIENTE -->
                     <div class="border p-3 mb-3">
-                        <h5 class="text-success">Datos del Paciente</h5>
+                        <h5 class="text-success"><i class="bi bi-person me-1"></i>Datos del Paciente</h5>
 
                         <div class="row">
                             <div class="col-md-6">
@@ -100,7 +111,7 @@
 
                     <!-- INFORMACION CLINICA -->
                     <div class="border p-3 mb-3 text-break">
-                        <h5 class="text-success">Información Clínica</h5>
+                        <h5 class="text-success"><i class="bi bi-heart-pulse me-1"></i>Información Diagnóstico</h5>
 
                         <p>
                             <strong>Motivo de consulta:</strong><br>
@@ -121,7 +132,7 @@
 
                     <!-- ACUDIENTE -->
                     <div class="border p-3 mb-3">
-                        <h5 class="text-success">Datos del Acudiente</h5>
+                        <h5 class="text-success"><i class="bi bi-people me-1"></i>Datos del Acudiente</h5>
 
                         <div class="row">
                             <div class="col-md-5">
@@ -156,10 +167,3 @@
         </div>
     </div>
 @endforeach
-
-{{-- Paginación --}}
-@if ($atenciones->hasPages())
-    <div class="d-flex justify-content-center mt-3">
-        {{ $atenciones->links('pagination::bootstrap-5') }}
-    </div>
-@endif

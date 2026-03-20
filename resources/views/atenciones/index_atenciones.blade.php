@@ -4,11 +4,9 @@
 
 
 @section('content')
-    {{-- Estilos específicos para esta vista --}}
     <style>
         .user-select-auto {
             user-select: text !important;
-            /* Permitir selección de texto en elementos con esta clase */
         }
     </style>
 
@@ -18,7 +16,6 @@
                 <h5 class="mb-0">Consulta de Paciente</h5>
 
             </div>
-            {{-- Alertas de éxito --}}
             @if (session('success'))
                 <div
                     style="
@@ -38,26 +35,24 @@
                 </div>
             @endif
 
-            {{-- Alertas de error --}}
             @if ($errors->any())
                 <div
                     style="
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            width: auto;
-            max-width: 90%;
-        ">
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 9999;
+                    width: auto;
+                    max-width: 90%;">
                     @foreach ($errors->all() as $error)
                         <div class="alert alert-danger alert-dismissible fade show shadow-lg border-0" role="alert"
                             style="border-radius: 20px; padding-right: 50px;">
-                            <i class="fas fa-exclamation-circle me-2"></i> {{ $error }}
+                            <i class="fas fa-check-circle me-2"></i> {{ $error }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                    @endforeach
                 </div>
+            @endforeach
             @endif
 
 
@@ -181,7 +176,7 @@
                     @endif
 
                     <!-- Modal para registrar nueva atención - OJO tiene que ir dentro del isset paciente--->
-                    <div class="modal fade" id="modalCreateAtencion{{ $paciente->par_identificacion }}"tabindex="-1"
+                    <div class="modal fade" id="modalCreateAtencion{{ $paciente->par_identificacion }}" tabindex="-1"
                         aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -232,9 +227,9 @@
 
                                         <!-- CAMPOS EDITABLES -->
 
-                                        {{-- Fecha y hora actual (oculto) --}}
                                         <div class="mb-3">
-                                            <input type="hidden" name="fecha_hora"
+                                            <label class="form-label">Fecha y Hora</label>
+                                            <input type="datetime-local" name="fecha_hora"
                                                 value="{{ now()->format('Y-m-d\TH:i') }}" class="form-control" required>
                                         </div>
 
@@ -259,6 +254,7 @@
                                             </div>
                                         </div>
 
+
                                         <div class="mb-3">
                                             <label class="form-label">Procedimientos</label>
                                             <textarea name="procedimientos" class="form-control"></textarea>
@@ -278,6 +274,37 @@
 
                                         <button type="submit" class="btn btn-primary">
                                             Registrar Atención
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal para agregar nuevo motivo -->
+                    <div class="modal fade" id="modalMotivo" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #007832;">
+                                    <h5 class="modal-title text-light">Agregar Nuevo Motivo</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <form action="{{ route('motivos.store') }}" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Motivo de Consulta</label>
+                                            <input type="text" name="nombre" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button"
+                                            class="btn btn-secondary"data-bs-target="#modalCreateAtencion{{ $paciente->par_identificacion }}"
+                                            data-bs-toggle="modal">
+                                            Cancelar
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            Agregar Motivo
                                         </button>
                                     </div>
                                 </form>
@@ -392,23 +419,24 @@
         </div>
     @endisset
 
-    {{-- Modal para mas info del Paciente -- mostrar = Procedimientos -> Observaciones --}}
+    {{-- Modal para más info del Paciente (boton ver registro) --}}
     @isset($paciente)
         @foreach ($paciente->atenciones as $atencion)
             <div class="modal fade user-select-none" id="modalInfoPaciente{{ $atencion->id }}" tabindex="-1">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg"> <!-- modal-lg para más ancho -->
                     <div class="modal-content">
 
                         <div class="modal-header" style="background-color:#007832;">
-                            <h5 class="modal-title text-light">Información del Paciente</h5>
+                            <h5 class="modal-title text-light">
+                                <i class="bi bi-info-circle me-1"></i>Información del Paciente
+                            </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
                         <div class="modal-body">
-
                             <!-- INFORMACION DEL PACIENTE -->
                             <div class="border p-3 mb-3 user-select-auto">
-                                <h5 class="text-success">Datos del Paciente</h5>
+                                <h5 class="text-success"><i class="bi bi-person me-1"></i>Datos del Paciente</h5>
 
                                 <div class="row mb-2">
                                     <div class="col-md-6">
@@ -434,7 +462,7 @@
 
                                 <!-- INFORMACION CLINICA -->
                                 <div class="border p-3 mb-3">
-                                    <h5 class="text-success">Información Atención</h5>
+                                    <h5 class="text-success"><i class="bi bi-heart-pulse me-1"></i>Información Atención</h5>
 
                                     <p>
                                         <strong>Motivo de consulta:</strong><br>
@@ -456,7 +484,7 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                    Cerrar
+                                    <i class="bi bi-x-circle me-1"></i>Cerrar
                                 </button>
                             </div>
                         </div>
@@ -466,7 +494,6 @@
         @endforeach
     @endisset
 
-    {{-- script para ocultar alertas de mensajes automaticamente --}}
     <script>
         setTimeout(() => {
             const alert = document.querySelector('.alert-success');

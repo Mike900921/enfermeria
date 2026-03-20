@@ -4,6 +4,7 @@ namespace App\Models\Ficha;
 
 use App\Models\Programa\Programa;
 use App\Models\Ficha\Ficha;
+use App\Models\Paciente\Paciente;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,5 +23,13 @@ class FichaPro extends Model
     public function ficha()
     {
         return $this->hasOne(Ficha::class, 'fic_numero', 'fic_numero');
+    }
+
+    // ESTA ES LA QUE FALTA: Relación con el Coordinador
+    public function coordinador()
+    {
+        // Apunta a la tabla de participantes usando el ID del coordinador
+        return $this->belongsTo(Paciente::class, 'par_identificacion_coordinador', 'par_identificacion')
+                    ->where('rol_id', 3);
     }
 }

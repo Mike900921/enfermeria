@@ -6,6 +6,7 @@ use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Consulta\ConsultaController;
 use App\Http\Controllers\Caracterizacion\CaracterizacionController;
+use App\Http\Controllers\Motivo\MotivoController;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\PacienteExport;
 
@@ -75,6 +76,21 @@ Route::middleware('auth')->group(function () {
 
     // ruta Estadisticas
     Route::get('/estadisticas', [EstadisticaController::class, 'index'])->name('estadisticas.index');
+
+    // rutas para motivo
+    Route::get('/motivos',[MotivoController::class, 'index'])->name('motivos.index');
+    Route::get('/buscarMotivos', [MotivoController::class, 'buscar'])->name('motivos.buscar');
+    
+    //validaciones rutas motivo
+        //crear motivo
+        Route::post('/motivos', [MotivoController::class, 'store'])->name('motivos.store');
+        //editar motivo
+        Route::put('/motivos/{id}', [MotivoController::class, 'update'])->name('motivos.update');
+        //eliminar motivo (inhabilitar)
+        Route::delete('/motivos/destroy/{id}', [MotivoController::class, 'destroy'])->name('motivos.destroy');
+        //restaurar motivo
+        Route::post('/motivos/restore/{id}', [MotivoController::class, 'restore'])->name('motivos.restore');
+
 
 
     Route::get('/caracterizacion', [CaracterizacionController::class, 'index'])->name('caracterizacion');
