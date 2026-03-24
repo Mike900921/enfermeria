@@ -147,7 +147,7 @@
                                                         <td>{{ $atencion->fecha_hora }}</td>
                                                         <td class="text-truncate" style="max-width: 100px;">
 
-                                                            {{ $atencion->motivo ?? 'No registrado' }}
+                                                            {{ $atencion->motivo->pluck('motivo')->join(', ') ?? 'No registrado' }}
                                                         </td>
 
 
@@ -467,7 +467,7 @@
 
                                     <p>
                                         <strong>Motivo de consulta:</strong><br>
-                                        {{ $atencion->motivo ?? 'No registrado' }}
+                                        {{ $atencion->motivo->pluck('motivo')->join(', ') ?? 'No registrado' }}
                                     </p>
 
                                     <p>
