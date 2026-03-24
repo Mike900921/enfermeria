@@ -51,6 +51,7 @@ class MotivoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'paciente_id' => 'required',
             'nombre' => 'required|string|max:255',
         ]);
 
@@ -58,7 +59,9 @@ class MotivoController extends Controller
             'motivo' => $request->input('nombre'),
         ]);
 
-        return back()->with('success', 'Motivo creado exitosamente.');
+        return redirect()
+            ->route('atenciones.index_atenciones', ['cedula' => $request->paciente_id])
+            ->with('success', 'Motivo creado exitosamente.');
     }
 
 

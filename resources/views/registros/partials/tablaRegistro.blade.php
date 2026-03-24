@@ -34,7 +34,13 @@
                             {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('h:i a') }}
                         </span>
                     </td>
-                    <td class="text-truncate" style="max-width: 100px;">{{ $atencion->motivo->pluck('motivo')->join(', ') ?? 'Sin motivo' }}
+
+                    <td class="text-truncate" style="max-width: 100px;">
+                        {{ $atencion->motivo->isEmpty()
+                            ? 'Sin motivo'
+                            : ($atencion->motivo->count() === 1
+                                ? $atencion->motivo->first()->motivo
+                                : 'Múltiples') }}
                     </td>
                     <td>
                         <button class="btn btn-success p-1" title="Info usuario" style="font-size: 12px;"
@@ -72,11 +78,12 @@
                     <h4 class="modal-title">Informacion Médica</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body user-select-auto">
 
                     <!-- INFORMACION DEL PACIENTE -->
                     <div class="border p-3 mb-3">
-                        <h5 class="text-success"><i class="bi bi-person me-1"></i>Datos del Paciente</h5>
+                        <h5 class="text-success user-select-none"><i class="bi bi-person me-1"></i>Datos del Paciente
+                        </h5>
 
                         <div class="row">
                             <div class="col-md-6">
@@ -111,7 +118,8 @@
 
                     <!-- INFORMACION CLINICA -->
                     <div class="border p-3 mb-3 text-break">
-                        <h5 class="text-success"><i class="bi bi-heart-pulse me-1"></i>Información Diagnóstico</h5>
+                        <h5 class="text-success user-select-none"><i class="bi bi-heart-pulse me-1"></i>Información
+                            Diagnóstico</h5>
 
                         <p>
                             <strong>Motivo de consulta:</strong><br>
@@ -132,7 +140,8 @@
 
                     <!-- ACUDIENTE -->
                     <div class="border p-3 mb-3">
-                        <h5 class="text-success"><i class="bi bi-people me-1"></i>Datos del Acudiente</h5>
+                        <h5 class="text-success user-select-none"><i class="bi bi-people me-1"></i>Datos del Acudiente
+                        </h5>
 
                         <div class="row">
                             <div class="col-md-5">

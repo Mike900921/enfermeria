@@ -147,7 +147,11 @@
                                                         <td>{{ $atencion->fecha_hora }}</td>
                                                         <td class="text-truncate" style="max-width: 100px;">
 
-                                                            {{ $atencion->motivo->pluck('motivo')->join(', ') ?? 'No registrado' }}
+                                                            {{ $atencion->motivo->isEmpty()
+                                                                ? 'Sin motivo'
+                                                                : ($atencion->motivo->count() === 1
+                                                                    ? $atencion->motivo->first()->motivo
+                                                                    : 'Múltiples') }}
                                                         </td>
 
 
@@ -238,7 +242,8 @@
                                             <label class="form-label">Motivo</label>
 
                                             <div class="input-group">
-                                                <select name="motivo_id[]" multiple id="motivo_id" class="form-control" required>
+                                                <select name="motivo_id[]" multiple id="motivo_id" class="form-control"
+                                                    required>
                                                     <option value="">Seleccione un motivo</option>
                                                     @foreach ($motivos as $motivo)
                                                         <option value="{{ $motivo->id }}">
@@ -292,6 +297,8 @@
                                 </div>
                                 <form action="{{ route('motivos.store') }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="paciente_id" value="{{ $paciente->par_identificacion }}"
+                                        required>
                                     <div class="modal-body">
                                         <div class="mb-3">
                                             <label class="form-label">Motivo de Consulta</label>
@@ -496,7 +503,7 @@
     @endisset
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
 
-     <script>
+    <script>
         // Inicialización
         new TomSelect('#motivo_id', {
             plugins: ['remove_button'],
