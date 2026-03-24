@@ -17,6 +17,8 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="{{ asset('img/logoSena.png') }}">
+    <!-- Tom Select CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
     <title>Enfermería</title>
 </head>
 
@@ -216,6 +218,7 @@
 
     <!-- Incluir el script para el topbar desde public/js/topbar.js -->
     <script src="{{ asset('js/topbar.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
 
     {{-- Script para el toggle del sidebar --}}
     <script>

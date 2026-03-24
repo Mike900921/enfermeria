@@ -124,34 +124,6 @@
                 {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}
 
 
-                <!-- INFORMACION CLINICA -->
-                <div class="section">
-                    <h4>Información Clínica</h4>
-
-                    <div class="row">
-                        <div class="box">
-                            <span class="label">Motivo de consulta:</span><br>
-                            {{ $atencion->motivo->motivo ?? 'No registrado' }}
-                        </div>
-
-                    </div>
-
-                    <div class="col">
-                        <span class="label">Programa:</span>
-                        {{ $atencion->paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="full">
-                        <span class="label">Correo:</span>
-                        {{ $atencion->paciente->par_correo ?? 'No registrado' }}
-                    </div>
-                </div>
-
-            </div>
-
-
             <!-- INFORMACION CLINICA -->
             <div class="section">
                 <h4>Información Clínica</h4>
@@ -159,7 +131,7 @@
                 <div class="row">
                     <div class="box">
                         <span class="label">Motivo de consulta:</span><br>
-                        {{ $atencion->motivo->motivo ?? 'No registrado' }}
+                        {{ $atencion->motivo ?? 'No registrado' }}
                     </div>
                 </div>
 

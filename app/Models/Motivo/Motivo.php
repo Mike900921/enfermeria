@@ -15,6 +15,6 @@ class Motivo extends Model
 
     public function atenciones()
     {
-        return $this->hasMany(Atencion::class);
+        return $this->belongsToMany(Atencion::class, 'atencion_motivo', 'motivo_id', 'atencion_id')->withTimestamps();
     }
 }

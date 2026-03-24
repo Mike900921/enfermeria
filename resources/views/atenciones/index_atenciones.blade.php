@@ -4,6 +4,8 @@
 
 
 @section('content')
+    <!-- Tom Select CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
     <style>
         .user-select-auto {
             user-select: text !important;
@@ -145,7 +147,7 @@
                                                         <td>{{ $atencion->fecha_hora }}</td>
                                                         <td class="text-truncate" style="max-width: 100px;">
 
-                                                            {{ $atencion->motivo->motivo ?? 'No registrado' }}
+                                                            {{ $atencion->motivo ?? 'No registrado' }}
                                                         </td>
 
 
@@ -228,8 +230,7 @@
                                         <!-- CAMPOS EDITABLES -->
 
                                         <div class="mb-3">
-                                            <label class="form-label">Fecha y Hora</label>
-                                            <input type="datetime-local" name="fecha_hora"
+                                            <input type="hidden" name="fecha_hora"
                                                 value="{{ now()->format('Y-m-d\TH:i') }}" class="form-control" required>
                                         </div>
 
@@ -237,7 +238,7 @@
                                             <label class="form-label">Motivo</label>
 
                                             <div class="input-group">
-                                                <select name="motivo_id" class="form-control" required>
+                                                <select name="motivo_id[]" multiple id="motivo_id" class="form-control" required>
                                                     <option value="">Seleccione un motivo</option>
                                                     @foreach ($motivos as $motivo)
                                                         <option value="{{ $motivo->id }}">
@@ -466,7 +467,7 @@
 
                                     <p>
                                         <strong>Motivo de consulta:</strong><br>
-                                        {{ $atencion->motivo->motivo ?? 'No registrado' }}
+                                        {{ $atencion->motivo ?? 'No registrado' }}
                                     </p>
 
                                     <p>
@@ -493,6 +494,26 @@
             </div>
         @endforeach
     @endisset
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+
+     <script>
+        // Inicialización
+        new TomSelect('#motivo_id', {
+            plugins: ['remove_button'],
+            sortField: {
+                field: 'text',
+                direction: 'asc'
+            },
+            create: false,
+            // Esto mejora la apariencia en móviles
+            maxOptions: 50,
+            render: {
+                no_results: function(data, escape) {
+                    return '<div class="no-results">No se encontró "' + escape(data.input) + '"</div>';
+                }
+            }
+        });
+    </script>
 
     <script>
         setTimeout(() => {

@@ -60,6 +60,6 @@ class Atencion extends Model
     }
     public function motivo()
     {
-        return $this->belongsTo(Motivo::class, 'motivo_id');
+        return $this->belongsToMany(Motivo::class, 'atencion_motivo', 'atencion_id', 'motivo_id')->withTimestamps();
     }
 }

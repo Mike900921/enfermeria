@@ -34,7 +34,7 @@
                             {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('h:i a') }}
                         </span>
                     </td>
-                    <td class="text-truncate" style="max-width: 100px;">{{ $atencion->motivo?->motivo ?? 'Sin motivo' }}
+                    <td class="text-truncate" style="max-width: 100px;">{{ $atencion->motivo ?? 'Sin motivo' }}
                     </td>
                     <td>
                         <button class="btn btn-success p-1" title="Info usuario" style="font-size: 12px;"
@@ -115,7 +115,7 @@
 
                         <p>
                             <strong>Motivo de consulta:</strong><br>
-                            {{ $atencion->motivo->motivo ?? 'No registrado' }}
+                            {{ $atencion->motivo ?? 'No registrado' }}
                         </p>
 
                         <p>

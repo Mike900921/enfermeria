@@ -176,7 +176,13 @@ class AtencionController extends Controller
         $data['ficha_id'] = is_numeric($data['ficha_id']) ? $data['ficha_id'] : 1;
         $data['user_id'] = Auth::id();
 
-        Atencion::create($data);
+         // ❗ quitar motivo_id del insert
+        $atencion = Atencion::create(collect($data)->except('motivo_id')->toArray());
+
+        if ($request->has('motivo_id')) {
+            
+                $atencion->motivo()->sync($request->motivo_id);
+        }
 
         return redirect()
             ->route('atenciones.index_atenciones', ['cedula' => $request->paciente_id])
