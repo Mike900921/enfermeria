@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-
-        Schema::table('atenciones', function (Blueprint $table) {
-            $table->foreignId('motivo_id')->after('fecha_hora')->constrained()->onDelete('cascade');
+        Schema::create('motivos', function (Blueprint $table) {
+            $table->id();
+            $table->string('motivo');
+            $table->timestamps();
         });
     }
 
@@ -23,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('atenciones', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('motivos');
     }
 };
