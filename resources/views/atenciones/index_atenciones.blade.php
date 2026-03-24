@@ -146,12 +146,29 @@
                                                     <tr>
                                                         <td>{{ $atencion->fecha_hora }}</td>
                                                         <td class="text-truncate" style="max-width: 100px;">
+<<<<<<< HEAD
 
                                                             {{ $atencion->motivo->pluck('motivo')->join(', ') ?? 'No registrado' }}
+=======
+                                                            {{ $atencion->motivo->isEmpty()
+                                                                ? 'Sin motivo'
+                                                                : ($atencion->motivo->count() === 1
+                                                                    ? $atencion->motivo->first()->motivo
+                                                                    : 'Múltiples') }}
                                                         </td>
-
-
-                                                        <td>{{ $atencion->usuario->name ?? 'No disponible' }}</td>
+                                                        <td>
+                                                            @if ($atencion->usuario)
+                                                                {{ $atencion->usuario->name }}
+                                                                {{ $atencion->usuario->last_name }}
+                                                                @if ($atencion->usuario->trashed())
+                                                                    <i class="bi bi-person-x text-danger"
+                                                                        title="Usuario inactivo"></i>
+                                                                @endif
+                                                            @else
+                                                                N/A
+                                                            @endif
+>>>>>>> b0f2cd0192fa8d61ecb324aedba7f4e3b3548a70
+                                                        </td>
                                                         <td>
                                                             <button class="btn btn-verde p-1" title="Info usuario"
                                                                 style="font-size: 12px;" data-bs-toggle="modal"
@@ -238,7 +255,8 @@
                                             <label class="form-label">Motivo</label>
 
                                             <div class="input-group">
-                                                <select name="motivo_id[]" multiple id="motivo_id" class="form-control" required>
+                                                <select name="motivo_id[]" multiple id="motivo_id" class="form-control"
+                                                    required>
                                                     <option value="">Seleccione un motivo</option>
                                                     @foreach ($motivos as $motivo)
                                                         <option value="{{ $motivo->id }}">
@@ -292,6 +310,8 @@
                                 </div>
                                 <form action="{{ route('motivos.store') }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="paciente_id" value="{{ $paciente->par_identificacion }}"
+                                        required>
                                     <div class="modal-body">
                                         <div class="mb-3">
                                             <label class="form-label">Motivo de Consulta</label>
@@ -496,7 +516,7 @@
     @endisset
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
 
-     <script>
+    <script>
         // Inicialización
         new TomSelect('#motivo_id', {
             plugins: ['remove_button'],

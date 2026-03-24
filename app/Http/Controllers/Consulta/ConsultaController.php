@@ -15,7 +15,13 @@ class ConsultaController extends Controller
         $motivos = Motivo::all();
 
         if ($request->cedula) {
-            $paciente = Paciente::with('atenciones.usuario', 'ficha.fichapro.programa')
+            $paciente = Paciente::with([
+                'atenciones' => function ($query) {
+                    $query->orderBy('fecha_hora', 'desc'); // o 'created_at' si la tienes
+                },
+                'atenciones.usuario',
+                'ficha.fichapro.programa'
+            ])
                 ->where('par_identificacion', $request->cedula)
                 ->first();
         }
@@ -30,11 +36,17 @@ class ConsultaController extends Controller
             'cedula' => 'required'
         ]);
 
-        $paciente = Paciente::with('ficha')
+        $paciente = Paciente::with([
+            'atenciones' => function ($query) {
+                $query->orderBy('fecha_hora', 'desc'); // o 'created_at' si la tienes
+            },
+            'atenciones.usuario',
+            'ficha.fichapro.programa'
+        ])
             ->where('par_identificacion', $request->cedula)
             ->first();
 
-        $motivos = Motivo::all(); 
+        $motivos = Motivo::all();
 
         return view('atenciones.index_atenciones', compact('paciente', 'motivos'));
         //return view('atenciones.index_atenciones', compact('paciente'));
