@@ -153,9 +153,18 @@
                                                                     ? $atencion->motivo->first()->motivo
                                                                     : 'Múltiples') }}
                                                         </td>
-
-
-                                                        <td>{{ $atencion->usuario->name ?? 'No disponible' }}</td>
+                                                        <td>
+                                                            @if ($atencion->usuario)
+                                                                {{ $atencion->usuario->name }}
+                                                                {{ $atencion->usuario->last_name }}
+                                                                @if ($atencion->usuario->trashed())
+                                                                    <i class="bi bi-person-x text-danger"
+                                                                        title="Usuario inactivo"></i>
+                                                                @endif
+                                                            @else
+                                                                N/A
+                                                            @endif
+                                                        </td>
                                                         <td>
                                                             <button class="btn btn-verde p-1" title="Info usuario"
                                                                 style="font-size: 12px;" data-bs-toggle="modal"

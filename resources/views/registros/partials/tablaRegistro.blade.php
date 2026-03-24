@@ -26,7 +26,15 @@
                 <tr>
                     <td>{{ $atencion->paciente->par_identificacion }}</td>
                     <td>{{ $atencion->paciente->par_nombres }}</td>
-                    <td>{{ $atencion->usuario ? $atencion->usuario->name . ' ' . $atencion->usuario->last_name : 'N/A' }}
+                    <td>
+                        @if ($atencion->usuario)
+                            {{ $atencion->usuario->name }} {{ $atencion->usuario->last_name }}
+                            @if ($atencion->usuario->trashed())
+                                <i class="bi bi-person-x text-danger" title="Usuario inactivo"></i>
+                            @endif
+                        @else
+                            N/A
+                        @endif
                     </td>
                     <td style="max-width: 150px;"> {{-- Aumenté un poco el max-width para que no se amontone --}}
                         {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('d/m/Y') }}
