@@ -228,8 +228,7 @@
                                         <!-- CAMPOS EDITABLES -->
 
                                         <div class="mb-3">
-                                            <label class="form-label">Fecha y Hora</label>
-                                            <input type="datetime-local" name="fecha_hora"
+                                            <input type="hidden" name="fecha_hora"
                                                 value="{{ now()->format('Y-m-d\TH:i') }}" class="form-control" required>
                                         </div>
 
@@ -291,6 +290,8 @@
                                 </div>
                                 <form action="{{ route('motivos.store') }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="paciente_id" value="{{ $paciente->par_identificacion }}"
+                                        required>
                                     <div class="modal-body">
                                         <div class="mb-3">
                                             <label class="form-label">Motivo de Consulta</label>
