@@ -39,7 +39,7 @@ class PacienteExport implements FromCollection, WithMapping, WithHeadings
             optional($paciente)->par_apellidos ?? 'No registrado',
             optional($paciente)->par_telefono ?? 'No registrado',
             $atencion->fecha_hora,
-            $atencion->motivo->motivo,
+            $atencion->motivo->pluck('motivo')->join(', '),
             $atencion->procedimientos,
             $atencion->observaciones,
             $nombreCompletoUsuario,

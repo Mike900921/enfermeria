@@ -124,79 +124,79 @@
                 {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}
 
 
-            <!-- INFORMACION CLINICA -->
-            <div class="section">
-                <h4>Información Clínica</h4>
+                <!-- INFORMACION CLINICA -->
+                <div class="section">
+                    <h4>Información Clínica</h4>
 
-                <div class="row">
-                    <div class="box">
-                        <span class="label">Motivo de consulta:</span><br>
-                        {{ $atencion->motivo ?? 'No registrado' }}
+                    <div class="row">
+                        <div class="box">
+                            <span class="label">Motivo de consulta:</span><br>
+                            {{ $atencion->motivo->pluck('motivo')->join(', ') ?? 'No registrado' }}
+                        </div>
                     </div>
+
+                    <div class="row">
+                        <div class="box">
+                            <span class="label">Procedimientos:</span><br>
+                            {{ $atencion->procedimientos ?? 'No registrado' }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="box">
+                            <span class="label">Observaciones:</span><br>
+                            {{ $atencion->observaciones ?? 'No registrado' }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="box">
+                            <span class="label">Fecha de Atención:</span>
+                            {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('d/m/Y') }}
+                        </div>
+                        <div class="box">
+                            <span class="label">Hora:</span>
+                            {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('h:i A') }}
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="row">
-                    <div class="box">
-                        <span class="label">Procedimientos:</span><br>
-                        {{ $atencion->procedimientos ?? 'No registrado' }}
+
+                <!-- ACUDIENTE -->
+                <div class="section">
+                    <h4>Datos del Acudiente</h4>
+
+                    <div class="row">
+                        <div class="col">
+                            <span class="label">Nombre:</span>
+                            {{ $atencion->paciente->acudiente->par_acu_nombre ?? 'No registrado' }}
+                        </div>
+
+                        <div class="col">
+                            <span class="label">Teléfono:</span>
+                            {{ $atencion->paciente->acudiente->par_acu_tel ?? 'No registrado' }}
+                        </div>
                     </div>
+
+                    <div class="row">
+                        <div class="full">
+                            <span class="label">Parentesco:</span>
+                            {{ $atencion->paciente->acudiente->par_acu_parentesco ?? 'No registrado' }}
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="row">
-                    <div class="box">
-                        <span class="label">Observaciones:</span><br>
-                        {{ $atencion->observaciones ?? 'No registrado' }}
+
+                <!-- FIRMA -->
+                <div class="footer">
+
+                    <div class="firma">
+                        Firma Profesional
                     </div>
+
                 </div>
-
-                <div class="row">
-                    <div class="box">
-                        <span class="label">Fecha de Atención:</span>
-                        {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('d/m/Y') }}
-                    </div>
-                    <div class="box">
-                        <span class="label">Hora:</span>
-                        {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('h:i A') }}
-                    </div>
-                </div>
-
-            </div>
-
-
-            <!-- ACUDIENTE -->
-            <div class="section">
-                <h4>Datos del Acudiente</h4>
-
-                <div class="row">
-                    <div class="col">
-                        <span class="label">Nombre:</span>
-                        {{ $atencion->paciente->acudiente->par_acu_nombre ?? 'No registrado' }}
-                    </div>
-
-                    <div class="col">
-                        <span class="label">Teléfono:</span>
-                        {{ $atencion->paciente->acudiente->par_acu_tel ?? 'No registrado' }}
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="full">
-                        <span class="label">Parentesco:</span>
-                        {{ $atencion->paciente->acudiente->par_acu_parentesco ?? 'No registrado' }}
-                    </div>
-                </div>
-
-            </div>
-
-
-            <!-- FIRMA -->
-            <div class="footer">
-
-                <div class="firma">
-                    Firma Profesional
-                </div>
-
-            </div>
 </body>
 
 </html>

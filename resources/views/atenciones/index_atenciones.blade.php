@@ -146,8 +146,11 @@
                                                     <tr>
                                                         <td>{{ $atencion->fecha_hora }}</td>
                                                         <td class="text-truncate" style="max-width: 100px;">
-
-                                                            {{ $atencion->motivo ?? 'No registrado' }}
+                                                            {{ $atencion->motivo->isEmpty()
+                                                                ? 'Sin motivo'
+                                                                : ($atencion->motivo->count() === 1
+                                                                    ? $atencion->motivo->first()->motivo
+                                                                    : 'Múltiples') }}
                                                         </td>
 
 
@@ -238,7 +241,8 @@
                                             <label class="form-label">Motivo</label>
 
                                             <div class="input-group">
-                                                <select name="motivo_id[]" multiple id="motivo_id" class="form-control" required>
+                                                <select name="motivo_id[]" multiple id="motivo_id" class="form-control"
+                                                    required>
                                                     <option value="">Seleccione un motivo</option>
                                                     @foreach ($motivos as $motivo)
                                                         <option value="{{ $motivo->id }}">
@@ -469,7 +473,7 @@
 
                                     <p>
                                         <strong>Motivo de consulta:</strong><br>
-                                        {{ $atencion->motivo ?? 'No registrado' }}
+                                        {{ $atencion->motivo->pluck('motivo')->join(', ') ?? 'No registrado' }}
                                     </p>
 
                                     <p>
@@ -498,7 +502,7 @@
     @endisset
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
 
-     <script>
+    <script>
         // Inicialización
         new TomSelect('#motivo_id', {
             plugins: ['remove_button'],
