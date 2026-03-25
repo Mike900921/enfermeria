@@ -32,7 +32,7 @@ class EstadisticaController extends Controller
         $busqueda = $request->input('buscador');
         $ver = $request->get('ver', 'ficha');
 
-        if ($request->filled('buscador')) {
+        /*if ($request->filled('buscador')) {
             if (is_numeric($busqueda)) {
                 // Buscamos si existe una ficha con ese número exacto
                 $existeFicha = \App\Models\Ficha\Ficha::where('fic_numero', $busqueda)->exists();
@@ -46,7 +46,7 @@ class EstadisticaController extends Controller
             } else {
                 $ver = 'programa';
             }
-        }
+        }*/
 
 
         //--------------------consulta base para las estadísticas, con joins para traer la información relacionada de fichas, programas, aprendices y coordinadores--------------------------------

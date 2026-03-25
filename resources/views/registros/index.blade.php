@@ -20,10 +20,11 @@
 
 
         {{-- Filtros de búsqueda por fecha, nombre paciente, cedula y nombre enfermero que lo atendio --}}
-        <div class="d-flex mb-2">
-            <input id="fecha_inicio" type="date" class="form-control me-2" placeholder="Fecha inicio">
-            <input id="fecha_fin" type="date" class="form-control me-2" placeholder="Fecha fin">
-            <input id="input-busqueda" class="form-control me-2" placeholder="Buscar Paciente..." />
+        <div class="d-flex mb-2 buscador">
+            <input id="fecha_inicio" type="date" class="form-control me-2" placeholder="Fecha inicio"
+                title="Fecha inicio">
+            <input id="fecha_fin" type="date" class="form-control me-2" placeholder="Fecha fin" title="Fecha fin">
+            <input id="input-busqueda" type="search" class="form-control me-2" placeholder="Buscar Paciente..." />
             <button id="btn-buscar" class="btn btn-outline-success d-flex" type="button"><i
                     class="bi bi-search me-1"></i>Buscar
             </button>
