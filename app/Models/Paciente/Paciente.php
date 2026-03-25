@@ -7,6 +7,7 @@ use App\Models\Atencion\Atencion; // 👈 IMPORTANTE
 use App\Models\Paciente\AcudientePaciente; // 👈 IMPORTANTE
 use App\Models\Paciente\Programa;
 use App\Models\Ficha\Ficha;
+use App\Models\Eps\caracterizacion_apr;
 
 class Paciente extends Model
 {
@@ -15,7 +16,7 @@ class Paciente extends Model
     protected $primaryKey = 'par_identificacion';
     public $timestamps = false;
 
-    
+
 
     public function atenciones()
     {
@@ -31,5 +32,10 @@ class Paciente extends Model
     {
         return $this->hasOne(Ficha::class, 'par_identificacion', 'par_identificacion')
             ->latestOfMany('created_at');
+    }
+
+    public function caracterizacion_apr()
+    {
+        return $this->hasOne(Caracterizacion_apr::class, 'par_identificacion', 'par_identificacion');
     }
 }

@@ -22,9 +22,7 @@
             padding: 10px;
             margin-bottom: 15px;
             /* Importante para que el borde no se corte */
-
             box-sizing: border-box;
-
         }
         .section h4 {
             margin: 0 0 10px 0;
@@ -44,6 +42,7 @@
         .box {
             padding: 5px 0;
         }
+
 
         .firma {
             margin-top: 60px;
@@ -95,6 +94,7 @@
                 {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}
             </div>
         </div>
+
 
     </div>
     <div class="section">
