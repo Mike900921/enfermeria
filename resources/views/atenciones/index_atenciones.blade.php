@@ -146,10 +146,7 @@
                                                     <tr>
                                                         <td>{{ $atencion->fecha_hora }}</td>
                                                         <td class="text-truncate" style="max-width: 100px;">
-<<<<<<< HEAD
 
-                                                            {{ $atencion->motivo->pluck('motivo')->join(', ') ?? 'No registrado' }}
-=======
                                                             {{ $atencion->motivo->isEmpty()
                                                                 ? 'Sin motivo'
                                                                 : ($atencion->motivo->count() === 1
@@ -167,7 +164,6 @@
                                                             @else
                                                                 N/A
                                                             @endif
->>>>>>> b0f2cd0192fa8d61ecb324aedba7f4e3b3548a70
                                                         </td>
                                                         <td>
                                                             <button class="btn btn-verde p-1" title="Info usuario"

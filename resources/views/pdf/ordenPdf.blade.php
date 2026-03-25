@@ -10,10 +10,7 @@
             font-size: 12px;
             color: #333;
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> b0f2cd0192fa8d61ecb324aedba7f4e3b3548a70
         .title {
             font-size: 20px;
             font-weight: bold;
@@ -25,11 +22,9 @@
             padding: 10px;
             margin-bottom: 15px;
             /* Importante para que el borde no se corte */
-<<<<<<< HEAD
-            box-sizing: border-box; 
-=======
+
             box-sizing: border-box;
->>>>>>> b0f2cd0192fa8d61ecb324aedba7f4e3b3548a70
+
         }
         .section h4 {
             margin: 0 0 10px 0;
@@ -44,17 +39,12 @@
             width: 48%;
             vertical-align: top;
         }
-<<<<<<< HEAD
-        .box {
-            padding: 5px 0;
-        }
-=======
+
 
         .box {
             padding: 5px 0;
         }
 
->>>>>>> b0f2cd0192fa8d61ecb324aedba7f4e3b3548a70
         .firma {
             margin-top: 60px;
             border-top: 1px solid #000;
@@ -69,10 +59,7 @@
         }
     </style>
 </head>
-<<<<<<< HEAD
-=======
 
->>>>>>> b0f2cd0192fa8d61ecb324aedba7f4e3b3548a70
 <body>
 
     <table style="width: 100%; border-bottom: 2px solid #39A900; padding-bottom: 10px; margin-bottom: 20px;">
@@ -108,12 +95,9 @@
                 {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}
             </div>
         </div>
-<<<<<<< HEAD
-    </div> <div class="section">
-=======
+
     </div>
     <div class="section">
->>>>>>> b0f2cd0192fa8d61ecb324aedba7f4e3b3548a70
         <h4>Información Clínica</h4>
         <div class="row">
             <div class="box">
@@ -143,12 +127,9 @@
                 {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('h:i A') }}
             </div>
         </div>
-<<<<<<< HEAD
-    </div> <div class="section">
-=======
+
     </div>
     <div class="section">
->>>>>>> b0f2cd0192fa8d61ecb324aedba7f4e3b3548a70
         <h4>Datos del Acudiente</h4>
         <div class="row">
             <div class="col">
@@ -166,19 +147,12 @@
                 {{ $atencion->paciente->acudiente->par_acu_parentesco ?? 'No registrado' }}
             </div>
         </div>
-<<<<<<< HEAD
-    </div> <div style="margin-top: 40px; text-align: center;">
-=======
+
     </div>
     <div style="margin-top: 40px; text-align: center;">
->>>>>>> b0f2cd0192fa8d61ecb324aedba7f4e3b3548a70
         <div class="firma">
             Firma Profesional
         </div>
     </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> b0f2cd0192fa8d61ecb324aedba7f4e3b3548a70
 </body>
 </html>

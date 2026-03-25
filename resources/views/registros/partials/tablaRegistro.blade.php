@@ -42,16 +42,12 @@
                             {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('h:i a') }}
                         </span>
                     </td>
-<<<<<<< HEAD
-                    <td class="text-truncate" style="max-width: 100px;">{{ $atencion->motivo->pluck('motivo')->join(', ') ?? 'Sin motivo' }}
-=======
                     <td class="text-truncate" style="max-width: 100px;">
                         {{ $atencion->motivo->isEmpty()
                             ? 'Sin motivo'
                             : ($atencion->motivo->count() === 1
                                 ? $atencion->motivo->first()->motivo
                                 : 'Múltiples') }}
->>>>>>> b0f2cd0192fa8d61ecb324aedba7f4e3b3548a70
                     </td>
                     <td>
                         <button class="btn btn-success p-1" title="Info usuario" style="font-size: 12px;"
