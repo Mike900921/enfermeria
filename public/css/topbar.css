@@ -2,30 +2,42 @@
         margin: 0;
         font-family: Arial;
     }
-.fondo-logo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;   /* Ocupa todo el ancho del contenedor */
-    height: 100%;  /* Ocupa todo el alto del contenedor */
-    display: flex;
-    justify-content: center; /* Centrar el logo horizontalmente */
-    align-items: center;     /* Centrar el logo verticalmente */
-    pointer-events: none;    /* Para que no interfiera con clicks */
-    z-index: 0;              /* Detrás del contenido */
-    opacity: 0.2;            /* Logo semitransparente */
-}
 
-.fondo-logo img {
-    width: 70vw;        /* ajusta este valor (40–70 funciona bien) */
-    max-width: 500px;   /* nunca más grande que esto */
-    height: auto;       /* mantiene proporción */
-}
+    .fondo-logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        /* Ocupa todo el ancho del contenedor */
+        height: 100%;
+        /* Ocupa todo el alto del contenedor */
+        display: flex;
+        justify-content: center;
+        /* Centrar el logo horizontalmente */
+        align-items: center;
+        /* Centrar el logo verticalmente */
+        pointer-events: none;
+        /* Para que no interfiera con clicks */
+        z-index: 0;
+        /* Detrás del contenido */
+        opacity: 0.2;
+        /* Logo semitransparente */
+    }
 
-.fondo-global {
-    position: relative;
-    min-height: 100vh; /* altura mínima igual al viewport */
-}
+    .fondo-logo img {
+        width: 70vw;
+        /* ajusta este valor (40–70 funciona bien) */
+        max-width: 500px;
+        /* nunca más grande que esto */
+        height: auto;
+        /* mantiene proporción */
+    }
+
+    .fondo-global {
+        position: relative;
+        min-height: 100vh;
+        /* altura mínima igual al viewport */
+    }
 
     /* BARRA VERDE FIJA */
     .topbar {
@@ -173,4 +185,82 @@
     /* contenido ajustado */
     html.sidebar-closed .content {
         margin-left: 70px;
+    }
+
+
+
+    /* --- Sidebar responsive móvil --- */
+    /* --- MEDIA QUERIES PARA MOVILES --- */
+    @media (max-width: 768px) {
+
+        /* Mantener sidebar en el DOM, pero sacarlo de la vista */
+        .sidebar {
+            top: 60px;
+            left: 0px;
+            /* fuera de la pantalla */
+            height: calc(100vh - 60px);
+            z-index: 100;
+            transition: left 0.3s ease;
+        }
+
+        /* Cuando se quiera mostrar (agregar clase 'open' con JS) */
+        .sidebar.open {
+            left: 0;
+        }
+
+        /* Contenido ocupa toda la pantalla */
+        .content {
+            margin-left: 2;
+            position: relative;
+        }
+
+        .topbar {
+            justify-content: space-between;
+        }
+    }
+
+
+
+    @media (max-width: 768px) {
+
+        .table td,
+        .table th {
+            font-size: 0.75rem;
+            /* texto más pequeño */
+            padding: 0.35rem 0.5rem;
+            /* padding más compacto */
+            white-space: nowrap;
+            /* evitar salto de línea innecesario */
+            vertical-align: middle;
+            /* alinear verticalmente */
+        }
+
+        /* Reducir tamaño y padding de botones */
+        .table td .btn {
+            font-size: 0.65rem;
+            /* más pequeño que btn-sm */
+            padding: 0.25rem 0.4rem;
+            /* menos padding */
+            min-width: 70px;
+            /* ancho mínimo para que no se vea demasiado chico */
+            white-space: nowrap;
+            /* no permitir que el texto se divida */
+        }
+
+        /* Reducir tamaño de iconos dentro de botones */
+        .table td .btn i {
+            font-size: 0.75rem;
+            margin-right: 4px;
+        }
+
+        /* Acortar columnas largas para que no se partan en varias líneas */
+        td.text-truncate,
+        td.text-truncate>* {
+            max-width: 120px;
+            /* limitar ancho para email, nombre */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: block;
+        }
     }
