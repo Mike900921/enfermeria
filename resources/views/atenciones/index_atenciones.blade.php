@@ -151,6 +151,7 @@
                                                             </span>
                                                         </td>
                                                         <td class="text-truncate" style="max-width: 100px;">
+
                                                             {{ $atencion->motivo->isEmpty()
                                                                 ? 'Sin motivo'
                                                                 : ($atencion->motivo->count() === 1

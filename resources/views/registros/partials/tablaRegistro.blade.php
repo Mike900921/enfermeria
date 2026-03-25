@@ -46,6 +46,7 @@
                             {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('h:i a') }}
                         </span>
                     </td>
+
                     <td class="text-truncate" style="max-width: 100px;">
                         {{ $atencion->motivo->isEmpty()
                             ? 'Sin motivo'

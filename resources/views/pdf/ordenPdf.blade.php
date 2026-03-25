@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +16,6 @@
             font-weight: bold;
             color: #198754;
         }
-
         .section {
             border: 1px solid #ccc;
             width: 100%;
@@ -26,26 +24,25 @@
             /* Importante para que el borde no se corte */
             box-sizing: border-box;
         }
-
         .section h4 {
             margin: 0 0 10px 0;
             color: #198754;
         }
-
         .row {
             width: 100%;
             margin-bottom: 5px;
         }
-
         .col {
             display: inline-block;
             width: 48%;
             vertical-align: top;
         }
 
+
         .box {
             padding: 5px 0;
         }
+
 
         .firma {
             margin-top: 60px;
@@ -56,7 +53,6 @@
             text-align: center;
             padding-top: 5px;
         }
-
         .label {
             font-weight: bold;
         }
@@ -98,6 +94,7 @@
                 {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}
             </div>
         </div>
+
     </div>
     <div class="section">
         <h4>Información Clínica</h4>
@@ -129,6 +126,7 @@
                 {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('h:i A') }}
             </div>
         </div>
+
     </div>
     <div class="section">
         <h4>Datos del Acudiente</h4>
@@ -148,6 +146,7 @@
                 {{ $atencion->paciente->acudiente->par_acu_parentesco ?? 'No registrado' }}
             </div>
         </div>
+
     </div>
     <div style="margin-top: 40px; text-align: center;">
         <div class="firma">
@@ -155,5 +154,4 @@
         </div>
     </div>
 </body>
-
 </html>
