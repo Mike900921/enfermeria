@@ -102,9 +102,9 @@
                             <div class="col-md-5">
                                 <label class="form-label fw-bold">Agrupar por:</label>
                                 <select name="ver" class="form-control">
-                                    <option value="ficha" @selected(request('ver') == 'ficha')>Número de Ficha</option>
-                                    <option value="programa" @selected(request('ver') == 'programa')>Nombre del Programa</option>
-                                    <option value="pacientes" @selected(request('ver') == 'pacientes')>paciente</option>
+                                    <option value="ficha"@selected($ver == 'ficha')>Número de Ficha</option>
+                                    <option value="programa" @selected($ver == 'programa')>Nombre del Programa</option>
+                                    <option value="pacientes" @selected($ver == 'pacientes')>paciente</option>
                                 </select>
                             </div>
                             <!--filtros por buscador-->

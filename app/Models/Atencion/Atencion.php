@@ -34,7 +34,7 @@ class Atencion extends Model
     {
         return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
-
+  
     public function paciente()
     {
         return $this->belongsTo(Paciente::class, 'paciente_id', 'par_identificacion');
