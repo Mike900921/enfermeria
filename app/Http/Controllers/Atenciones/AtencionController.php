@@ -38,7 +38,7 @@ class AtencionController extends Controller
         }
 
         // Tipo de búsqueda: 'usuario' por defecto
-        $atenciones = Atencion::with(['paciente.acudiente', 'usuario'])
+        $atenciones = Atencion::with(['paciente.acudiente', 'usuario', 'paciente.caracterizacion_apr.resultados_apr'])
             ->when(!empty($query), function ($q) use ($query, $pacienteIds) {
                 $q->where(function ($sub) use ($query, $pacienteIds) {
                     $sub->whereHas('usuario', function ($q1) use ($query) {

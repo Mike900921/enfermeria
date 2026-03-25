@@ -14,6 +14,7 @@
             <tr>
                 <th><i class="bi bi-hash me-1"></i> ID</th>
                 <th><i class="bi bi-person me-1"></i> Paciente</th>
+                <th><i class="bi bi-hospital me-1"></i> EPS</th>
                 <th><i class="bi bi-person-badge me-1"></i> Responsable</th>
                 <th><i class="bi bi-calendar me-1"></i> Fecha y Hora</th>
                 <th><i class="bi bi-chat-dots me-1"></i> Motivo</th>
@@ -26,6 +27,9 @@
                 <tr>
                     <td>{{ $atencion->paciente->par_identificacion }}</td>
                     <td>{{ $atencion->paciente->par_nombres }}</td>
+                    <td>
+                        {{ $atencion->paciente?->caracterizacion_apr?->resultados_apr->where('pregunta_id', 7)->first()?->respuesta_texto ?? 'No registrado' }}
+                    </td>
                     <td>
                         @if ($atencion->usuario)
                             {{ $atencion->usuario->name }} {{ $atencion->usuario->last_name }}

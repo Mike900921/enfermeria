@@ -144,7 +144,12 @@
                                             <tbody class="user-select-auto">
                                                 @foreach ($paciente->atenciones as $atencion)
                                                     <tr>
-                                                        <td>{{ $atencion->fecha_hora }}</td>
+                                                        <td style="max-width: 150px;"> {{-- Aumenté un poco el max-width para que no se amontone --}}
+                                                            {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('d/m/Y') }}
+                                                            <span style="margin-left: 10px;">
+                                                                {{ \Carbon\Carbon::parse($atencion->fecha_hora)->format('h:i a') }}
+                                                            </span>
+                                                        </td>
                                                         <td class="text-truncate" style="max-width: 100px;">
                                                             {{ $atencion->motivo->isEmpty()
                                                                 ? 'Sin motivo'
@@ -356,9 +361,13 @@
 
                             <div class="card-body user-select-auto">
                                 <div class="row mb-2">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <strong>Nombre:</strong><br>
                                         {{ $paciente->par_nombres }} {{ $paciente->par_apellidos }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <strong>Eps:</strong><br>
+                                        {{ $atencion->paciente?->caracterizacion_apr?->resultados_apr->where('pregunta_id', 7)->first()?->respuesta_texto ?? 'No registrado' }}
                                     </div>
 
                                     <div class="col-md-3">
