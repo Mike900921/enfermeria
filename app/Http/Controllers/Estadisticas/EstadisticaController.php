@@ -32,7 +32,7 @@ class EstadisticaController extends Controller
         $busqueda = $request->input('buscador');
         $ver = $request->get('ver', 'ficha');
 
-        if ($request->filled('buscador')) {
+        /*if ($request->filled('buscador')) {
             if (is_numeric($busqueda)) {
                 // Buscamos si existe una ficha con ese número exacto
                 $existeFicha = \App\Models\Ficha\Ficha::where('fic_numero', $busqueda)->exists();
@@ -46,7 +46,7 @@ class EstadisticaController extends Controller
             } else {
                 $ver = 'programa';
             }
-        }
+        }*/
 
 
         //--------------------consulta base para las estadísticas, con joins para traer la información relacionada de fichas, programas, aprendices y coordinadores--------------------------------
@@ -82,8 +82,8 @@ class EstadisticaController extends Controller
         if ($ver === 'programa') {
             // Para agrupar por programa, el JOIN es obligatorio
             $topData = $query->join('senacdti_seguimientopro.sep_ficha as f', 'atenciones.ficha_id', '=', 'f.fic_numero')
-                ->select('f.prog_codigo', 'atenciones.ficha_id', DB::raw('count(atenciones.id) as total'))
-                ->groupBy('f.prog_codigo', 'atenciones.ficha_id');
+                ->select('f.prog_codigo', DB::raw('count(atenciones.id) as total'))
+                ->groupBy('f.prog_codigo'); 
         } elseif ($ver === 'pacientes') {
             $topData = $query->select('paciente_id', 'ficha_id', DB::raw('count(*) as total'))
                 ->groupBy('paciente_id', 'ficha_id');
@@ -96,15 +96,32 @@ class EstadisticaController extends Controller
         $topData = $topData->orderBy('total', 'desc')->limit(10)->get();
 
         // Carga de Relaciones (Aquí es donde recuperamos los nombres para los 10 resultados)
-        $topData->load(['paciente', 'ficha.fichapro.programa', 'ficha.fichapro.coordinador']);
+        $programas = null;
+        $coordinadores = null;
+        if ($ver === 'programa') {
+            $programas = Programa::whereIn('prog_codigo', $topData->pluck('prog_codigo'))->get()->keyBy('prog_codigo');
+            $coordinadores = DB::table('senacdti_seguimientopro.sep_ficha as f')
+                ->join('senacdti_seguimientopro.sep_participante as p', 'f.par_identificacion_coordinador', '=', 'p.par_identificacion')
+                ->whereIn('f.prog_codigo', $topData->pluck('prog_codigo'))
+                ->select('f.prog_codigo', 'p.par_nombres', 'p.par_apellidos')
+                ->get()
+                ->groupBy('prog_codigo')
+                ->map(function ($group) {
+                    return $group->first();
+                });
+        } else {
+            $topData->load(['paciente', 'ficha.fichapro.programa', 'ficha.fichapro.coordinador']);
+        }
 
 
         // Mapeo de datos para la Vista (Llenamos las variables que usa tu Blade)
-        $topData->transform(function ($item) use ($ver) {
+        $topData->transform(function ($item) use ($ver, $programas, $coordinadores) {
             if ($ver === 'programa') {
-                $item->etiqueta = $item->ficha->fichapro->programa->prog_nombre ?? 'N/A';
-                $item->nombre_coord = $item->ficha->fichapro->coordinador->par_nombres ?? 'Sin';
-                $item->apellido_coord = $item->ficha->fichapro->coordinador->par_apellidos ?? 'Coordinador';
+                $programa = $programas[$item->prog_codigo] ?? null;
+                $item->etiqueta = $programa ? $programa->prog_nombre : 'N/A';
+                $coordinador = $coordinadores[$item->prog_codigo] ?? null;
+                $item->nombre_coord = $coordinador ? $coordinador->par_nombres : 'N/A';
+                $item->apellido_coord = $coordinador ? $coordinador->par_apellidos : 'N/A';
             } elseif ($ver === 'pacientes') {
                 $item->etiqueta = $item->paciente
                     ? ($item->paciente->par_nombres . ' ' . $item->paciente->par_apellidos)
