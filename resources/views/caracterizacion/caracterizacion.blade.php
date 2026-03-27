@@ -19,9 +19,8 @@
         </div>
     </div>
     <div class="card-body text-center " style="margin-top: 80px;">
-
-
-        {!! QrCode::size(300)->generate('https://setalpro.senacdti.com/login') !!}
+        
+        {!! QrCode::size(200)->generate('https://setalpro.senacdti.com/login') !!}
 
     </div>
 </div>
