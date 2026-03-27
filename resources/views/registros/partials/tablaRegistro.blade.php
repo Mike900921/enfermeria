@@ -14,7 +14,7 @@
             <thead class="table-info">
                 <tr>
                     <th><i class="bi bi-hash me-1"></i> ID</th>
-                    <th><i class="bi bi-person me-1"></i> Paciente</th>
+                    <th><i class="bi bi-person me-1"></i> Aprendiz</th>
                     <th><i class="bi bi-hospital me-1"></i> EPS</th>
                     <th><i class="bi bi-person-badge me-1"></i> Responsable</th>
                     <th><i class="bi bi-calendar me-1"></i> Fecha y Hora</th>
@@ -93,7 +93,7 @@
 
                     <!-- INFORMACION DEL PACIENTE -->
                     <div class="border p-3 mb-3">
-                        <h5 class="text-success user-select-none"><i class="bi bi-person me-1"></i>Datos del Paciente
+                        <h5 class="text-success user-select-none"><i class="bi bi-person me-1"></i>Datos del Aprendiz
                         </h5>
 
                         <div class="row">

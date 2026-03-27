@@ -123,7 +123,7 @@ class AtencionController extends Controller
             ->orderBy('fecha_hora', 'desc')
             ->get();
 
-        return Excel::download(new PacienteExport($atenciones), 'pacientes_SenaCDTI.xlsx');
+        return Excel::download(new PacienteExport($atenciones), 'Enfermería_SenaCDTI.xlsx');
     }
 
 
@@ -133,7 +133,7 @@ class AtencionController extends Controller
         return view('atenciones.create_atenciones', compact('pacientes'));
     }
 
-    // 🔎 Buscar paciente por documento
+    //  Buscar paciente por documento
     public function buscarPaciente(Request $request)
     {
         $request->validate([

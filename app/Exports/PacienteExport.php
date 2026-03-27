@@ -38,6 +38,9 @@ class PacienteExport implements FromCollection, WithMapping, WithHeadings
             optional($paciente)->par_nombres ?? 'No registrado',
             optional($paciente)->par_apellidos ?? 'No registrado',
             optional($paciente)->par_telefono ?? 'No registrado',
+            $atencion->paciente->ficha->fichapro->programa->prog_nombre,
+            $atencion->paciente->ficha->fic_numero,
+
             $atencion->fecha_hora,
 
             $atencion->motivo->pluck('motivo')->join(', ') ?? 'No registrado',
@@ -53,18 +56,20 @@ class PacienteExport implements FromCollection, WithMapping, WithHeadings
     public function headings(): array
     {
         return [
-            'Identificación Paciente',
-            'Nombres Paciente',
-            'Apellidos Paciente',
-            'Teléfono Paciente',
-            'Fecha y Hora Atención',
+            'Identificación_Aprendiz',
+            'Nombres_Aprendiz',
+            'Apellidos_Aprendiz',
+            'Teléfono_Aprendiz',
+            'Programa_Aprendiz',
+            'Ficha_Aprendiz',
+            'Fecha_Hora_Atención',
             'Motivo',
             'Procedimientos',
             'Observaciones',
-            'Usuario Responsable',
-            'Nombre Acudiente',
-            'Teléfono Acudiente',
-            'Parentesco Acudiente',
+            'Usuario_Responsable',
+            'Nombre_Acudiente',
+            'Teléfono_Acudiente',
+            'Parentesco_Acudiente',
         ];
     }
 }

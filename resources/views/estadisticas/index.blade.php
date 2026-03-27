@@ -104,7 +104,7 @@
                                 <select name="ver" class="form-control">
                                     <option value="ficha"@selected($ver == 'ficha')>Número de Ficha</option>
                                     <option value="programa" @selected($ver == 'programa')>Nombre del Programa</option>
-                                    <option value="pacientes" @selected($ver == 'pacientes')>paciente</option>
+                                    <option value="pacientes" @selected($ver == 'pacientes')>Aprendiz</option>
                                 </select>
                             </div>
                             <!--filtros por buscador-->
@@ -140,7 +140,7 @@
             </div>
         </div>
     </div>
-    
+
     {{-- Scripts para Chart.js --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
