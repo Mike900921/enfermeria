@@ -40,7 +40,7 @@
                                 <th class=" text-center">Coordinador del programa</th>
                                 <th class=" tq1Qext-center">Total Atenciones</th>
                             @elseif($ver === 'pacientes')
-                                <th class=" text-center">Nombre del Paciente</th>
+                                <th class=" text-center">Nombre del Aprendiz</th>
                                 <th class=" text-center">Numero de documento</th>
                                 <th class=" text-center ">ficha</th>
                                 <th class=" text-center">total atenciones</th>
