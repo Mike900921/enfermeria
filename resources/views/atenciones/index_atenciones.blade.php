@@ -368,7 +368,9 @@
                                     </div>
                                     <div class="col-md-2">
                                         <strong>Eps:</strong><br>
+
                                         {{ $paciente?->caracterizacion_apr?->resultados_apr->where('pregunta_id', 7)->first()?->respuesta_texto ?? 'No registrado' }}
+
                                     </div>
                                     <div class="col-md-3">
                                         <strong>Teléfono:</strong><br>
