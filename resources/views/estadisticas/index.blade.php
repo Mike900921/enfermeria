@@ -44,6 +44,9 @@
                                 <th class=" text-center">Numero de documento</th>
                                 <th class=" text-center ">ficha</th>
                                 <th class=" text-center">total atenciones</th>
+                            @elseif($ver === 'motivos')
+                                <th class=" text-center">Nombre del motivo</th>
+                                <th class=" text-center">total atenciones</th>
                             @else
                                 <th class=" text-center">Número de Ficha</th>
                                 <th class=" text-center ">Programa Relacionado</th>
@@ -55,7 +58,7 @@
                         @forelse ($topData as $query)
                             <tr>
                                 @if ($ver === 'programa')
-                                    {{-- Vista por  Programa --}}
+                                    {{-- Vista por Programa --}}
                                     <td class=" text-center">{{ $query->etiqueta }}</td>
                                     <td class=" text-center">{{ $query->nombre_coord . ' ' . $query->apellido_coord }}</td>
                                     <td class=" text-center "><span class="badge bg-primary ">{{ $query->total }}</span>
@@ -66,6 +69,10 @@
                                     <td class=" text-center">{{ $query->numeroDocumento }}</td>
                                     <td class=" text-center">{{ $query->fichaPaciente }}</td>
                                     <td class=" text-center "><span class="badge bg-info ">{{ $query->total }}</span></td>
+                                @elseif($ver === 'motivos')
+                                    {{-- Vista por Motivos --}}
+                                    <td class=" text-center">{{ $query->etiqueta }}</td>
+                                    <td class=" text-center"><span class="badge bg-primary ">{{ $query->total }}</span></td>
                                 @else
                                     {{-- Vista por Ficha --}}
                                     <td class=" text-center">{{ $query->etiqueta }}</td>
@@ -103,8 +110,12 @@
                                 <label class="form-label fw-bold">Agrupar por:</label>
                                 <select name="ver" class="form-control">
                                     <option value="ficha"@selected($ver == 'ficha')>Número de Ficha</option>
-                                    <option value="programa" @selected($ver == 'programa')>Nombre del Programa</option>
+
                                     <option value="pacientes" @selected($ver == 'pacientes')>Aprendiz</option>
+
+                                    <option value="pacientes" @selected($ver == 'programa')>programa</option>
+                                    <option value="motivos" @selected($ver == 'motivos')>Motivos</option>
+
                                 </select>
                             </div>
                             <!--filtros por buscador-->

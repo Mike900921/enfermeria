@@ -20,7 +20,7 @@
             margin: 0;
             padding: 0;
             font-family: "Poppins", sans-serif;
-            background: url("{{ asset('img/fondomm.jpg') }}") no-repeat center center fixed;
+            background: url("{{ asset('img/fondom.jpg') }}") no-repeat center center fixed;
             background-size: cover;
             display: flex;
             justify-content: center;
