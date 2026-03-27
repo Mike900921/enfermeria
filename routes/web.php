@@ -78,20 +78,25 @@ Route::middleware('auth')->group(function () {
     Route::get('/estadisticas', [EstadisticaController::class, 'index'])->name('estadisticas.index');
 
     // rutas para motivo
-    Route::get('/motivos',[MotivoController::class, 'index'])->name('motivos.index');
+    Route::get('/motivos', [MotivoController::class, 'index'])->name('motivos.index');
     Route::get('/buscarMotivos', [MotivoController::class, 'buscar'])->name('motivos.buscar');
-    
+
     //validaciones rutas motivo
-        //crear motivo
-        Route::post('/motivos', [MotivoController::class, 'store'])->name('motivos.store');
-        //editar motivo
-        Route::put('/motivos/{id}', [MotivoController::class, 'update'])->name('motivos.update');
-        //eliminar motivo (inhabilitar)
-        Route::delete('/motivos/destroy/{id}', [MotivoController::class, 'destroy'])->name('motivos.destroy');
-        //restaurar motivo
-        Route::post('/motivos/restore/{id}', [MotivoController::class, 'restore'])->name('motivos.restore');
+    //crear motivo
+    Route::post('/motivos', [MotivoController::class, 'store'])->name('motivos.store');
+    //editar motivo
+    Route::put('/motivos/{id}', [MotivoController::class, 'update'])->name('motivos.update');
+    //eliminar motivo (inhabilitar)
+    Route::delete('/motivos/destroy/{id}', [MotivoController::class, 'destroy'])->name('motivos.destroy');
+    //restaurar motivo
+    Route::post('/motivos/restore/{id}', [MotivoController::class, 'restore'])->name('motivos.restore');
 
 
-
+    //vista encuesta setalpro
     Route::get('/caracterizacion', [CaracterizacionController::class, 'index'])->name('caracterizacion');
+
+
+    //restaurar cambio clave
+    //Route::get('/cambiar-clave', [UserController::class, 'editPassword'])->name('password.change');
+    Route::post('/cambiar-clave', [UserController::class, 'updatePassword'])->name('password.update');
 });

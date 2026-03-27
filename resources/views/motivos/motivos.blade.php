@@ -9,47 +9,6 @@
         }
     </style>
 
-    {{-- Alertas de éxito --}}
-            @if (session('success'))
-                <div
-                    style="
-                    position: fixed;
-                    top: 20px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    z-index: 9999;
-                    width: auto;
-                    max-width: 90%;
-                    ">
-                    <div class="alert alert-success alert-dismissible fade show shadow-lg border-0" role="alert"
-                        style="border-radius: 20px; padding-right: 50px;">
-                        <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
-            @endif
-
-            {{-- Alertas de error --}}
-            @if ($errors->any())
-                <div
-                    style="
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            width: auto;
-            max-width: 90%;
-        ">
-                    @foreach ($errors->all() as $error)
-                        <div class="alert alert-danger alert-dismissible fade show shadow-lg border-0" role="alert"
-                            style="border-radius: 20px; padding-right: 50px;">
-                            <i class="fas fa-exclamation-circle me-2"></i> {{ $error }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endforeach
-                </div>
-            @endif
 
     <div class="container">
         <div class="row">

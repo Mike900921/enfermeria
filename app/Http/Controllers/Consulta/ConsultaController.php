@@ -38,7 +38,7 @@ class ConsultaController extends Controller
 
         $paciente = Paciente::with([
             'atenciones' => function ($query) {
-                $query->orderBy('fecha_hora', 'desc'); // o 'created_at' si la tienes
+                $query->orderBy('fecha_hora', 'desc');
             },
             'atenciones.usuario',
             'ficha.fichapro.programa'
@@ -46,9 +46,13 @@ class ConsultaController extends Controller
             ->where('par_identificacion', $request->cedula)
             ->first();
 
+        //Si no existe el paciente
+        if (!$paciente) {
+            return back()->with('error', 'La cédula ingresada no existe en la base de datos');
+        }
+
         $motivos = Motivo::all();
 
         return view('atenciones.index_atenciones', compact('paciente', 'motivos'));
-        //return view('atenciones.index_atenciones', compact('paciente'));
     }
 }

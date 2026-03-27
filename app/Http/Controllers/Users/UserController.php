@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -61,7 +62,7 @@ class UserController extends Controller
      */
     public function create()
     {
-     // Validación manual
+        // Validación manual
         if (Gate::denies('gestionar-usuarios')) {
             return redirect()->route('registros.index')
                 ->with('error', 'No tienes permisos para acceder');
@@ -201,5 +202,33 @@ class UserController extends Controller
 
         return redirect()->route('users.index')
             ->with('success', 'Usuario ' . $user->name . ' ' . $user->last_name . ' inhabilitado correctamente');
+    }
+
+    // Actualizar contraseña del usuario logeado
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required', 'string'],
+            'new_password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                'regex:/[A-Z]/',          // Al menos una mayúscula
+                'regex:/[!@#$%^&*()_\-+=.]/' // Al menos un carácter especial
+            ],
+        ]);
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'La contraseña actual es incorrecta']);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return back()->with('success', 'Contraseña actualizada correctamente');
     }
 }

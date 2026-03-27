@@ -95,6 +95,7 @@
             </div>
         </div>
 
+
     </div>
     <div class="section">
         <h4>Información Clínica</h4>
