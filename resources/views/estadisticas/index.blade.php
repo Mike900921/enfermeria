@@ -44,6 +44,9 @@
                                 <th class=" text-center">Numero de documento</th>
                                 <th class=" text-center ">ficha</th>
                                 <th class=" text-center">total atenciones</th>
+                             @elseif($ver === 'motivos')
+                                <th class=" text-center">Nombre del motivo</th>
+                                <th class=" text-center">total atenciones</th>
                             @else
                                 <th class=" text-center">Número de Ficha</th>
                                 <th class=" text-center ">Programa Relacionado</th>
@@ -53,19 +56,23 @@
                     </thead>
                     <tbody>
                         @forelse ($topData as $query)
-                            <tr>
+                            <tr>    
                                 @if ($ver === 'programa')
-                                    {{-- Vista por  Programa --}}
+                                    {{-- Vista por Programa --}}
                                     <td class=" text-center">{{ $query->etiqueta }}</td>
                                     <td class=" text-center">{{ $query->nombre_coord . ' ' . $query->apellido_coord }}</td>
                                     <td class=" text-center "><span class="badge bg-primary ">{{ $query->total }}</span>
-                                    </td>
+                                        </td>
                                 @elseif($ver === 'pacientes')
                                     {{-- Vista por Pacientes --}}
                                     <td class=" text-center">{{ $query->etiqueta }}</td>
                                     <td class=" text-center">{{ $query->numeroDocumento }}</td>
                                     <td class=" text-center">{{ $query->fichaPaciente }}</td>
                                     <td class=" text-center "><span class="badge bg-info ">{{ $query->total }}</span></td>
+                                @elseif($ver === 'motivos')
+                                    {{-- Vista por Motivos --}}
+                                    <td class=" text-center">{{ $query->etiqueta }}</td>
+                                    <td class=" text-center"><span class="badge bg-primary ">{{ $query->total }}</span></td>
                                 @else
                                     {{-- Vista por Ficha --}}
                                     <td class=" text-center">{{ $query->etiqueta }}</td>
@@ -73,7 +80,7 @@
                                     <td class=" text-center"><span class="badge bg-success">{{ $query->total }}</span></td>
                                 @endif
 
-                            @empty
+                                @empty
                                 <td colspan="4" class="text-muted text-center">No se encontraron datos para los filtros
                                     seleccionados.</td>
                             </tr>
@@ -104,7 +111,8 @@
                                 <select name="ver" class="form-control">
                                     <option value="ficha"@selected($ver == 'ficha')>Número de Ficha</option>
                                     <option value="programa" @selected($ver == 'programa')>Nombre del Programa</option>
-                                    <option value="pacientes" @selected($ver == 'pacientes')>paciente</option>
+                                    <option value="pacientes" @selected($ver == 'aprendiz')>paciente</option>
+                                    <option value="motivos" @selected($ver == 'motivos')>Motivos</option>
                                 </select>
                             </div>
                             <!--filtros por buscador-->

@@ -10,6 +10,7 @@ use App\Models\Atencion\Atencion;
 use App\Models\Ficha\Ficha;
 use App\Models\Ficha\FichaPro;
 use App\Models\Programa\Programa;
+use App\Models\Motivo\Motivo;
 
 class EstadisticaController extends Controller
 {
@@ -63,16 +64,26 @@ class EstadisticaController extends Controller
                 $q->where(function ($sub) use ($busqueda) {
                     // 1. Búsqueda básica por IDs (Siempre rápida)
                     $sub->where('atenciones.ficha_id', 'like', "%{$busqueda}%")
-                        ->orWhere('atenciones.paciente_id', 'like', "%{$busqueda}%");
+                        ->orWhere('atenciones.paciente_id', 'like', "%{$busqueda}%")
+                        ->orWhere('atenciones.id', 'like', "%{$busqueda}%");
 
-                    // 2. Búsqueda por nombre de programa (Solo si no es puramente numérico)
                     if (!is_numeric($busqueda)) {
+                        // Nombre de programa
                         $sub->orWhereExists(function ($exists) use ($busqueda) {
                             $exists->select(DB::raw(1))
                                 ->from('senacdti_seguimientopro.sep_ficha as f_ext')
                                 ->join('senacdti_seguimientopro.sep_programa as p_ext', 'f_ext.prog_codigo', '=', 'p_ext.prog_codigo')
                                 ->whereColumn('f_ext.fic_numero', 'atenciones.ficha_id')
                                 ->where('p_ext.prog_nombre', 'like', "%{$busqueda}%");
+                        });
+
+                        // Nombre de motivo
+                        $sub->orWhereExists(function ($exists) use ($busqueda) {
+                            $exists->select(DB::raw(1))
+                                ->from('atencion_motivo')
+                                ->join('motivos', 'motivos.id', '=', 'atencion_motivo.motivo_id')
+                                ->whereColumn('atencion_motivo.atencion_id', 'atenciones.id')
+                                ->where('motivos.motivo', 'like', "%{$busqueda}%");
                         });
                     }
                 });
@@ -87,6 +98,11 @@ class EstadisticaController extends Controller
         } elseif ($ver === 'pacientes') {
             $topData = $query->select('paciente_id', 'ficha_id', DB::raw('count(*) as total'))
                 ->groupBy('paciente_id', 'ficha_id');
+        } elseif ($ver === 'motivos') {
+            $topData = $query->join('atencion_motivo', 'atencion_motivo.atencion_id', '=', 'atenciones.id')
+                ->join('motivos', 'motivos.id', '=', 'atencion_motivo.motivo_id')
+                ->select('motivos.id as motivo_id', 'motivos.motivo', DB::raw('count(*) as total'))
+                ->groupBy('motivos.id', 'motivos.motivo');
         } else {
             $topData = $query->select('ficha_id', DB::raw('count(*) as total'))
                 ->groupBy('ficha_id');
@@ -109,7 +125,7 @@ class EstadisticaController extends Controller
                 ->map(function ($group) {
                     return $group->first();
                 });
-        } else {
+        } elseif ($ver === 'pacientes' || $ver === 'ficha') {
             $topData->load(['paciente', 'ficha.fichapro.programa', 'ficha.fichapro.coordinador']);
         }
 
@@ -127,7 +143,9 @@ class EstadisticaController extends Controller
                     ? ($item->paciente->par_nombres . ' ' . $item->paciente->par_apellidos)
                     : "ID: {$item->paciente_id}";
                 $item->numeroDocumento = $item->paciente_id;
-                $item->fichaPaciente = $item->ficha_id ?? 'N/A';
+                $item->fichaPaciente = $item->ficha_id ?? 'N/A'; 
+            } elseif ($ver === 'motivos') {
+                $item->etiqueta = $item->motivo;
             } else {
                 $item->etiqueta = $item->ficha_id;
                 $item->programa = $item->ficha->fichapro->programa->prog_nombre ?? 'Sin Programa';
