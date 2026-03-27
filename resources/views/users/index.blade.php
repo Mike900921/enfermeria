@@ -22,29 +22,6 @@
             <i class="bi bi-person-add"></i> Crear Usuario
         </a>
 
-        {{-- Alertas de éxito o error --}}
-        @if (session('success') || session('error'))
-            <div
-                style="
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            width: auto;
-            max-width: 90%;
-        ">
-                <div class="alert alert-dismissible fade show shadow-lg border-0 {{ session('success') ? 'alert-success' : 'alert-danger' }}"
-                    role="alert" style="border-radius: 20px; padding-right: 50px;">
-                    @if (session('success'))
-                        <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
-                    @else
-                        <i class="fas fa-exclamation-circle me-2"></i> {{ session('error') }}
-                    @endif
-                </div>
-            </div>
-        @endif
-
 
         <div class="">
             {{-- Filtro de usuarios --}}

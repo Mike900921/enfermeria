@@ -131,6 +131,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown"
                     title="{{ auth()->user()->name }}">
+
                     <!-- Avatar de letra -->
                     <div class="letter-avatar me-2">
                         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
@@ -139,6 +140,19 @@
 
                 <ul class="dropdown-menu dropdown-menu-end">
 
+                    <!--  Cambiar contraseña -->
+                    <li>
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                            data-bs-target="#changePasswordModal">
+                            <i class="fas fa-key me-2 text-primary"></i> Cambiar contraseña
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <!--  Cerrar sesión -->
                     <li>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -208,6 +222,46 @@
 
         <!-- Contenido principal -->
         <main class="content w-100 h-auto fondo-global ">
+
+            {{-- Alertas de éxito o errores --}}
+            @if (session('success') || session('error') || $errors->any())
+                <div
+                    style="
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+        width: auto;
+        max-width: 90%;
+    ">
+                    {{-- Mensaje de éxito --}}
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show shadow-lg border-0" role="alert"
+                            style="border-radius: 20px; padding-right: 50px;">
+                            <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+                        </div>
+                    @endif
+
+                    {{-- Mensajes de error --}}
+                    @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger alert-dismissible fade show shadow-lg border-0"
+                                role="alert" style="border-radius: 20px; padding-right: 50px;">
+                                <i class="fas fa-exclamation-circle me-2"></i> {{ $error }}
+                            </div>
+                        @endforeach
+                    @endif
+
+                    @if (session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show shadow-lg border-0" role="alert"
+                            style="border-radius: 20px; padding-right: 50px;">
+                            <i class="fas fa-exclamation-circle me-2"></i> {{ session('error') }}
+                        </div>
+                    @endif
+                </div>
+            @endif
+
             <div class="fondo-logo">
                 <img src="/img/logoSena.png" alt="Logo" />
             </div>
@@ -215,6 +269,53 @@
                 @yield('content')
             </div>
         </main>
+    </div>
+
+    <!-- Modal Cambiar Contraseña -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <form action="{{ route('password.update') }}" method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="changePasswordModalLabel">Cambiar contraseña</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Cerrar"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="current_password" class="form-label">Contraseña actual</label>
+                            <input type="password" name="current_password" id="current_password"
+                                class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="new_password" class="form-label">Nueva contraseña</label>
+                            <input type="password" name="new_password" id="new_password" class="form-control"
+                                required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="new_password_confirmation" class="form-label">Confirmar nueva
+                                contraseña</label>
+                            <input type="password" name="new_password_confirmation" id="new_password_confirmation"
+                                class="form-control" required>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Actualizar contraseña</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
     </div>
 
     <!-- Incluir el script para el topbar desde public/js/topbar.js -->
@@ -232,6 +333,15 @@
             main.classList.toggle('expanded');
         });
     </script>
+
+    {{-- script para ocultar alertas de mensajes automaticamente --}}
+    <script>
+        setTimeout(() => {
+            const alert = document.querySelector('.alert-danger, .alert-success');
+            if (alert) alert.style.display = 'none';
+        }, 5000); // 5 segundos
+    </script>
+
 
 </body>
 

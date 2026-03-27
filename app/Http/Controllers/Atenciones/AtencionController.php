@@ -126,7 +126,6 @@ class AtencionController extends Controller
         return Excel::download(new PacienteExport($atenciones), 'Enfermería_SenaCDTI.xlsx');
     }
 
-
     public function create()
     {
         $pacientes = Paciente::all();

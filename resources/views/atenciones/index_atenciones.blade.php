@@ -16,47 +16,7 @@
         <div class="card shadow-sm">
             <div class="card-header header-institucional text-center">
                 <h5 class="mb-0">Consultar Aprendiz</h5>
-
             </div>
-            @if (session('success'))
-                <div
-                    style="
-                    position: fixed;
-                    top: 20px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    z-index: 9999;
-                    width: auto;
-                    max-width: 90%;
-                    ">
-                    <div class="alert alert-success alert-dismissible fade show shadow-lg border-0" role="alert"
-                        style="border-radius: 20px; padding-right: 50px;">
-                        <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
-            @endif
-
-            @if ($errors->any())
-                <div
-                    style="
-                    position: fixed;
-                    top: 20px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    z-index: 9999;
-                    width: auto;
-                    max-width: 90%;">
-                    @foreach ($errors->all() as $error)
-                        <div class="alert alert-danger alert-dismissible fade show shadow-lg border-0" role="alert"
-                            style="border-radius: 20px; padding-right: 50px;">
-                            <i class="fas fa-check-circle me-2"></i> {{ $error }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                </div>
-            @endforeach
-            @endif
-
 
             <div class="card-body">
 
@@ -359,7 +319,6 @@
                             <div class="card-header bg-verde text-white">
                                 <i class="bi bi-person"></i> Datos del Aprendiz
                             </div>
-
                             <div class="card-body user-select-auto">
                                 <div class="row mb-2">
                                     <div class="col-md-4">
@@ -368,7 +327,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <strong>Eps:</strong><br>
-                                        {{ $atencion->paciente?->caracterizacion_apr?->resultados_apr->where('pregunta_id', 7)->first()?->respuesta_texto ?? 'No registrado' }}
+                                        {{ $paciente?->caracterizacion_apr?->resultados_apr->where('pregunta_id', 7)->first()?->respuesta_texto ?? 'No registrado' }}
                                     </div>
                                     <div class="col-md-3">
                                         <strong>Teléfono:</strong><br>
