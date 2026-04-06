@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Paciente\Paciente;
 use App\Models\Motivo\Motivo;
+use Illuminate\Support\Facades\DB;
 
 class ConsultaController extends Controller
 {
@@ -13,6 +14,7 @@ class ConsultaController extends Controller
     {
         $paciente = null;
         $motivos = Motivo::all();
+        $tiposDocumentoPorId = $this->getTiposDocumentoPorId();
 
         if ($request->cedula) {
             $paciente = Paciente::with([
@@ -26,7 +28,7 @@ class ConsultaController extends Controller
                 ->first();
         }
         //return view('atenciones.index_atenciones', compact('paciente'));
-        return view('atenciones.index_atenciones', compact('paciente', 'motivos'));
+        return view('atenciones.index_atenciones', compact('paciente', 'motivos', 'tiposDocumentoPorId'));
     }
 
 
@@ -53,6 +55,18 @@ class ConsultaController extends Controller
 
         $motivos = Motivo::all();
 
-        return view('atenciones.index_atenciones', compact('paciente', 'motivos'));
+        $tiposDocumentoPorId = $this->getTiposDocumentoPorId();
+
+        return view('atenciones.index_atenciones', compact('paciente', 'motivos', 'tiposDocumentoPorId'));
+    }
+
+    protected function getTiposDocumentoPorId(): array
+    {
+        return DB::connection('senacdti_seguimientopro')
+            ->table('sep_apr_documento')
+            ->get(['apr_documento_id', 'sigla'])
+            ->filter(fn($row) => !empty($row->apr_documento_id))
+            ->mapWithKeys(fn($row) => [(string) $row->apr_documento_id => (string) ($row->sigla ?? $row->apr_documento_id)])
+            ->toArray();
     }
 }

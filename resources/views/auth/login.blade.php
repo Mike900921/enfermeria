@@ -11,9 +11,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
-        /* Paleta de colores:
-        Verde Oscuro (SENA): #26A743 (Principal)
-        Verde Lima Brillante: #A7F920 (Degradado/Efecto)
+        /* Paleta de colores institucional azul:
+        Azul claro: #50E5F9
+        Azul oscuro: #00304D
         */
 
         body {
@@ -40,7 +40,7 @@
 
         .login-left {
             flex: 1;
-            background: linear-gradient(135deg, #26A743, #A7F920);
+            background: linear-gradient(135deg, #00304D, #50E5F9);
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -81,18 +81,18 @@
 
         @keyframes pulse-border {
             0% {
-                border-color: #26A743;
-                box-shadow: 0 0 10px rgba(38, 167, 67, 0.3);
+                border-color: #00304D;
+                box-shadow: 0 0 10px rgba(0, 48, 77, 0.3);
             }
 
             50% {
-                border-color: #A7F920;
-                box-shadow: 0 0 20px rgba(167, 249, 32, 0.7);
+                border-color: #50E5F9;
+                box-shadow: 0 0 20px rgba(80, 229, 249, 0.7);
             }
 
             100% {
-                border-color: #26A743;
-                box-shadow: 0 0 10px rgba(38, 167, 67, 0.3);
+                border-color: #00304D;
+                box-shadow: 0 0 10px rgba(0, 48, 77, 0.3);
             }
         }
 
@@ -100,10 +100,10 @@
             width: 100%;
             max-width: 420px;
             text-align: center;
-            border: 3px solid #26A743;
+            border: 3px solid #00304D;
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 8px 25px rgba(38, 167, 67, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 48, 77, 0.3);
             background: #fff;
             animation: pulse-border 3s infinite alternate;
         }
@@ -117,7 +117,7 @@
         .login-card h3 {
             font-weight: 700;
             margin-bottom: 8px;
-            color: #26A743;
+            color: #00304D;
             font-size: 1.8rem;
         }
 
@@ -134,15 +134,15 @@
             /* Aplicamos el radio de borde al contenedor */
             border-radius: 10px;
             overflow: hidden;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #cfdde4;
             transition: all 0.3s;
         }
 
-        /* Efecto de foco para todo el grupo (borde verde SENA) */
+        /* Efecto de foco para todo el grupo (borde azul institucional) */
         .input-group:focus-within {
-            border-color: #A7F920;
+            border-color: #50E5F9;
             /* Borde más brillante en foco */
-            box-shadow: 0 0 0 0.25rem rgba(38, 167, 67, 0.25);
+            box-shadow: 0 0 0 0.25rem rgba(80, 229, 249, 0.25);
         }
 
         .form-control {
@@ -168,7 +168,7 @@
             background-color: #f8f9fa;
             /* Fondo gris claro (puedes cambiarlo a blanco si quieres) */
             border: none;
-            color: #26A743;
+            color: #00304D;
             /* Color SENA en estado normal */
             font-size: 1.2rem;
 
@@ -177,14 +177,14 @@
             transition: all 0.3s;
         }
 
-        /* Cambiar el color del icono y fondo en foco (verde lima) */
+        /* Cambiar el color del icono y fondo en foco (azul) */
         .input-group:focus-within .custom-icon {
             color: #fff;
             /* Color blanco para el ícono en foco */
-            background-color: #26A743;
-            /* Fondo Verde SENA en foco */
-            border-right-color: #26A743;
-            /* Borde de división verde SENA */
+            background-color: #00304D;
+            /* Fondo azul institucional en foco */
+            border-right-color: #00304D;
+            /* Borde de división azul */
         }
 
         .mb-3.input-group {
@@ -195,7 +195,7 @@
 
 
         .btn-custom {
-            background: linear-gradient(to right, #26A743, #A7F920);
+            background: linear-gradient(to right, #00304D, #50E5F9);
             border: none;
             border-radius: 8px;
             padding: 12px 0;
@@ -209,8 +209,8 @@
         }
 
         .btn-custom:hover {
-            background: linear-gradient(to right, #1E8E3E, #A7F920);
-            box-shadow: 0 8px 25px rgba(38, 167, 67, 0.5);
+            background: linear-gradient(to right, #00263a, #7ff0ff);
+            box-shadow: 0 8px 25px rgba(0, 48, 77, 0.5);
             color: #fff;
         }
 
@@ -238,8 +238,8 @@
 
             .login-card {
                 padding: 30px;
-                border: 3px solid #26A743;
-                box-shadow: 0 8px 25px rgba(38, 167, 67, 0.3);
+                border: 3px solid #00304D;
+                box-shadow: 0 8px 25px rgba(0, 48, 77, 0.3);
             }
         }
     </style>
@@ -255,7 +255,7 @@
 
         <div class="login-right">
             <div class="login-card">
-                <img src="{{ asset('img/LogoSena.png') }}" alt="Logo SENA" class="logo-sena">
+                <img src="{{ asset('img/logoSena.png') }}" alt="Logo SENA" class="logo-sena">
 
                 <h3>Acceso al Sistema</h3>
                 <p>Ingresa tus credenciales para continuar.</p>

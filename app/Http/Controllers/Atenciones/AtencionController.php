@@ -13,6 +13,8 @@ use App\Exports\PacienteExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 
 class AtencionController extends Controller
@@ -22,14 +24,36 @@ class AtencionController extends Controller
         $query = trim($request->input('query'));
         $fecha_inicio = $request->input('fecha_inicio');
         $fecha_fin = $request->input('fecha_fin');
+        $tipo_documento = trim((string) $request->input('tipo_documento'));
+        $filtro_edad = $request->input('filtro_edad');
         $motivos = Cache::remember('motivos', 3600, function () {
             return Motivo::all();
         });
 
-        // Buscar pacientes en la conexión externa si hay query
-        $pacienteIds = collect(); // inicializar vacío por defecto
+        $tiposDocumentos = $this->getTiposDocumento()
+            ->map(function ($row) {
+                $valor = $row->apr_documento_id ?? $row->id ?? $row->sigla;
+                $texto = $row->nom_tipo_documento ?? $row->nombre ?? $row->sigla ?? $valor;
+                $sigla = $row->sigla ?? $texto;
+
+                return [
+                    'valor' => (string) $valor,
+                    'texto' => (string) $texto,
+                    'sigla' => (string) $sigla,
+                ];
+            })
+            ->filter(fn($item) => !empty($item['valor']))
+            ->unique('valor')
+            ->values();
+
+        $tiposDocumentoPorId = $tiposDocumentos
+            ->pluck('sigla', 'valor')
+            ->toArray();
+
+        // IDs por búsqueda textual (nombre, apellido o documento)
+        $pacienteIdsBusqueda = collect();
         if (!empty(trim($query))) {
-            $pacienteIds = \App\Models\Paciente\Paciente::on('senacdti_seguimientopro')
+            $pacienteIdsBusqueda = \App\Models\Paciente\Paciente::on('senacdti_seguimientopro')
                 ->whereRaw("CONCAT(par_nombres, ' ', par_apellidos) LIKE ?", ["%{$query}%"])
                 ->orWhere('par_nombres', 'like', "{$query}%")
                 ->orWhere('par_apellidos', 'like', "{$query}%")
@@ -37,14 +61,37 @@ class AtencionController extends Controller
                 ->pluck('par_identificacion');
         }
 
+        // IDs por filtros de paciente (tipo de documento / edad)
+        $pacienteIdsFiltro = null;
+        if (!empty($tipo_documento) || in_array($filtro_edad, ['menor_18', 'mayor_18'], true)) {
+            $pacientesFiltrados = \App\Models\Paciente\Paciente::on('senacdti_seguimientopro')
+                ->when(!empty($tipo_documento), function ($q) use ($tipo_documento) {
+                    $q->where('par_tipo_doc', $tipo_documento);
+                })
+                ->when(in_array($filtro_edad, ['menor_18', 'mayor_18'], true), function ($q) use ($filtro_edad) {
+                    $fechaCorte = now()->subYears(18)->toDateString();
+                    $q->whereNotNull('par_fec_nacimiento');
+
+                    if ($filtro_edad === 'menor_18') {
+                        $q->whereDate('par_fec_nacimiento', '>', $fechaCorte);
+                    }
+
+                    if ($filtro_edad === 'mayor_18') {
+                        $q->whereDate('par_fec_nacimiento', '<=', $fechaCorte);
+                    }
+                });
+
+            $pacienteIdsFiltro = $pacientesFiltrados->pluck('par_identificacion');
+        }
+
         // Tipo de búsqueda: 'usuario' por defecto
         $atenciones = Atencion::with(['paciente.acudiente', 'usuario', 'paciente.caracterizacion_apr.resultados_apr'])
-            ->when(!empty($query), function ($q) use ($query, $pacienteIds) {
-                $q->where(function ($sub) use ($query, $pacienteIds) {
+            ->when(!empty($query), function ($q) use ($query, $pacienteIdsBusqueda) {
+                $q->where(function ($sub) use ($query, $pacienteIdsBusqueda) {
                     $sub->whereHas('usuario', function ($q1) use ($query) {
                         $q1->whereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$query}%"]);
                     })
-                        ->orWhereIn('paciente_id', $pacienteIds);
+                        ->orWhereIn('paciente_id', $pacienteIdsBusqueda);
                 });
             })
 
@@ -53,6 +100,9 @@ class AtencionController extends Controller
             })
             ->when($fecha_fin, function ($q) use ($fecha_fin) {
                 $q->whereDate('fecha_hora', '<=', $fecha_fin);
+            })
+            ->when($pacienteIdsFiltro !== null, function ($q) use ($pacienteIdsFiltro) {
+                $q->whereIn('paciente_id', $pacienteIdsFiltro);
             })
             ->select('atenciones.*')
             ->orderBy('fecha_hora', 'desc')
@@ -64,11 +114,19 @@ class AtencionController extends Controller
 
         if ($request->ajax()) {
             // return view('registros.partials.tablaRegistro', compact('atenciones'))->render();
-            return view('registros.partials.tablaRegistro', compact('atenciones', 'motivos'))->render();
+            return view('registros.partials.tablaRegistro', compact('atenciones', 'motivos', 'tiposDocumentoPorId'))->render();
         }
 
 
-        return view('registros.index', compact('atenciones', 'motivos'));
+        return view('registros.index', compact('atenciones', 'motivos', 'tiposDocumentos', 'tiposDocumentoPorId'));
+    }
+
+    protected function getTiposDocumento(): Collection
+    {
+        return DB::connection('senacdti_seguimientopro')
+            ->table('sep_apr_documento')
+            ->orderBy('nom_tipo_documento')
+            ->get();
     }
 
     //metodo para generar PDF de la atención
@@ -92,33 +150,61 @@ class AtencionController extends Controller
         $query = $request->input('query');
         $fecha_inicio = $request->input('fecha_inicio');
         $fecha_fin = $request->input('fecha_fin');
+        $tipo_documento = trim((string) $request->input('tipo_documento'));
+        $filtro_edad = $request->input('filtro_edad');
 
         $motivos = Cache::remember('motivos', 3600, function () {
             return Motivo::all();
         });
 
-        // Buscar pacientes en la conexión externa si hay query
-        $pacienteIds = collect(); // inicializar vacío por defecto
+        // IDs por búsqueda textual (nombre, apellido o documento)
+        $pacienteIdsBusqueda = collect();
         if (!empty(trim($query))) {
-            $pacienteIds = \App\Models\Paciente\Paciente::on('senacdti_seguimientopro')
+            $pacienteIdsBusqueda = \App\Models\Paciente\Paciente::on('senacdti_seguimientopro')
                 ->where('par_nombres', 'like', "{$query}%")
                 ->orWhere('par_apellidos', 'like', "{$query}%")
                 ->orWhere('par_identificacion', 'like', "{$query}%")
                 ->pluck('par_identificacion');
         }
 
+        // IDs por filtros de paciente (tipo de documento / edad)
+        $pacienteIdsFiltro = null;
+        if (!empty($tipo_documento) || in_array($filtro_edad, ['menor_18', 'mayor_18'], true)) {
+            $pacientesFiltrados = \App\Models\Paciente\Paciente::on('senacdti_seguimientopro')
+                ->when(!empty($tipo_documento), function ($q) use ($tipo_documento) {
+                    $q->where('par_tipo_doc', $tipo_documento);
+                })
+                ->when(in_array($filtro_edad, ['menor_18', 'mayor_18'], true), function ($q) use ($filtro_edad) {
+                    $fechaCorte = now()->subYears(18)->toDateString();
+                    $q->whereNotNull('par_fec_nacimiento');
+
+                    if ($filtro_edad === 'menor_18') {
+                        $q->whereDate('par_fec_nacimiento', '>', $fechaCorte);
+                    }
+
+                    if ($filtro_edad === 'mayor_18') {
+                        $q->whereDate('par_fec_nacimiento', '<=', $fechaCorte);
+                    }
+                });
+
+            $pacienteIdsFiltro = $pacientesFiltrados->pluck('par_identificacion');
+        }
+
         // Tipo de búsqueda: 'usuario' por defecto
-        $atenciones = Atencion::with(['paciente.acudiente', 'usuario'])
-            ->when(!empty($query), function ($q) use ($query, $pacienteIds) {
-                $q->where(function ($sub) use ($query, $pacienteIds) {
+        $atenciones = Atencion::with(['paciente.acudiente', 'usuario', 'ficha.fichapro.programa'])
+            ->when(!empty($query), function ($q) use ($query, $pacienteIdsBusqueda) {
+                $q->where(function ($sub) use ($query, $pacienteIdsBusqueda) {
                     $sub->whereHas('usuario', function ($q1) use ($query) {
                         $q1->whereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$query}%"]);
                     })
-                        ->orWhereIn('paciente_id', $pacienteIds);
+                        ->orWhereIn('paciente_id', $pacienteIdsBusqueda);
                 });
             })
             ->when($fecha_inicio, fn($q) => $q->whereDate('fecha_hora', '>=', $fecha_inicio))
             ->when($fecha_fin, fn($q) => $q->whereDate('fecha_hora', '<=', $fecha_fin))
+            ->when($pacienteIdsFiltro !== null, function ($q) use ($pacienteIdsFiltro) {
+                $q->whereIn('paciente_id', $pacienteIdsFiltro);
+            })
             ->select('atenciones.*')
             ->orderBy('fecha_hora', 'desc')
             ->get();

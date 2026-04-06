@@ -10,10 +10,11 @@
 
 <div class="border rounded-4 shadow-sm">
     <div class="table-responsive">
-        <table class="table table-striped table-hover align-middle">
+        <table class="mb-0 table table-striped table-hover align-middle">
             <thead class="table-info">
                 <tr>
-                    <th><i class="bi bi-hash me-1"></i> ID</th>
+                    <th><i class="bi bi-hash me-1"></i> Tipo de Documento</th>
+                    <th><i class="bi bi-hash me-1"></i> Documento</th>
                     <th><i class="bi bi-person me-1"></i> Aprendiz</th>
                     <th><i class="bi bi-hospital me-1"></i> EPS</th>
                     <th><i class="bi bi-person-badge me-1"></i> Responsable</th>
@@ -25,6 +26,8 @@
             <tbody class="user-select-auto">
                 @forelse ($atenciones as $atencion)
                     <tr>
+                        <td>{{ $tiposDocumentoPorId[(string) ($atencion->paciente->par_tipo_doc ?? '')] ?? ($atencion->paciente->par_tipo_doc ?? 'No registrado') }}
+                        </td>
                         <td>{{ $atencion->paciente->par_identificacion }}</td>
                         <td>{{ $atencion->paciente->par_nombres }}</td>
                         <td>
@@ -54,7 +57,7 @@
                                     : 'Múltiples') }}
                         </td>
                         <td>
-                            <button class="btn btn-success p-1" title="Info usuario" style="font-size: 12px;"
+                            <button class="btn btn-ver-registro p-1" title="Info usuario" style="font-size: 12px;"
                                 data-bs-toggle="modal" data-bs-target="#modalShowPaciente{{ $atencion->id }}">
                                 <i class="bi bi-info-circle me-1"></i> Ver Registro
                             </button>
@@ -62,12 +65,19 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center">No hay registros</td>
+                        <td colspan="8" class="text-center">No hay registros</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
+</div>
+
+{{-- Botón para descargar registro en Excel (abajo, antes de paginación) --}}
+<div class="d-flex justify-content-end mt-3">
+    <a id="btn-excel" href="{{ route('atenciones.export', request()->query()) }}" class="btn btn-sena-verde">
+        <i class="bi bi-file-earmark-excel"></i> Descargar Excel
+    </a>
 </div>
 
 
@@ -85,8 +95,8 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <!-- ENCABEZADO -->
-                <div class="modal-header text-white" style="background:#007832;">
-                    <h4 class="modal-title">Informacion Médica</h4>
+                <div class="modal-header" style="background:#00304d;">
+                    <h4 class="modal-title text-white">Informacion Médica</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body user-select-auto">
@@ -98,31 +108,41 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <strong>Nombre:</strong>
+                                <strong>Nombre completo:</strong>
                                 {{ $atencion->paciente->par_nombres }} {{ $atencion->paciente->par_apellidos }}
                             </div>
 
-                            <div class="col-md-3">
-                                <strong>Teléfono:</strong>
-                                {{ $atencion->paciente->par_telefono ?? 'No registrado' }}
+                            <div class="col-md-6">
+                                <strong>Edad:</strong>
+                                {{ $atencion->paciente->par_fec_nacimiento ? \Carbon\Carbon::parse($atencion->paciente->par_fec_nacimiento)->age : 'No registrado' }}
                             </div>
 
-                            <div class="col-md-3">
-                                <strong>Ficha:</strong>
-                                {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}
-                            </div>
+
                         </div>
 
-                        <div class="row mt-2">
+                        <div class="row mt-3">
                             <div class="col-md-6">
-                                <strong>Programa:</strong>
-                                {{ $atencion->paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}
+                                <strong>Teléfono:</strong>
+                                {{ $atencion->paciente->par_telefono ?? 'No registrado' }}
                             </div>
 
                             <div class="col-md-6">
                                 <strong>Correo:</strong>
                                 {{ $atencion->paciente->par_correo ?? 'No registrado' }}
                             </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <strong>Programa:</strong>
+                                {{ $atencion->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Ficha:</strong>
+                                {{ $atencion->ficha->fic_numero ?? 'No registrado' }}
+                            </div>
+
                         </div>
                     </div>
 

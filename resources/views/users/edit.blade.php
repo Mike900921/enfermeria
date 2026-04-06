@@ -54,7 +54,7 @@
                     @endforeach
                 </select>
             </div>
-            <button class="btn btn-success">Actualizar</button>
+            <button class="btn btn-azul">Actualizar</button>
             <a href="{{ route('users.index') }}" class="btn btn-secondary">
                 Volver
             </a>

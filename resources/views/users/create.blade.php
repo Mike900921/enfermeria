@@ -71,7 +71,7 @@
                 </div>
 
                 <div>
-                    <button class="btn btn-success">Guardar</button>
+                    <button class="btn btn-azul">Guardar</button>
                     <a href="{{ route('users.index') }}" class="btn btn-secondary">
                         Volver
                     </a>

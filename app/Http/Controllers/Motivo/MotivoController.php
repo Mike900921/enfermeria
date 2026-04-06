@@ -7,6 +7,7 @@ use App\Models\Motivo\Motivo;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 
 class MotivoController extends Controller
@@ -51,7 +52,7 @@ class MotivoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'paciente_id' => 'required',
+           
             'nombre' => 'required|string|max:255',
         ]);
 
@@ -59,12 +60,23 @@ class MotivoController extends Controller
             'motivo' => $request->input('nombre'),
         ]);
 
+        return redirect()->back()->with('success', 'Motivo creado exitosamente.');
+    }
+
+ public function storeFromAtencion(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'paciente_id' => [
+                'required',
+                Rule::exists('senacdti_seguimientopro.sep_participante', 'par_identificacion'),
+            ],
+        ]);
+
         return redirect()
             ->route('atenciones.index_atenciones', ['cedula' => $request->paciente_id])
             ->with('success', 'Motivo creado exitosamente.');
     }
-
-
     //actualización de motivo
     public function update(Request $request, $id)
     {

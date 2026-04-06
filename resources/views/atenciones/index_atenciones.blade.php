@@ -15,8 +15,48 @@
     <div class="container mt-4 user-select-none">
         <div class="card shadow-sm">
             <div class="card-header header-institucional text-center">
-                <h5 class="mb-0">Consultar Aprendiz</h5>
+                <h5 class="mb-0">Consulta de Aprendiz</h5>
+
             </div>
+            @if (session('success'))
+                <div
+                    style="
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 9999;
+                    width: auto;
+                    max-width: 90%;
+                    ">
+                    <div class="alert alert-success alert-dismissible fade show shadow-lg border-0" role="alert"
+                        style="border-radius: 20px; padding-right: 50px;">
+                        <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div
+                    style="
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 9999;
+                    width: auto;
+                    max-width: 90%;">
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger alert-dismissible fade show shadow-lg border-0" role="alert"
+                            style="border-radius: 20px; padding-right: 50px;">
+                            <i class="fas fa-check-circle me-2"></i> {{ $error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                </div>
+            @endforeach
+            @endif
+
 
             <div class="card-body">
 
@@ -24,7 +64,7 @@
                 <form action="{{ route('consulta.buscar') }}" method="POST">
                     @csrf
 
-                    <div class="row">
+                    <div class="row g-3 align-items-end">
                         <div class="col-md-8">
                             <label class="form-label">Número de Documento</label>
                             <input type="text" name="cedula" class="form-control"
@@ -49,36 +89,40 @@
                                 Datos del Aprendiz
                             </div>
                             <div class="card-body user-select-auto">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <strong>Nombre:</strong><br>
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-3">
+                                        <strong>Nombre Completo:</strong><br>
                                         {{ $paciente->par_nombres ?? '' }} {{ $paciente->par_apellidos ?? '' }}
                                     </div>
-                                    <div class="col-md-3">
-                                        <strong>Documento:</strong><br>
-                                        {{ $paciente->par_identificacion ?? '' }}
+                                    <div class="col-6 col-md-2">
+                                        <strong>Tipo de Documento:</strong><br>
+                                        {{ $tiposDocumentoPorId[(string) ($paciente->par_tipo_doc ?? '')] ?? ($paciente->par_tipo_doc ?? 'No registrado') }}
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-6 col-md-2">
+                                        <strong>Número de Documento:</strong><br>
+                                        {{ $paciente->par_identificacion ?? 'No registrado' }}
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-3">
                                         <strong>Programa:</strong><br>
                                         {{ $paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-12 col-sm-6 col-md-2">
                                         <strong>Ficha:</strong><br>
                                         {{ $paciente->ficha->fic_numero ?? 'No registrado' }}
                                     </div>
 
-                                    <div class="d-flex gap-3 mt-3">
-                                        <button class="btn btn-verde" title="Registrar nueva atención" data-bs-toggle="modal"
+                                    <div class="col-12 d-flex flex-wrap gap-2">
+                                        <button class="btn btn-registrar-atencion" title="Registrar nueva atención"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#modalCreateAtencion{{ $paciente->par_identificacion }}">
                                             <i class="bi bi-plus-circle"></i> Registrar Nueva Atención
                                         </button>
 
-                                        <button class="btn btn-verde" data-bs-toggle="modal"
+                                        <button class="btn btn-ver-informacion" data-bs-toggle="modal"
                                             data-bs-target="#modalShowPaciente{{ $paciente->par_identificacion }}">
-                                            <i class="bi bi-info-circle"></i> Ver información del paciente
+                                            <i class="bi bi-info-circle"></i> Ver información del aprendiz
                                         </button>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -89,11 +133,12 @@
                                 Historial de Atenciones
                             </div>
                             <div class="card-body">
-                                <div class="border rounded-4 overflow-hidden shadow-sm">
+                                <div class="border rounded-4 shadow-sm"
+                                    style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
                                     @if ($paciente->atenciones->count() > 0)
                                         <table
                                             class="mb-0 table table-bordered table-striped table-hover shadow-sm text-center align-middle">
-                                            <thead class="table-success">
+                                            <thead class="table-secondary">
                                                 <tr>
                                                     <th><i class="bi bi-calendar"></i> Fecha</th>
                                                     <th><i class="bi bi-chat-dots"></i> Motivo</th>
@@ -131,7 +176,7 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-verde p-1" title="Info usuario"
+                                                            <button class="btn btn-ver-registro p-1" title="Info usuario"
                                                                 style="font-size: 12px;" data-bs-toggle="modal"
                                                                 data-bs-target="#modalInfoPaciente{{ $atencion->id }}">
                                                                 <i class="bi bi-info-circle"></i> Ver Registro
@@ -143,7 +188,7 @@
                                         </table>
                                     @else
                                         <div class="alert alert-info">
-                                            Este paciente no tiene atenciones registradas.
+                                            Este aprendiz no tiene atenciones registradas.
                                         </div>
                                     @endif
                                 </div>
@@ -151,7 +196,7 @@
                         </div>
                     @else
                         <div class="alert alert-danger mt-3">
-                            No se encontró ningún paciente con ese documento.
+                            No se encontró ningún aprendiz con ese documento.
                         </div>
                     @endif
 
@@ -161,7 +206,7 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
 
-                                <div class="modal-header" style="background-color: #007832;">
+                                <div class="modal-header" style="background-color: #00304d;">
                                     <h5 class="modal-title text-light">Registrar Nueva Atención</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
@@ -265,11 +310,11 @@
                     <div class="modal fade" id="modalMotivo" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <div class="modal-header" style="background-color: #007832;">
+                                <div class="modal-header" style="background-color: #00304d;">
                                     <h5 class="modal-title text-light">Agregar Nuevo Motivo</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
-                                <form action="{{ route('motivos.store') }}" method="POST">
+                                <form action="{{ route('motivos.storeFromAtencion') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="paciente_id" value="{{ $paciente->par_identificacion }}"
                                         required>
@@ -305,7 +350,7 @@
                 <div class="modal-content shadow">
 
                     <!-- HEADER -->
-                    <div class="modal-header text-white" style="background-color:#007832;">
+                    <div class="modal-header text-white" style="background-color:#00304d;">
                         <h5 class="modal-title">
                             <i class="bi bi-person-badge"></i> Información del Aprendiz
                         </h5>
@@ -319,25 +364,33 @@
                             <div class="card-header bg-verde text-white">
                                 <i class="bi bi-person"></i> Datos del Aprendiz
                             </div>
+
                             <div class="card-body user-select-auto">
-                                <div class="row mb-2">
-                                    <div class="col-md-4">
+                                <div class="row mb-3">
+                                    <div class="col-md-5">
                                         <strong>Nombre:</strong><br>
                                         {{ $paciente->par_nombres }} {{ $paciente->par_apellidos }}
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
+                                        <strong>Edad:</strong><br>
+                                        {{ $paciente->par_fec_nacimiento ? \Carbon\Carbon::parse($paciente->par_fec_nacimiento)->age : 'No registrado' }}
+                                    </div>
+                                    <div class="col-md-4">
                                         <strong>Eps:</strong><br>
                                         {{ $paciente?->caracterizacion_apr?->resultados_apr->where('pregunta_id', 7)->first()?->respuesta_texto ?? 'No registrado' }}
                                     </div>
-                                    <div class="col-md-3">
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-5">
                                         <strong>Teléfono:</strong><br>
                                         {{ $paciente->par_telefono ?? 'No registrado' }}
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <strong>Correo:</strong><br>
                                         {{ $paciente->par_correo ?? 'No registrado' }}
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -410,7 +463,7 @@
                 <div class="modal-dialog modal-lg"> <!-- modal-lg para más ancho -->
                     <div class="modal-content">
 
-                        <div class="modal-header" style="background-color:#007832;">
+                        <div class="modal-header" style="background-color:#00304d;">
                             <h5 class="modal-title text-light">
                                 <i class="bi bi-info-circle me-1"></i>Información del Aprendiz
                             </h5>
@@ -429,7 +482,7 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <strong>N.cedula:</strong>
+                                        <strong>Documento:</strong>
                                         {{ $atencion->paciente->par_identificacion }}
                                     </div>
 
@@ -444,26 +497,26 @@
                                     </div>
                                 </div>
 
-                                <!-- INFORMACION CLINICA -->
-                                <div class="border p-3 mb-3">
-                                    <h5 class="text-success"><i class="bi bi-heart-pulse me-1"></i>Información Atención</h5>
 
-                                    <p>
-                                        <strong>Motivo de consulta:</strong><br>
-                                        {{ $atencion->motivo->pluck('motivo')->join(', ') ?? 'No registrado' }}
-                                    </p>
+                            </div>
+                            <!-- INFORMACION CLINICA -->
+                            <div class="border p-3 mb-3">
+                                <h5 class="text-success"><i class="bi bi-heart-pulse me-1"></i>Información Atención</h5>
 
-                                    <p>
-                                        <strong>Procedimientos:</strong><br>
-                                        {{ $atencion->procedimientos ?? 'No registrado' }}
-                                    </p>
+                                <p>
+                                    <strong>Motivo de consulta:</strong><br>
+                                    {{ $atencion->motivo->pluck('motivo')->join(', ') ?? 'No registrado' }}
+                                </p>
 
-                                    <p>
-                                        <strong>Observaciones:</strong><br>
-                                        {{ $atencion->observaciones ?? 'No registrado' }}
-                                    </p>
-                                </div>
+                                <p>
+                                    <strong>Procedimientos:</strong><br>
+                                    {{ $atencion->procedimientos ?? 'No registrado' }}
+                                </p>
 
+                                <p>
+                                    <strong>Observaciones:</strong><br>
+                                    {{ $atencion->observaciones ?? 'No registrado' }}
+                                </p>
                             </div>
 
                             <div class="modal-footer">

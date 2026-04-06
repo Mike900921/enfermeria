@@ -1,266 +1,387 @@
-    body {
-        margin: 0;
-        font-family: Arial;
-    }
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #f6fbfd;
+}
 
-    .fondo-logo {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        /* Ocupa todo el ancho del contenedor */
-        height: 100%;
-        /* Ocupa todo el alto del contenedor */
-        display: flex;
-        justify-content: center;
-        /* Centrar el logo horizontalmente */
-        align-items: center;
-        /* Centrar el logo verticalmente */
-        pointer-events: none;
-        /* Para que no interfiera con clicks */
-        z-index: 0;
-        /* Detrás del contenido */
-        opacity: 0.2;
-        /* Logo semitransparente */
-    }
+:root {
+    --sidebar-width: 250px;
+    --sidebar-width-closed: 70px;
+    --topbar-height: 60px;
+    --azul-900: #4e8e9e;
+    --azul-800: #4e8e9e;
+    --azul-700: #4e8e9e;
+    --azul-claro: #345f69;
+    --azul-100: #e2f6fb;
+    --azul-200: #c7e4ee;
+}
 
-    .fondo-logo img {
-        width: 70vw;
-        /* ajusta este valor (40–70 funciona bien) */
-        max-width: 500px;
-        /* nunca más grande que esto */
-        height: auto;
-        /* mantiene proporción */
-    }
+html.sidebar-closed {
+    --sidebar-width: var(--sidebar-width-closed);
+}
 
-    .fondo-global {
-        position: relative;
-        min-height: 100vh;
-        /* altura mínima igual al viewport */
-    }
+.fondo-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Ocupa todo el ancho del contenedor */
+    height: 100%;
+    /* Ocupa todo el alto del contenedor */
+    display: flex;
+    justify-content: center;
+    /* Centrar el logo horizontalmente */
+    align-items: center;
+    /* Centrar el logo verticalmente */
+    pointer-events: none;
+    /* Para que no interfiera con clicks */
+    z-index: 0;
+    /* Detrás del contenido */
+    opacity: 0.2;
+    /* Logo semitransparente */
+}
 
-    /* BARRA VERDE FIJA */
-    .topbar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 60px;
-        background: #007832;
-        color: white;
-        display: flex;
-        align-items: center;
-        padding: 0 20px;
-        z-index: 1000;
-    }
+.fondo-logo img {
+    width: 70vw;
+    /* ajusta este valor (40–70 funciona bien) */
+    max-width: 500px;
+    /* nunca más grande que esto */
+    height: auto;
+    /* mantiene proporción */
+}
 
-    /* Layout debajo del header */
-    .layout {
-        display: flex;
-    }
+.fondo-global {
+    position: relative;
+    min-height: 100vh;
+    /* altura mínima igual al viewport */
+}
 
-    .layout nav ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        user-select: none
-            /* evita selección de texto */
-    }
+/* BARRA VERDE FIJA */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    height: var(--topbar-height);
+    background: #00253a;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+    box-shadow: 0 10px 24px rgba(0, 48, 77, 0.14);
+    border-bottom: 1px solid var(--azul-200);
+}
 
-    /* MENU */
+/* (restaurado) sin desplazamiento del título */
+
+/* Layout debajo del header */
+.layout {
+    display: flex;
+}
+
+.layout nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    user-select: none;
+    /* evita selección de texto */
+}
+
+/* MENU */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: linear-gradient(
+        180deg,
+        var(--azul-800) 0%,
+        var(--azul-900) 100%
+    );
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.22);
+    transition: width 0.3s;
+}
+
+/* Bloque superior del sidebar con logo */
+.sidebar-brand {
+    height: var(--topbar-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    background: rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-brand img {
+    height: 44px;
+    width: auto;
+    display: block;
+}
+
+/* Sidebar: links más “institucional” */
+.sidebar .nav-link {
+    padding: 0.65rem 0.85rem;
+    border-radius: 10px;
+    margin: 6px 10px;
+    transition:
+        background-color 150ms ease,
+        color 150ms ease;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(80, 229, 249, 0.16);
+}
+
+.sidebar .nav-link.active {
+    background-color: var(--azul-claro) !important;
+    color: #00253a !important;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
+}
+
+.sidebar .nav-link.active i {
+    color: #00253a;
+}
+
+.sidebar .nav-link,
+.sidebar .nav-link i,
+.sidebar .nav-link .sidebar-text {
+    color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.sidebar .nav-item.border-bottom {
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Separación para que el menú no quede debajo del logo */
+.sidebar .nav {
+    padding-top: 6px;
+}
+
+/* (restaurado) sin bloque fijo de logo en sidebar */
+
+/* SIDEBAR COLAPSADO */
+.sidebar.closed {
+    width: var(--sidebar-width-closed);
+}
+
+.sidebar.toggle-transition {
+    transition: width 0.3s;
+}
+
+/* (ajuste) no ocultar completamente: solo colapsar */
+/* .sidebar.closed { width: 0; overflow: hidden; } */
+
+/* CONTENIDO */
+.content {
+    margin-left: var(--sidebar-width);
+    margin-top: var(--topbar-height);
+    padding: 20px;
+    transition: margin-left 0.3s;
+    min-height: calc(100vh - var(--topbar-height));
+}
+
+/* Inputs/controles sobre fondo claro */
+.content .card {
+    box-shadow: 0 10px 24px rgba(0, 48, 77, 0.08);
+}
+
+/* Tipografía del header */
+.topbar h3 {
+    font-size: 1.05rem;
+    font-weight: 650;
+    letter-spacing: 0.2px;
+}
+
+/* Encabezados de tabla (Atenciones, Usuarios, Motivos, etc.) */
+.table thead.table-info,
+.table thead.table-success {
+    --bs-table-bg: #4e8e9e;
+    --bs-table-color: #ffffff;
+    --bs-table-border-color: rgba(255, 255, 255, 0.22);
+}
+
+.table thead.table-info th,
+.table thead.table-success th {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* CONTENIDO CUANDO SIDEBAR ESTA CERRADO */
+.sidebar.closed + .content {
+    margin-left: var(--sidebar-width-closed);
+}
+
+/* (removido) línea blanca */
+
+.topbar .menu button {
+    width: 1.5rem;
+    height: 1.5rem;
+    background: none;
+    color: white;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.topbar .menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.topbar h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.sidebar.closed {
+    width: 50px;
+    /* mini sidebar */
+}
+
+.sidebar.closed .sidebar-text {
+    display: none;
+    /* ocultamos el texto */
+}
+
+/* Botón de logout igual que links */
+.logout-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.logout-btn:hover {
+    background-color: #eef6fb;
+    border-radius: 5px;
+}
+
+/* Sidebar colapsado: solo icono */
+.sidebar.closed .sidebar-text {
+    display: none;
+}
+
+/* Avatar de letra y circulo del header */
+.letter-avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #ffffff;
+    color: #00304d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    /* círculo */
+    font-size: 19px;
+    text-transform: uppercase;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Dropdown/header sobre fondo claro */
+.topbar .nav-link,
+.topbar .nav-link.dropdown-toggle {
+    color: var(--azul-900) !important;
+}
+
+.topbar .nav-link.dropdown-toggle::after {
+    filter: none;
+    opacity: 0.75;
+}
+
+/* sidebar colapsado desde carga (consistente con variables) */
+html.sidebar-closed .sidebar {
+    width: var(--sidebar-width-closed);
+}
+
+html.sidebar-closed .content {
+    margin-left: var(--sidebar-width-closed);
+}
+
+/* --- Sidebar responsive móvil --- */
+/* --- MEDIA QUERIES PARA MOVILES --- */
+@media (max-width: 768px) {
+    /* Mantener sidebar en el DOM, pero sacarlo de la vista */
     .sidebar {
-        position: fixed;
-        top: 60px;
+        top: 0px;
+        left: 0px;
+        /* fuera de la pantalla */
+        height: 100%;
+        z-index: 100;
+        transition: left 0.3s ease;
+    }
+
+    /* Cuando se quiera mostrar (agregar clase 'open' con JS) */
+    .sidebar.open {
         left: 0;
-        width: 250px;
-        height: calc(100vh - 60px);
-        background: #eee;
-        transition: width .3s;
     }
 
-    /* SIDEBAR COLAPSADO */
-    .sidebar.closed {
-        width: 70px;
-    }
-
-
-    .sidebar.toggle-transition {
-        transition: width 0.3s;
-    }
-
-    /* oculto */
-    .sidebar.closed {
-        width: 0;
-        overflow: hidden;
-    }
-
-    /* CONTENIDO */
+    /* Contenido ocupa toda la pantalla */
     .content {
-        margin-left: 250px;
-        margin-top: 60px;
-        padding: 20px;
-        transition: margin-left .3s;
+        margin-left: 2;
+        position: relative;
     }
 
-    /* CONTENIDO CUANDO SIDEBAR ESTA CERRADO */
-    .sidebar.closed+.content {
-        margin-left: 70px;
+    .topbar {
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 768px) {
+    .table td,
+    .table th {
+        font-size: 0.75rem;
+        /* texto más pequeño */
+        padding: 0.35rem 0.5rem;
+        /* padding más compacto */
+        white-space: nowrap;
+        /* evitar salto de línea innecesario */
+        vertical-align: middle;
+        /* alinear verticalmente */
     }
 
-    .topbar .menu button {
-        width: 1.5rem;
-        height: 1.5rem;
-        background: none;
-        color: white;
-        border: none;
-        font-size: 15px;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    /* Reducir tamaño y padding de botones */
+    .table td .btn {
+        font-size: 0.65rem;
+        /* más pequeño que btn-sm */
+        padding: 0.25rem 0.4rem;
+        /* menos padding */
+        min-width: 70px;
+        /* ancho mínimo para que no se vea demasiado chico */
+        white-space: nowrap;
+        /* no permitir que el texto se divida */
     }
 
-
-    .topbar .menu {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem;
+    /* Reducir tamaño de iconos dentro de botones */
+    .table td .btn i {
+        font-size: 0.75rem;
+        margin-right: 4px;
     }
 
-    .sidebar.closed {
-        width: 50px;
-        /* mini sidebar */
+    /* Acortar columnas largas para que no se partan en varias líneas */
+    td.text-truncate,
+    td.text-truncate > * {
+        max-width: 120px;
+        /* limitar ancho para email, nombre */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
-    .sidebar.closed .sidebar-text {
-        display: none;
-        /* ocultamos el texto */
-    }
-
-    /* Botón de logout igual que links */
-    .logout-btn {
+    .btn-registrar-atencion {
         width: 100%;
-        background: none;
-        border: none;
-        padding: 0.5rem 0.75rem;
-        text-align: left;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
     }
-
-    .logout-btn:hover {
-        background-color: #dcdcdc;
-        border-radius: 5px;
-    }
-
-    /* Sidebar colapsado: solo icono */
-    .sidebar.closed .sidebar-text {
-        display: none;
-    }
-
-    /* Avatar de letra y circulo del header */
-    .letter-avatar {
-        width: 32px;
-        height: 32px;
-        background-color: #eef1f4;
-        color: #007832;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        /* círculo */
-        font-size: 19px;
-        text-transform: uppercase;
-        cursor: pointer;
-        user-select: none
-    }
-
-    /* sidebar colapsado desde carga */
-    html.sidebar-closed .sidebar {
-        width: 50px;
-    }
-
-    /* contenido ajustado */
-    html.sidebar-closed .content {
-        margin-left: 70px;
-    }
-
-
-
-    /* --- Sidebar responsive móvil --- */
-    /* --- MEDIA QUERIES PARA MOVILES --- */
-    @media (max-width: 768px) {
-
-        /* Mantener sidebar en el DOM, pero sacarlo de la vista */
-        .sidebar {
-            top: 60px;
-            left: 0px;
-            /* fuera de la pantalla */
-            height: calc(100vh - 60px);
-            z-index: 100;
-            transition: left 0.3s ease;
-        }
-
-        /* Cuando se quiera mostrar (agregar clase 'open' con JS) */
-        .sidebar.open {
-            left: 0;
-        }
-
-        /* Contenido ocupa toda la pantalla */
-        .content {
-            margin-left: 2;
-            position: relative;
-        }
-
-        .topbar {
-            justify-content: space-between;
-        }
-    }
-
-
-
-    @media (max-width: 768px) {
-
-        .table td,
-        .table th {
-            font-size: 0.75rem;
-            /* texto más pequeño */
-            padding: 0.35rem 0.5rem;
-            /* padding más compacto */
-            white-space: nowrap;
-            /* evitar salto de línea innecesario */
-            vertical-align: middle;
-            /* alinear verticalmente */
-        }
-
-        /* Reducir tamaño y padding de botones */
-        .table td .btn {
-            font-size: 0.65rem;
-            /* más pequeño que btn-sm */
-            padding: 0.25rem 0.4rem;
-            /* menos padding */
-            min-width: 70px;
-            /* ancho mínimo para que no se vea demasiado chico */
-            white-space: nowrap;
-            /* no permitir que el texto se divida */
-        }
-
-        /* Reducir tamaño de iconos dentro de botones */
-        .table td .btn i {
-            font-size: 0.75rem;
-            margin-right: 4px;
-        }
-
-        /* Acortar columnas largas para que no se partan en varias líneas */
-        td.text-truncate,
-        td.text-truncate>* {
-            max-width: 120px;
-            /* limitar ancho para email, nombre */
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            display: block;
-        }
-    }
+}

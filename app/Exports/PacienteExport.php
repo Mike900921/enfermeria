@@ -24,9 +24,14 @@ class PacienteExport implements FromCollection, WithMapping, WithHeadings
     public function map($atencion): array
     {
         // Usar `optional` para los datos relacionados
-        $paciente = $atencion->paciente;
+        $paciente = optional($atencion->paciente);
         $acudiente = optional($atencion->acudiente);
         $usuario = optional($atencion->usuario);
+
+        // Datos de ficha y programa con optional para evitar errores
+        $ficha = optional($atencion->ficha);
+        $fichapro = optional($ficha->fichapro);
+        $programa = optional($fichapro->programa);
 
         // Concatenar nombre y apellido del usuario
         $nombreCompletoUsuario = trim(
@@ -34,16 +39,16 @@ class PacienteExport implements FromCollection, WithMapping, WithHeadings
         ) ?: 'No registrado';
 
         return [
-            optional($paciente)->par_identificacion ?? 'No registrado',
-            optional($paciente)->par_nombres ?? 'No registrado',
-            optional($paciente)->par_apellidos ?? 'No registrado',
-            optional($paciente)->par_telefono ?? 'No registrado',
-            $atencion->paciente->ficha->fichapro->programa->prog_nombre,
-            $atencion->paciente->ficha->fic_numero,
+            $paciente->par_identificacion ?? 'No registrado',
+            $paciente->par_nombres ?? 'No registrado',
+            $paciente->par_apellidos ?? 'No registrado',
+            $paciente->par_telefono ?? 'No registrado',
+            $programa->prog_nombre ?? 'No registrado',
+            $ficha->fic_numero ?? 'No registrado',
 
             $atencion->fecha_hora,
 
-            $atencion->motivo->pluck('motivo')->join(', ') ?? 'No registrado',
+            optional($atencion->motivo)->pluck('motivo')->join(', ') ?? 'No registrado',
             $atencion->procedimientos,
             $atencion->observaciones,
             $nombreCompletoUsuario,

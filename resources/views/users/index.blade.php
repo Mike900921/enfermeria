@@ -17,25 +17,49 @@
 
     <div class="container user-select-none">
         <h2>Listado de Usuarios</h2>
+        <br>
 
-        <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">
-            <i class="bi bi-person-add"></i> Crear Usuario
-        </a>
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <a href="{{ route('users.create') }}" class="btn btn-primary">
+                <i class="bi bi-person-add"></i> Crear Usuario
+            </a>
+
+            {{-- Filtro de usuarios --}}
+            <form method="GET" action="{{ route('users.index') }}" class="d-flex align-items-center gap-2 m-0">
+                <label for="filter" class="mb-0">Filtrar:</label>
+                <select name="filter" id="filter" class="form-select w-auto" onchange="this.form.submit()">
+                    <option value="todo" {{ $filter === 'todo' ? 'selected' : '' }}>Todos</option>
+                    <option value="activos" {{ $filter === 'activos' ? 'selected' : '' }}>Activos</option>
+                    <option value="inactivos" {{ $filter === 'inactivos' ? 'selected' : '' }}>Inactivos</option>
+                </select>
+            </form>
+        </div>
+
+        {{-- Alertas de éxito o error --}}
+        @if (session('success') || session('error'))
+            <div
+                style="
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: auto;
+            max-width: 90%;
+        ">
+                <div class="alert alert-dismissible fade show shadow-lg border-0 {{ session('success') ? 'alert-success' : 'alert-danger' }}"
+                    role="alert" style="border-radius: 20px; padding-right: 50px;">
+                    @if (session('success'))
+                        <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+                    @else
+                        <i class="fas fa-exclamation-circle me-2"></i> {{ session('error') }}
+                    @endif
+                </div>
+            </div>
+        @endif
 
 
         <div class="">
-            {{-- Filtro de usuarios --}}
-            <div>
-                <form method="GET" action="{{ route('users.index') }}" class=" mb-3 d-flex align-items-center gap-2">
-                    <label for="filter">Filtrar:</label>
-                    <select name="filter" id="filter" class="form-select w-auto" onchange="this.form.submit()">
-                        <option value="todo" {{ $filter === 'todo' ? 'selected' : '' }}>Todos</option>
-                        <option value="activos" {{ $filter === 'activos' ? 'selected' : '' }}>Activos</option>
-                        <option value="inactivos" {{ $filter === 'inactivos' ? 'selected' : '' }}>Inactivos</option>
-                    </select>
-                </form>
-            </div>
-
             <div class="border rounded-4 shadow-sm">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover align-middle mb-0">
@@ -71,7 +95,7 @@
                                             <form action="{{ route('users.restore', $user->user_id) }}" method="POST"
                                                 style="display:inline;">
                                                 @csrf
-                                                <button class="btn btn-success btn-sm"
+                                                <button class="btn btn-azul btn-sm"
                                                     onclick="return confirm('¿Restaurar usuario?')">
                                                     <i class="bi bi-person-check-fill"></i> Restaurar
                                                 </button>

@@ -1,7 +1,7 @@
 <div class="border rounded-4 overflow-hidden shadow-sm" style="min-width:600px;">
 
     <table class="table table-bordered table-striped table-hover shadow-sm text-center align-middle m-0">
-        <thead class="table-success">
+        <thead class="table-info">
             <tr>
                 <th>ID</th>
                 <th>Motivo</th>

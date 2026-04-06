@@ -20,6 +20,10 @@ use App\Http\Controllers\Estadisticas\EstadisticaController;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
 // Login
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
@@ -69,6 +73,9 @@ Route::middleware('auth')->group(function () {
     //RUTA PARA IMPRIMIR PDF DE LA ATENCION
     Route::get('/atenciones/crear-pdf/{id}', [AtencionController::class, 'generarPdf'])->name('atencionesPdf');
 
+    //RUTA PARA EXPORTAR ESTADISTICAS A EXCEL  CON FILTROS DE BUSQUEDA
+
+    Route::get('/estadisticas/export', [EstadisticaController::class, 'export'])->name('estadisticas.export');
 
     //RUTA PARA EXPORTAR PACIENTE A EXCEL CON FILTROS DE BUSQUEDA
     Route::get('/atenciones/export', [AtencionController::class, 'export'])
@@ -82,14 +89,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/buscarMotivos', [MotivoController::class, 'buscar'])->name('motivos.buscar');
 
     //validaciones rutas motivo
-    //crear motivo
-    Route::post('/motivos', [MotivoController::class, 'store'])->name('motivos.store');
-    //editar motivo
-    Route::put('/motivos/{id}', [MotivoController::class, 'update'])->name('motivos.update');
-    //eliminar motivo (inhabilitar)
-    Route::delete('/motivos/destroy/{id}', [MotivoController::class, 'destroy'])->name('motivos.destroy');
-    //restaurar motivo
-    Route::post('/motivos/restore/{id}', [MotivoController::class, 'restore'])->name('motivos.restore');
+        //crear motivo
+        Route::post('/motivos', [MotivoController::class, 'store'])->name('motivos.store');
+        //crear motivo desde atencion
+        Route::post('/motivos/desde-atencion', [MotivoController::class, 'storeFromAtencion'])->name('motivos.storeFromAtencion');
+        //editar motivo
+        Route::put('/motivos/{id}', [MotivoController::class, 'update'])->name('motivos.update');
+        //eliminar motivo (inhabilitar)
+        Route::delete('/motivos/destroy/{id}', [MotivoController::class, 'destroy'])->name('motivos.destroy');
+        //restaurar motivo
+        Route::post('/motivos/restore/{id}', [MotivoController::class, 'restore'])->name('motivos.restore');
 
 
     //vista encuesta setalpro

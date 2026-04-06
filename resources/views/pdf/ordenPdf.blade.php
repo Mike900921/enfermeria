@@ -77,18 +77,32 @@
     </table>
 
     <div class="section">
-        <h4>Datos del Paciente</h4>
+        <h4>Datos del Aprendiz</h4>
         <div class="row">
             <div class="col">
-                <span class="label">Nombre:</span>
+                <span class="label">Nombre Completo:</span>
                 {{ $atencion->paciente->par_nombres }} {{ $atencion->paciente->par_apellidos }}
             </div>
+            <div class="col">
+                <span class="label">Edad:</span>
+                {{ $atencion->paciente->par_fec_nacimiento ? \Carbon\Carbon::parse($atencion->paciente->par_fec_nacimiento)->age : 'No registrado' }}
+            </div>
+        </div>
+        <div class="row">
             <div class="col">
                 <span class="label">Teléfono:</span>
                 {{ $atencion->paciente->par_telefono ?? 'No registrado' }}
             </div>
+            <div class="col">
+                <span class="label">Correo:</span>
+                {{ $atencion->paciente->par_correo ?? 'No registrado' }}
+            </div>
         </div>
         <div class="row">
+            <div class="col">
+                <span class="label">Programa:</span>
+                {{ $atencion->paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}
+            </div>
             <div class="col">
                 <span class="label">Ficha:</span>
                 {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}
