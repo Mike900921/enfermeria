@@ -17,6 +17,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancelar</button>
                     <button type="submit" class="btn btn-verde">Actualizar</button>
+                </div>
             </form>
         </div>
     </div>

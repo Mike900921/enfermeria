@@ -19,6 +19,9 @@
                                     <th class=" text-center">Numero de documento</th>
                                     <th class=" text-center ">ficha</th>
                                     <th class=" text-center">total atenciones</th>
+                                @elseif($ver === 'motivos')
+                                    <th class=" text-center">Motivo</th>
+                                    <th class=" text-center">Total Atenciones</th>
                                 @else
                                     <th class=" text-center">Número de Ficha</th>
                                     <th class=" text-center ">Programa Relacionado</th>
@@ -42,6 +45,12 @@
                                         <td class=" text-center">{{ $query->numeroDocumento }}</td>
                                         <td class=" text-center">{{ $query->fichaPaciente }}</td>
                                         <td class=" text-center "><span class="badge bg-info ">{{ $query->total }}</span>
+                                        </td>
+
+                                    @elseif($ver === 'motivos')
+                                        {{-- Vista por Motivos --}}
+                                        <td class=" text-center">{{ $query->etiqueta }}</td>
+                                        <td class=" text-center"><span class="badge bg-info">{{ $query->total }}</span>
                                         </td>
                                     @else
                                         {{-- Vista por Ficha --}}

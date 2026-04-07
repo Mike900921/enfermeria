@@ -222,7 +222,7 @@
                                             <label class="form-label">Motivo</label>
 
                                             <div class="input-group">
-                                                <select name="motivo_id[]" multiple id="motivo_id" class="form-control"
+                                                <select name="motivo_id[]"  autocomplete="off" multiple id="motivo_id" class="form-control"
                                                     required>
                                                     <option value="">Seleccione un motivo</option>
                                                     @foreach ($motivos as $motivo)
@@ -442,7 +442,7 @@
                                         {{ $atencion->paciente->par_nombres }} {{ $atencion->paciente->par_apellidos }}
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <strong>Documento:</strong>
                                         {{ $atencion->paciente->par_identificacion }}
                                     </div>
@@ -454,7 +454,7 @@
 
                                     <div class="col-md-6">
                                         <strong>Ficha:</strong>
-                                        {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}
+                                        {{ $atencion->ficha->fic_numero ?? 'No registrado' }}
                                     </div>
                                 </div>
 
@@ -508,6 +508,9 @@
                 no_results: function(data, escape) {
                     return '<div class="no-results">No se encontró "' + escape(data.input) + '"</div>';
                 }
+            },
+            onItemAdd: function() {
+                this.setTextboxValue(''); // Limpia el campo de búsqueda después de seleccionar
             }
         });
     </script>

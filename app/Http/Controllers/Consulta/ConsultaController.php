@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Paciente\Paciente;
 use App\Models\Motivo\Motivo;
+use App\Models\Atencion\Atencion;
 use Illuminate\Support\Facades\DB;
 
 class ConsultaController extends Controller
@@ -43,10 +44,13 @@ class ConsultaController extends Controller
                 $query->orderBy('fecha_hora', 'desc');
             },
             'atenciones.usuario',
+            'atenciones.ficha.fichapro.programa',
             'ficha.fichapro.programa'
         ])
             ->where('par_identificacion', $request->cedula)
             ->first();
+
+  
 
         //Si no existe el paciente
         if (!$paciente) {
