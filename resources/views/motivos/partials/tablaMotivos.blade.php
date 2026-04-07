@@ -86,14 +86,10 @@
     </script>
 
 
-
-
     @if ($motivos->hasPages())
         {{-- PAGINACIÓN --}}
         <div class="p-3 d-flex justify-content-center">
             {{ $motivos->appends(request()->query())->links() }}
         </div>
     @endif
-
-
 </div>

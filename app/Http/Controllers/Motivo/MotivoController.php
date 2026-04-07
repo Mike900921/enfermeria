@@ -68,6 +68,9 @@ class MotivoController extends Controller
                 Rule::exists('senacdti_seguimientopro.sep_participante', 'par_identificacion'),
             ],
         ]);
+        Motivo::create([
+            'motivo' => $request->input('nombre'),
+        ]);
 
         return redirect()
             ->route('atenciones.index_atenciones', ['cedula' => $request->paciente_id])

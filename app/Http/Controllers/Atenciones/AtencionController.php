@@ -163,6 +163,7 @@ class AtencionController extends Controller
             $pacienteIdsBusqueda = \App\Models\Paciente\Paciente::on('senacdti_seguimientopro')
                 ->where('par_nombres', 'like', "{$query}%")
                 ->orWhere('par_apellidos', 'like', "{$query}%")
+                ->orwhereRaw("CONCAT(par_nombres, ' ', par_apellidos) LIKE ?", ["{$query}%"])
                 ->orWhere('par_identificacion', 'like', "{$query}%")
                 ->pluck('par_identificacion');
         }

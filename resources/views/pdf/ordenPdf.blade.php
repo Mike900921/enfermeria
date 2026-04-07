@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
             font-weight: bold;
             color: #198754;
         }
+
         .section {
             border: 1px solid #ccc;
             width: 100%;
@@ -24,14 +26,17 @@
             /* Importante para que el borde no se corte */
             box-sizing: border-box;
         }
+
         .section h4 {
             margin: 0 0 10px 0;
             color: #198754;
         }
+
         .row {
             width: 100%;
             margin-bottom: 5px;
         }
+
         .col {
             display: inline-block;
             width: 48%;
@@ -53,6 +58,7 @@
             text-align: center;
             padding-top: 5px;
         }
+
         .label {
             font-weight: bold;
         }
@@ -84,8 +90,16 @@
                 {{ $atencion->paciente->par_nombres }} {{ $atencion->paciente->par_apellidos }}
             </div>
             <div class="col">
+                <span class="label">N.Identificación:</span>
+                {{ $atencion->paciente->par_identificacion ?? 'No registrado' }}
+            </div>
+            <div class="col">
                 <span class="label">Edad:</span>
                 {{ $atencion->paciente->par_fec_nacimiento ? \Carbon\Carbon::parse($atencion->paciente->par_fec_nacimiento)->age : 'No registrado' }}
+            </div>
+            <div class="col">
+                <span class="label">tipo de documento:</span>
+                {{ $tiposDocumentoPorId[(string) ($paciente->par_tipo_doc ?? '')] ?? ($paciente->par_tipo_doc ?? 'No registrado') }}
             </div>
         </div>
         <div class="row">
@@ -108,6 +122,7 @@
                 {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}
             </div>
         </div>
+
 
 
     </div>
@@ -169,4 +184,5 @@
         </div>
     </div>
 </body>
+
 </html>
