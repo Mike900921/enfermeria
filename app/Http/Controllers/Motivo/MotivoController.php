@@ -14,17 +14,13 @@ class MotivoController extends Controller
 {
     public function index(Request $request)
     {
-        $filter = $request->query('filter', 'todo');
-
         $query = Motivo::withTrashed();
 
-        if ($filter === 'activos') {
-            $query->whereNull('deleted_at');
-        } elseif ($filter === 'inactivos') {
-            $query->onlyTrashed();
+        if ($request->q) {
+            $query->where('motivo', 'like', "%{$request->q}%");
         }
 
-        $motivos = $query->paginate(10);
+        $motivos = $query->paginate(10)->withQueryString();
 
         if ($request->ajax()) {
             return view('motivos.partials.tablaMotivos', compact('motivos'))->render();
@@ -52,7 +48,7 @@ class MotivoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-           
+
             'nombre' => 'required|string|max:255',
         ]);
 
@@ -63,7 +59,7 @@ class MotivoController extends Controller
         return redirect()->back()->with('success', 'Motivo creado exitosamente.');
     }
 
- public function storeFromAtencion(Request $request)
+    public function storeFromAtencion(Request $request)
     {
         $request->validate([
             'nombre' => 'required|string|max:255',

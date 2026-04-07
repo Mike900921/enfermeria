@@ -248,8 +248,8 @@ class AtencionController extends Controller
             'motivo_id' => 'required|exists:motivos,id',
             'ficha_id' => 'nullable',
             'fecha_hora' => 'required',
-            'procedimientos' => 'nullable',
-            'observaciones' => 'nullable'
+            'procedimientos' => 'required',
+            'observaciones' => 'required'
         ], [
             'paciente_id.required' => 'El campo paciente es obligatorio.',
             //'motivo.required' => 'El campo motivo es obligatorio.',
