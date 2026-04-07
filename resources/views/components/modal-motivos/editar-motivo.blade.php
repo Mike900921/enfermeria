@@ -1,4 +1,5 @@
-<div class="modal fade" id="editarMotivoModal{{ $motivo->id }}" tabindex="-1" aria-labelledby="editarMotivoLabel{{ $motivo->id }}" aria-hidden="true">
+<div class="modal fade" id="editarMotivoModal{{ $motivo->id }}" tabindex="-1"
+    aria-labelledby="editarMotivoLabel{{ $motivo->id }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,7 +12,8 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="motivo" class="form-label fw-bold">Actualizar motivo</label>
-                        <input type="text" value="{{ $motivo->motivo }}" name="nombre" class="form-control" id="motivo" placeholder="Ingrese el motivo">
+                        <input type="text" value="{{ $motivo->motivo }}" name="nombre" class="form-control"
+                            id="motivo" placeholder="Ingrese el motivo">
                     </div>
                 </div>
                 <div class="modal-footer">

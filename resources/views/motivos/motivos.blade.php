@@ -34,7 +34,6 @@
                 <div id="resultados" class="mt-4 d-flex justify-content-center">
                     @include('motivos.partials.tablaMotivos', ['motivos' => $motivos])
                 </div>
-
             </div>
         </div>
     </div>
@@ -67,9 +66,11 @@
                     .then(res => res.text())
                     .then(data => {
                         document.getElementById('resultados').innerHTML = data;
+                        document.querySelectorAll('.modal').forEach(modalEl => {
+                            new bootstrap.Modal(modalEl);
+                        });
                         document.getElementById('loader').style.display = 'none';
                     });
-
             }, 300);
         });
 
@@ -91,6 +92,7 @@
                     .then(res => res.text())
                     .then(data => {
                         document.getElementById('resultados').innerHTML = data;
+
                         document.getElementById('loader').style.display = 'none';
                     });
             }

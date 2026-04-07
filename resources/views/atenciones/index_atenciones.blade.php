@@ -243,12 +243,12 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Procedimientos</label>
-                                            <textarea name="procedimientos" class="form-control"></textarea>
+                                            <textarea name="procedimientos" class="form-control" required></textarea>
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Observaciones</label>
-                                            <textarea name="observaciones" class="form-control"></textarea>
+                                            <textarea name="observaciones" class="form-control" required></textarea>
                                         </div>
 
                                     </div>

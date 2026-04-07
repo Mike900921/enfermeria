@@ -4,7 +4,6 @@
     <div class="container user-select-none">
         <h2>Atenciones Registradas</h2>
 
-
         {{-- Filtros de búsqueda por fecha, tipo de documento, edad y texto --}}
         <div class="row g-2 mb-2 buscador align-items-end">
             <div class="col-12 col-md-2">

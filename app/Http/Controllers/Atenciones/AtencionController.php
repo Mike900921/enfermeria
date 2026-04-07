@@ -163,6 +163,7 @@ class AtencionController extends Controller
             $pacienteIdsBusqueda = \App\Models\Paciente\Paciente::on('senacdti_seguimientopro')
                 ->where('par_nombres', 'like', "{$query}%")
                 ->orWhere('par_apellidos', 'like', "{$query}%")
+                ->orwhereRaw("CONCAT(par_nombres, ' ', par_apellidos) LIKE ?", ["{$query}%"])
                 ->orWhere('par_identificacion', 'like', "{$query}%")
                 ->pluck('par_identificacion');
         }
@@ -248,8 +249,8 @@ class AtencionController extends Controller
             'motivo_id' => 'required|exists:motivos,id',
             'ficha_id' => 'nullable',
             'fecha_hora' => 'required',
-            'procedimientos' => 'nullable',
-            'observaciones' => 'nullable'
+            'procedimientos' => 'required',
+            'observaciones' => 'required'
         ], [
             'paciente_id.required' => 'El campo paciente es obligatorio.',
             //'motivo.required' => 'El campo motivo es obligatorio.',
