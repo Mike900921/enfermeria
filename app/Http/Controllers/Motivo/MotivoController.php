@@ -14,6 +14,11 @@ class MotivoController extends Controller
 {
     public function index(Request $request)
     {
+        if (Gate::denies('admisnitradorEnfermeria')) {
+            return redirect()->route('consulta.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
+        //----
         $query = Motivo::withTrashed();
 
         if ($request->q) {

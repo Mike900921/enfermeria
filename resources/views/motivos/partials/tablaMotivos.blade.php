@@ -5,7 +5,9 @@
             <tr>
                 <th>ID</th>
                 <th>Motivo</th>
+                @can('gestionar-usuarios')
                 <th>Acciones</th>
+                @endcan
             </tr>
         </thead>
 
@@ -14,6 +16,7 @@
                 <tr>
                     <td>{{ $motivo->id }}</td>
                     <td>{{ $motivo->motivo }}</td>
+                    @can('gestionar-usuarios')
                     <td>
                         <button class="btn btn-amarillo btn-sm btn-editar" data-id="{{ $motivo->id }}"
                             data-motivo="{{ $motivo->motivo }}" data-bs-toggle="modal" data-bs-target="#editarMotivoModal">
@@ -21,6 +24,7 @@
                             Editar
                         </button>
                     </td>
+                    @endcan
                 </tr>
             @empty
                 <tr>

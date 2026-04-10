@@ -1270,3 +1270,75 @@ Stack trace:
 #19 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
 #20 {main}
   thrown in /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php on line 257
+[08-Apr-2026 08:26:40 America/Bogota] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Component\ErrorHandler\ErrorRenderer\highlight_file() in /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php:257
+Stack trace:
+#0 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/Resources/views/trace.html.php(36): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->fileExcerpt()
+#1 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/senacdti/...')
+#2 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/Resources/views/traces.html.php(48): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#3 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/senacdti/...')
+#4 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/Resources/views/exception.html.php(54): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#5 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/senacdti/...')
+#6 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/Resources/views/exception_full.html.php(35): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#7 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/senacdti/...')
+#8 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(140): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#9 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(72): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->renderException()
+#10 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(911): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->render()
+#11 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(885): Illuminate\Foundation\Exceptions\Handler->renderExceptionWithSymfony()
+#12 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(860): Illuminate\Foundation\Exceptions\Handler->renderExceptionContent()
+#13 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(839): Illuminate\Foundation\Exceptions\Handler->convertExceptionToResponse()
+#14 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(738): Illuminate\Foundation\Exceptions\Handler->prepareResponse()
+#15 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(626): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse()
+#16 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(221): Illuminate\Foundation\Exceptions\Handler->render()
+#17 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(198): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse()
+#18 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#19 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#20 {main}
+  thrown in /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php on line 257
+[08-Apr-2026 08:26:53 America/Bogota] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Component\ErrorHandler\ErrorRenderer\highlight_file() in /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php:257
+Stack trace:
+#0 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/Resources/views/trace.html.php(36): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->fileExcerpt()
+#1 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/senacdti/...')
+#2 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/Resources/views/traces.html.php(48): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#3 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/senacdti/...')
+#4 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/Resources/views/exception.html.php(54): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#5 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/senacdti/...')
+#6 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/Resources/views/exception_full.html.php(35): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#7 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/senacdti/...')
+#8 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(140): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#9 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(72): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->renderException()
+#10 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(911): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->render()
+#11 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(885): Illuminate\Foundation\Exceptions\Handler->renderExceptionWithSymfony()
+#12 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(860): Illuminate\Foundation\Exceptions\Handler->renderExceptionContent()
+#13 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(839): Illuminate\Foundation\Exceptions\Handler->convertExceptionToResponse()
+#14 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(738): Illuminate\Foundation\Exceptions\Handler->prepareResponse()
+#15 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(626): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse()
+#16 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(221): Illuminate\Foundation\Exceptions\Handler->render()
+#17 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(198): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse()
+#18 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#19 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#20 {main}
+  thrown in /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php on line 257
+[08-Apr-2026 09:26:23 America/Bogota] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Component\ErrorHandler\ErrorRenderer\highlight_file() in /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php:257
+Stack trace:
+#0 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/Resources/views/trace.html.php(36): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->fileExcerpt()
+#1 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/senacdti/...')
+#2 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/Resources/views/traces.html.php(48): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#3 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/senacdti/...')
+#4 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/Resources/views/exception.html.php(54): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#5 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/senacdti/...')
+#6 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/Resources/views/exception_full.html.php(35): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#7 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/senacdti/...')
+#8 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(140): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#9 /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(72): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->renderException()
+#10 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(911): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->render()
+#11 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(885): Illuminate\Foundation\Exceptions\Handler->renderExceptionWithSymfony()
+#12 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(860): Illuminate\Foundation\Exceptions\Handler->renderExceptionContent()
+#13 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(839): Illuminate\Foundation\Exceptions\Handler->convertExceptionToResponse()
+#14 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(738): Illuminate\Foundation\Exceptions\Handler->prepareResponse()
+#15 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(626): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse()
+#16 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(221): Illuminate\Foundation\Exceptions\Handler->render()
+#17 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(198): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse()
+#18 /home/senacdti/public_html/sena/enfermeria/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#19 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#20 {main}
+  thrown in /home/senacdti/public_html/sena/enfermeria/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php on line 257

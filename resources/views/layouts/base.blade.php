@@ -352,6 +352,7 @@
             <ul class="dropdown-menu dropdown-menu-end">
 
                 <!--  Cambiar contraseña -->
+                @can('admisnitradorEnfermeria')
                 <li>
                     <a class="dropdown-item" href="#" data-bs-toggle="modal"
                         data-bs-target="#changePasswordModal">
@@ -362,6 +363,7 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
+                @endcan
 
                 <!--  Cerrar sesión -->
                 <li>
@@ -402,6 +404,7 @@
                         <span class="sidebar-text">Consulta</span>
                     </a>
                 </li>
+                @can('admisnitradorEnfermeria')
                 <li class="nav-item mb-0 border-bottom">
                     <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('registros.index') ? 'active' : '' }}"
                         href="{{ route('registros.index') }}" title="Atenciones">
@@ -409,6 +412,8 @@
                         <span class="sidebar-text">Atenciones</span>
                     </a>
                 </li>
+                @endcan
+                @can('admisnitradorEnfermeria')
                 <li class="nav-item mb-0 border-bottom">
                     <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('caracterizacion') ? 'active' : '' }}"
                         href="{{ route('caracterizacion') }}" title="Encuesta">
@@ -416,6 +421,8 @@
                         <span class="sidebar-text">Encuesta</span>
                     </a>
                 </li>
+                @endcan
+                @can('admisnitradorEnfermeria')
                 <li class="nav-item mb-0 border-bottom">
                     <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('estadisticas.index') ? 'active' : '' }}"
                         href="{{ route('estadisticas.index') }}" title="Estadistica">
@@ -423,6 +430,8 @@
                         <span class="sidebar-text">Estadistica</span>
                     </a>
                 </li>
+                @endcan
+                @can('admisnitradorEnfermeria')
                 <li class="nav-item mb-0 border-bottom">
                     <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('motivos.index') ? 'active' : '' }}"
                         href="{{ route('motivos.index') }}" title="About">
@@ -430,6 +439,7 @@
                         <span class="sidebar-text">Motivos</span>
                     </a>
                 </li>
+                @endcan
             </ul>
         </nav>
 

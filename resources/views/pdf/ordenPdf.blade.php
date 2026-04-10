@@ -99,7 +99,7 @@
             </div>
             <div class="col">
                 <span class="label">tipo de documento:</span>
-                {{ $tiposDocumentoPorId[(string) ($paciente->par_tipo_doc ?? '')] ?? ($paciente->par_tipo_doc ?? 'No registrado') }}
+                {{ $tiposDocumentoPorId[(string) ($atencion->paciente->par_tipo_doc ?? '')] ?? ($atencion->paciente->par_tipo_doc ?? 'No registrado') }}
             </div>
         </div>
         <div class="row">
@@ -115,11 +115,11 @@
         <div class="row">
             <div class="col">
                 <span class="label">Programa:</span>
-                {{ $atencion->paciente->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}
+                {{ $atencion->ficha->fichapro->programa->prog_nombre ?? 'No registrado' }}
             </div>
             <div class="col">
                 <span class="label">Ficha:</span>
-                {{ $atencion->paciente->ficha->fic_numero ?? 'No registrado' }}
+                {{ $atencion->ficha->fic_numero ?? 'No registrado' }}
             </div>
         </div>
 

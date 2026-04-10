@@ -15,12 +15,18 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Gate;
 
 
 class AtencionController extends Controller
 {
     public function index(Request $request)
     {
+         if (Gate::denies('admisnitradorEnfermeria')) {
+            return redirect()->route('consulta.index')
+                ->with('error', 'No tienes permisos para acceder');
+        }
         $query = trim($request->input('query'));
         $fecha_inicio = $request->input('fecha_inicio');
         $fecha_fin = $request->input('fecha_fin');
@@ -132,15 +138,26 @@ class AtencionController extends Controller
     //metodo para generar PDF de la atención
     public function generarPdf($id)
     {
-        $atencion = Atencion::with(['paciente', 'usuario'])->findOrFail($id);
+        $atencion = Atencion::with(['paciente', 'usuario', 'ficha.fichapro.programa'])->findOrFail($id);
         $motivos = Motivo::all();
+        $tiposDocumentoPorId = $this->getTiposDocumentoPorId();
         // Pasamos los datos a la vista del PDF
-        $pdf = Pdf::loadView('pdf.ordenPdf', compact('atencion', 'motivos'));
+        $pdf = Pdf::loadView('pdf.ordenPdf', compact('atencion', 'motivos', 'tiposDocumentoPorId'));
 
         // Configuramos el papel
         $pdf->setPaper('letter', 'portrait');
         // Retornamos el stream para que se abra en una pestaña nueva
         return $pdf->stream('Atencion_' . $atencion->id . '.pdf');
+    }
+
+    protected function getTiposDocumentoPorId(): array
+    {
+        return DB::connection('senacdti_seguimientopro')
+            ->table('sep_apr_documento')
+            ->get(['apr_documento_id', 'sigla'])
+            ->filter(fn($row) => !empty($row->apr_documento_id))
+            ->mapWithKeys(fn($row) => [(string) $row->apr_documento_id => (string) ($row->sigla ?? $row->apr_documento_id)])
+            ->toArray();
     }
 
 

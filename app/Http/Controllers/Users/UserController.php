@@ -20,7 +20,7 @@ class UserController extends Controller
     {
         // Validación manual
         if (Gate::denies('gestionar-usuarios')) {
-            return redirect()->route('registros.index')
+            return redirect()->route('consulta.index')
                 ->with('error', 'No tienes permisos para acceder');
         }
 

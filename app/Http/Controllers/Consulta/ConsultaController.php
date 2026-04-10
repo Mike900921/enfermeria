@@ -9,10 +9,13 @@ use App\Models\Motivo\Motivo;
 use App\Models\Atencion\Atencion;
 use Illuminate\Support\Facades\DB;
 
+
 class ConsultaController extends Controller
 {
     public function index(Request $request)
     {
+
+
         $paciente = null;
         $motivos = Motivo::all();
         $tiposDocumentoPorId = $this->getTiposDocumentoPorId();

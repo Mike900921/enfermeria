@@ -26,6 +26,12 @@ class AppServiceProvider extends ServiceProvider
         });
         Paginator::useBootstrap();
 
+        Gate::define('admisnitradorEnfermeria', function ($user) {
+            return in_array($user->roles_id, [1, 2]);
+        });
+        Paginator::useBootstrap();
+
+
 
     }
 }
