@@ -15,12 +15,19 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
-
+use Illuminate\Support\Facades\Gate;
 
 class AtencionController extends Controller
 {
     public function index(Request $request)
     {
+        // Validación manual de permisos mas de 1 para acceder a la vista de atenciones
+        if (!Gate::any(['gestionar-usuarios', 'gestionar-responsable'])) {
+            return redirect()->route('atenciones.index_atenciones')
+                ->with('error', 'No tienes permisos para acceder');
+        }
+
+
         $query = trim($request->input('query'));
         $fecha_inicio = $request->input('fecha_inicio');
         $fecha_fin = $request->input('fecha_fin');

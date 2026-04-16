@@ -37,7 +37,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 | Rutas protegidas por middleware auth
 |--------------------------------------------------------------------------
 */
-Route::middleware('auth')->group(function () {
+
+Route::middleware(['auth:web,instructor'])->group(function () {
 
     // Dashboard / Consulta aprendiz
     Route::get('/consulta', [ConsultaController::class, 'index'])->name('consulta.index');
@@ -61,7 +62,7 @@ Route::middleware('auth')->group(function () {
     // CRUD de usuarios
 
     //rutas protegidas por el permiso gestionar-usuarios con rol administrador
-    Route::middleware(['auth',])->group(function () {
+    Route::middleware(['auth:web,instructor'])->group(function () {
         Route::resource('users', UserController::class);
         Route::post('/users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
     });
@@ -89,16 +90,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/buscarMotivos', [MotivoController::class, 'buscar'])->name('motivos.buscar');
 
     //validaciones rutas motivo
-        //crear motivo
-        Route::post('/motivos', [MotivoController::class, 'store'])->name('motivos.store');
-        //crear motivo desde atencion
-        Route::post('/motivos/desde-atencion', [MotivoController::class, 'storeFromAtencion'])->name('motivos.storeFromAtencion');
-        //editar motivo
-        Route::put('/motivos/{id}', [MotivoController::class, 'update'])->name('motivos.update');
-        //eliminar motivo (inhabilitar)
-        Route::delete('/motivos/destroy/{id}', [MotivoController::class, 'destroy'])->name('motivos.destroy');
-        //restaurar motivo
-        Route::post('/motivos/restore/{id}', [MotivoController::class, 'restore'])->name('motivos.restore');
+    //crear motivo
+    Route::post('/motivos', [MotivoController::class, 'store'])->name('motivos.store');
+    //crear motivo desde atencion
+    Route::post('/motivos/desde-atencion', [MotivoController::class, 'storeFromAtencion'])->name('motivos.storeFromAtencion');
+    //editar motivo
+    Route::put('/motivos/{id}', [MotivoController::class, 'update'])->name('motivos.update');
+    //eliminar motivo (inhabilitar)
+    Route::delete('/motivos/destroy/{id}', [MotivoController::class, 'destroy'])->name('motivos.destroy');
+    //restaurar motivo
+    Route::post('/motivos/restore/{id}', [MotivoController::class, 'restore'])->name('motivos.restore');
 
 
     //vista encuesta setalpro
@@ -108,4 +109,9 @@ Route::middleware('auth')->group(function () {
     //restaurar cambio clave
     //Route::get('/cambiar-clave', [UserController::class, 'editPassword'])->name('password.change');
     Route::post('/cambiar-clave', [UserController::class, 'updatePassword'])->name('password.update');
+
+
+    Route::middleware(['auth:web,instructor', 'can:gestionar-instructor'])->group(function () {
+        // rutas de instructor
+    });
 });

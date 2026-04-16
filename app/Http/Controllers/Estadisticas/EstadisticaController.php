@@ -12,11 +12,17 @@ use App\Models\Ficha\FichaPro;
 use App\Models\Programa\Programa;
 use App\Models\Motivo\Motivo;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Gate;
 
 class EstadisticaController extends Controller
 {
     public function index(Request $request)
     {
+        // Validación manual
+        if (!Gate::any(['gestionar-usuarios', 'gestionar-responsable'])) {
+            return redirect()->route('atenciones.index_atenciones')
+                ->with('error', 'No tienes permisos para acceder');
+        }
 
         //--------------------------------------validaciones de los inputs de fecha -------------------------------------------------------------
         $request->validate([
@@ -95,7 +101,7 @@ class EstadisticaController extends Controller
             // Para agrupar por programa, el JOIN es obligatorio
             $topData = $query->join('senacdti_seguimientopro.sep_ficha as f', 'atenciones.ficha_id', '=', 'f.fic_numero')
                 ->select('f.prog_codigo', DB::raw('count(atenciones.id) as total'))
-                ->groupBy('f.prog_codigo'); 
+                ->groupBy('f.prog_codigo');
         } elseif ($ver === 'pacientes') {
             $topData = $query->select('paciente_id', 'ficha_id', DB::raw('count(*) as total'))
                 ->groupBy('paciente_id', 'ficha_id');
@@ -144,7 +150,7 @@ class EstadisticaController extends Controller
                     ? ($item->paciente->par_nombres . ' ' . $item->paciente->par_apellidos)
                     : "ID: {$item->paciente_id}";
                 $item->numeroDocumento = $item->paciente_id;
-                $item->fichaPaciente = $item->ficha_id ?? 'N/A'; 
+                $item->fichaPaciente = $item->ficha_id ?? 'N/A';
             } elseif ($ver === 'motivos') {
                 $item->etiqueta = $item->motivo;
             } else {

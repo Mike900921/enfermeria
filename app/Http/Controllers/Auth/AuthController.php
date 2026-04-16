@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Users\Instructor;
 
 class AuthController extends Controller
 {
+
     public function index()
     {
         return view('auth.login');
@@ -22,22 +24,45 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'))) {
+        // LOGIN NORMAL (si aplica)
+        if (Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ])) {
             $request->session()->regenerate();
-            return redirect()->intended('consulta'); // o la ruta que quieras
+            return redirect()->intended('consulta');
+        }
+
+        // LOGIN INSTRUCTOR (personalizado)
+        $instructor = Instructor::where('email', $request->email)->first();
+        $instructor->password = Hash::make($request->password);
+
+        if (
+            $instructor &&
+            Hash::check($request->password, $instructor->password) &&
+            $instructor->participante->rol_id == 2 &&
+            $instructor->estado == 1 // ajusta según tu estado activo
+        ) {
+            Auth::guard('instructor')->login($instructor);
+            $request->session()->regenerate();
+
+            return redirect()->intended('consulta')
+                ->with('success', 'Instructor logueado correctamente');
         }
 
         return back()->withErrors([
-            'email' => 'Correo o contraseña incorrectos.',
+            'email' => 'Credenciales incorrectas.',
         ])->onlyInput('email');
     }
 
+
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('web')->logout(); // usuario normal
+        Auth::guard('instructor')->logout(); // instructor
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        Cookie::queue(Cookie::forget(Auth::getRecallerName()));
 
         return redirect('/login');
     }

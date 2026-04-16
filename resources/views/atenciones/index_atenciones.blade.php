@@ -71,19 +71,21 @@
                                         <strong>Ficha:</strong><br>
                                         {{ $paciente->ficha->fic_numero ?? 'No registrado' }}
                                     </div>
+                                    
+                                    @canany(['gestionar-usuarios', 'gestionar-responsable'])
+                                        <div class="col-12 d-flex flex-wrap gap-2">
+                                            <button class="btn btn-registrar-atencion" title="Registrar nueva atención"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalCreateAtencion{{ $paciente->par_identificacion }}">
+                                                <i class="bi bi-plus-circle"></i> Registrar Nueva Atención
+                                            </button>
 
-                                    <div class="col-12 d-flex flex-wrap gap-2">
-                                        <button class="btn btn-registrar-atencion" title="Registrar nueva atención"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalCreateAtencion{{ $paciente->par_identificacion }}">
-                                            <i class="bi bi-plus-circle"></i> Registrar Nueva Atención
-                                        </button>
-
-                                        <button class="btn btn-ver-informacion" data-bs-toggle="modal"
-                                            data-bs-target="#modalShowPaciente{{ $paciente->par_identificacion }}">
-                                            <i class="bi bi-info-circle"></i> Ver información del aprendiz
-                                        </button>
-                                    </div>
+                                            <button class="btn btn-ver-informacion" data-bs-toggle="modal"
+                                                data-bs-target="#modalShowPaciente{{ $paciente->par_identificacion }}">
+                                                <i class="bi bi-info-circle"></i> Ver información del aprendiz
+                                            </button>
+                                        </div>
+                                    @endcanany
                                 </div>
                             </div>
                         </div>
@@ -182,7 +184,7 @@
 
                                             <div class="col-md-3">
                                                 <label class="form-label"><strong>Nombre</strong></label>
-                                                <input type="text" class="form-control"
+                                                <input type="text" id="nombrePaciente" class="form-control"
                                                     value="{{ $paciente->par_nombres ?? '' }} {{ $paciente->par_apellidos ?? '' }}"
                                                     readonly>
                                             </div>
@@ -222,8 +224,8 @@
                                             <label class="form-label">Motivo</label>
 
                                             <div class="input-group">
-                                                <select name="motivo_id[]" multiple id="motivo_id" class="form-control"
-                                                    required>
+                                                <select name="motivo_id[]" autocomplete="off" multiple id="motivo_id"
+                                                    class="form-control" required>
                                                     <option value="">Seleccione un motivo</option>
                                                     @foreach ($motivos as $motivo)
                                                         <option value="{{ $motivo->id }}">
@@ -243,12 +245,12 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Procedimientos</label>
-                                            <textarea name="procedimientos" class="form-control" required></textarea>
+                                            <textarea name="procedimientos" id="procedimientos" class="form-control" required></textarea>
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Observaciones</label>
-                                            <textarea name="observaciones" class="form-control" required></textarea>
+                                            <textarea name="observaciones" id="observaciones" class="form-control" required></textarea>
                                         </div>
 
                                     </div>
@@ -258,7 +260,7 @@
                                             Cancelar
                                         </button>
 
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="button" class="btn btn-primary" onclick="abrirConfirmacion(this)">
                                             Registrar Atención
                                         </button>
                                     </div>
@@ -491,6 +493,32 @@
             </div>
         @endforeach
     @endisset
+
+    {{-- -- Modal de confirmación antes de registrar atención --}}
+    <div class="modal fade" id="modalConfirmacion" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+
+                <div class="modal-header  bg-azul">
+                    <h5 class="modal-title">Confirmar Atención</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p><strong>Paciente:</strong> <span id="confPaciente"></span></p>
+                    <p><strong>Motivo:</strong> <span id="confMotivo"></span></p>
+                    <p><strong>Procedimiento:</strong> <span id="confProcedimiento"></span></p>
+                    <p><strong>Observación:</strong> <span id="confObservacion"></span></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-success" onclick="enviarFormulario()">Confirmar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
 
     <script>
@@ -517,6 +545,38 @@
             const alert = document.querySelector('.alert-success');
             if (alert) alert.style.display = 'none';
         }, 5000); // 5 segundos
+    </script>
+
+    {{-- Script para manejar la confirmación antes de enviar el formulario de nueva atención --}}
+    <script>
+        let formularioActual = null;
+
+        function abrirConfirmacion(btn) {
+            formularioActual = btn.closest("form");
+
+            let paciente = formularioActual.querySelector("#nombrePaciente").value;
+            let selectMotivos = formularioActual.querySelector("#motivo_id");
+            let motivo = Array.from(selectMotivos.selectedOptions)
+                .map(option => option.text)
+                .join(", ");
+
+            let procedimiento = formularioActual.querySelector("#procedimientos").value;
+            let observacion = formularioActual.querySelector("#observaciones").value;
+
+            document.getElementById("confPaciente").innerText = paciente;
+            document.getElementById("confMotivo").innerText = motivo;
+            document.getElementById("confProcedimiento").innerText = procedimiento;
+            document.getElementById("confObservacion").innerText = observacion;
+
+            let modal = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
+            modal.show();
+        }
+
+        function enviarFormulario() {
+            if (formularioActual) {
+                formularioActual.submit();
+            }
+        }
     </script>
 
 @endsection

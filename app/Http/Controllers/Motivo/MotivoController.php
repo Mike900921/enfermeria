@@ -14,6 +14,12 @@ class MotivoController extends Controller
 {
     public function index(Request $request)
     {
+        // Validación manual
+        if (!Gate::any(['gestionar-usuarios', 'gestionar-responsable'])) {
+            return redirect()->route('atenciones.index_atenciones')
+                ->with('error', 'No tienes permisos para acceder');
+        }
+
         $query = Motivo::withTrashed();
 
         if ($request->q) {

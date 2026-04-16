@@ -65,4 +65,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Atencion::class, 'usuario_id');
     }
+
+    public function getFullNameAttribute()
+    {
+        return trim($this->name . ' ' . $this->last_name);
+    }
+
+    public function getRolIdAttribute()
+    {
+        return $this->roles_id;
+    }
 }

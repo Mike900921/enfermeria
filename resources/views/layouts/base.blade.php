@@ -334,15 +334,18 @@
 
         <div>
             @php
-                $fullName = trim(auth()->user()->name . ' ' . auth()->user()->last_name);
+                $user = Auth::guard('instructor')->check() ? Auth::guard('instructor')->user() : Auth::user();
+
+                $fullName = $user->full_name;
                 $isLongUserName = \Illuminate\Support\Str::length($fullName) > 22;
             @endphp
+
             <a class="nav-link dropdown-toggle d-flex align-items-center user-menu-toggle {{ $isLongUserName ? 'hide-name-mobile' : '' }}"
                 data-bs-toggle="dropdown" title="{{ $fullName }}">
 
                 <!-- Avatar de letra -->
                 <div class="letter-avatar me-2">
-                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    {{ strtoupper(substr($fullName, 0, 1)) }}
                 </div>
                 <div class="me-2 text-white user-fullname">
                     {{ $fullName }}
@@ -352,16 +355,19 @@
             <ul class="dropdown-menu dropdown-menu-end">
 
                 <!--  Cambiar contraseña -->
-                <li>
-                    <a class="dropdown-item" href="#" data-bs-toggle="modal"
-                        data-bs-target="#changePasswordModal">
-                        <i class="fas fa-key me-2 text-primary"></i> Cambiar contraseña
-                    </a>
-                </li>
 
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
+                @canany(['gestionar-usuarios', 'gestionar-responsable'])
+                    <li>
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                            data-bs-target="#changePasswordModal">
+                            <i class="fas fa-key me-2 text-primary"></i> Cambiar contraseña
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                @endcanany
 
                 <!--  Cerrar sesión -->
                 <li>
@@ -378,7 +384,6 @@
     </header>
 
     <!-- Sidebar y contenido -->
-
     <div class="layout">
         <!-- Sidebar -->
         <nav id="sidebar" class="sidebar">
@@ -386,6 +391,7 @@
                 <img src="{{ asset('img/logo-sena-blanco.png') }}" alt="SENA" />
             </div>
             <ul class="nav flex-column">
+
                 @can('gestionar-usuarios')
                     <li class="nav-item mb-0 border-bottom">
                         <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('users.index') ? 'active' : '' }}"
@@ -395,6 +401,7 @@
                         </a>
                     </li>
                 @endcan
+
                 <li class="nav-item mb-0 border-bottom">
                     <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('consulta.index') ? 'active' : '' }}"
                         href="{{ route('consulta.index') }}" title="Consulta">
@@ -402,34 +409,48 @@
                         <span class="sidebar-text">Consulta</span>
                     </a>
                 </li>
-                <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('registros.index') ? 'active' : '' }}"
-                        href="{{ route('registros.index') }}" title="Atenciones">
-                        <i class="bi bi-journal-text me-2"></i>
-                        <span class="sidebar-text">Atenciones</span>
-                    </a>
-                </li>
-                <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('caracterizacion') ? 'active' : '' }}"
-                        href="{{ route('caracterizacion') }}" title="Encuesta">
-                        <i class="bi bi-card-checklist me-2"></i>
-                        <span class="sidebar-text">Encuesta</span>
-                    </a>
-                </li>
-                <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('estadisticas.index') ? 'active' : '' }}"
-                        href="{{ route('estadisticas.index') }}" title="Estadistica">
-                        <i class="bi bi-bar-chart  me-2"></i>
-                        <span class="sidebar-text">Estadistica</span>
-                    </a>
-                </li>
-                <li class="nav-item mb-0 border-bottom">
-                    <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('motivos.index') ? 'active' : '' }}"
-                        href="{{ route('motivos.index') }}" title="About">
-                        <i class="bi bi-gear me-2"></i>
-                        <span class="sidebar-text">Motivos</span>
-                    </a>
-                </li>
+
+
+                @canany(['gestionar-usuarios', 'gestionar-responsable'])
+                    <li class="nav-item mb-0 border-bottom">
+                        <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('registros.index') ? 'active' : '' }}"
+                            href="{{ route('registros.index') }}" title="Atenciones">
+                            <i class="bi bi-journal-text me-2"></i>
+                            <span class="sidebar-text">Atenciones</span>
+                        </a>
+                    </li>
+                @endcanany
+
+                @canany(['gestionar-usuarios', 'gestionar-responsable'])
+                    <li class="nav-item mb-0 border-bottom">
+                        <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('caracterizacion') ? 'active' : '' }}"
+                            href="{{ route('caracterizacion') }}" title="Encuesta">
+                            <i class="bi bi-card-checklist me-2"></i>
+                            <span class="sidebar-text">Encuesta</span>
+                        </a>
+                    </li>
+                @endcanany
+
+
+                @canany(['gestionar-usuarios', 'gestionar-responsable'])
+                    <li class="nav-item mb-0 border-bottom">
+                        <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('estadisticas.index') ? 'active' : '' }}"
+                            href="{{ route('estadisticas.index') }}" title="Estadistica">
+                            <i class="bi bi-bar-chart  me-2"></i>
+                            <span class="sidebar-text">Estadistica</span>
+                        </a>
+                    </li>
+                @endcanany
+
+                @canany(['gestionar-usuarios', 'gestionar-responsable'])
+                    <li class="nav-item mb-0 border-bottom">
+                        <a class="nav-link text-dark d-flex align-items-center {{ request()->routeIs('motivos.index') ? 'active' : '' }}"
+                            href="{{ route('motivos.index') }}" title="About">
+                            <i class="bi bi-gear me-2"></i>
+                            <span class="sidebar-text">Motivos</span>
+                        </a>
+                    </li>
+                @endcanany
             </ul>
         </nav>
 
